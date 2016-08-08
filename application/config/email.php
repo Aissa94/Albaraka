@@ -2,7 +2,7 @@
 
 $config['protocol'] = 'smtp';
 $config['useragent'] = 'phpmailer';
-///$config['mailpath'] = '/usr/sbin/sendmail';
+//$config['mailpath'] = '/usr/sbin/sendmail';
 $config['smtp_host'] = 'smtp.gmail.com';
 $config['smtp_user'] = 'jorani2016jorani@gmail.com';
 $config['smtp_pass'] = '31043546';
