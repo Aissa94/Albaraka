@@ -13,7 +13,7 @@ function data_base_connect ()
    }
             $db = data_base_connect ();
 
-//$html="<table border='1'>";
+$html="<table border='1'>";
 $i=0;
   if (isset($data->sheets[$i]['cells']))
   {
@@ -21,14 +21,14 @@ $i=0;
     {
     
       for($j=2;$j<=count($data->sheets[$i]['cells']);$j++) // loop used to get each row of the sheet
-      {/*
+      {
         $html.="<tr>";
         for($k=1;$k<=count($data->sheets[$i]['cells'][$j]);$k++) // This loop is created to get data in a table format.
         {
           $html.="<td>";
           $html.=$data->sheets[$i]['cells'][$j][$k];
           $html.="</td>";
-        }*/
+        }
         $id = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][1]);
         $name = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][2]);
         $parent_id =  mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][3]);
@@ -36,13 +36,13 @@ $i=0;
                 values('".$id."','".$name."','".$parent_id."')";
                 $st = $db->prepare($query);
                 $st->execute();
-//        $html.="</tr>";
+        $html.="</tr>";
       }
     }
   }
-/*
+
 $html.="</table>";
 echo "\t\t\tTable des organisations:\n\n";
 echo $html;
-echo utf8_decode("<br />Les données sont insérées dans la BDD.");*/
+echo utf8_decode("<br />Les données sont insérées dans la BDD.");
 ?>
