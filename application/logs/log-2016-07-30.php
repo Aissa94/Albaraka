@@ -1,0 +1,32 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2016-07-30 18:32:33 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:44:17 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:45:57 --> {controllers/pages/view} Not found=application/views/pages/fr/testmai.php.php
+ERROR - 2016-07-30 18:46:08 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:47:17 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:51:05 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:56:11 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:57:03 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:57:18 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:58:29 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:59:23 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 18:59:56 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:04:06 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:07:05 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:05 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:07 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:08 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:08 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:08 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:08 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:09 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:09 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:09 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:10 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:10 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:08:42 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:09:47 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:17:42 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:18:39 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
+ERROR - 2016-07-30 19:21:10 --> {controllers/pages/view} Not found=application/views/pages/fr/assets.php
