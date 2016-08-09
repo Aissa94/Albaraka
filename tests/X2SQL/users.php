@@ -16,7 +16,8 @@ function data_base_connect ()
 $html="<table border='1'>";
 $i=0;
 $id=1;
-$password='$2a$08$PBvFiEW5tNG9AWX3Uk7r1e.e0BtZH6Cc0DNFZ57/i9r3H06WBz54S';
+$password='$2a$08$KxK2isBmJtpWW4vEGLJU3.S0U6x80ptjI.ce6ISDqx5bplTZprWUS';
+$email='dnghouila@gmail.dz';
 $role=2;
 $manager=0;
 $country=213;
@@ -43,8 +44,8 @@ $timezone='Africa/Algiers';
         $organization = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][4]);
         $position =  mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][8]);
         $identifier = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][1]);
-                $query = "insert into users(id,firstname,lastname,login,password,role,manager,country,organization,contract,position,identifier,language,active,timezone)
-                values('".$id."','".$firstname."','".$lastname."','".$firstname."','".$password."','".$role."','".$manager."','".$country."','".$organization."','".$contract."','".$position."','".$identifier."','".$language."','".$active."','".$timezone."')";
+                $query = "insert into users(id,firstname,lastname,login,email,password,role,manager,country,organization,contract,position,identifier,language,active,timezone)
+                values('".$id."','".$firstname."','".$lastname."','".$firstname."','".$email."','".$password."','".$role."','".$manager."','".$country."','".$organization."','".$contract."','".$position."','".$identifier."','".$language."','".$active."','".$timezone."')";
                 $st = $db->prepare($query);
                 $st->execute();
         $html.="</tr>";

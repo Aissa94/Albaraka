@@ -439,7 +439,7 @@ $config['fonts'] =
 
 //____________________________________________________________________________
 //Set this value to TRUE if you want to hide the menu entries related to overtime
-$config['disable_overtime'] = FALSE;
+$config['disable_overtime'] = TRUE;
 
 //____________________________________________________________________________
 //Google analytics tracking code (if empty, the Javascript tracking code will be desactivated).
