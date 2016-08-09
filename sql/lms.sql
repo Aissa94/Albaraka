@@ -233,8 +233,10 @@ CREATE TABLE IF NOT EXISTS `leaves` (
 --
 CREATE TABLE IF NOT EXISTS `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  /*`id` varchar(512) CHARACTER SET utf8 NOT NULL,*/
   `name` varchar(512) CHARACTER SET utf8 DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
+  /*`parent_id` varchar(512) CHARACTER SET utf8 DEFAULT NULL,*/
   `supervisor` INT NULL DEFAULT NULL COMMENT 'this user will receive a copy of accepted and rejected leave requests',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -289,8 +291,9 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Content of table `roles`
 --
 INSERT INTO `roles` (`id`, `name`) VALUES
+(1, 'HR admin');
 (2, 'user'),
-(8, 'HR admin');
+
 
 --
 -- Structure of table `settings`
@@ -386,6 +389,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `manager` int(11) DEFAULT NULL,
   `country` int(11) DEFAULT NULL,
   `organization` int(11) DEFAULT NULL,
+  /*`organization` varchar(512) CHARACTER SET utf8 DEFAULT NULL,*/
   `contract` int(11) DEFAULT NULL,
   `position` int(11) NOT NULL,
   `datehired` date DEFAULT NULL COMMENT 'Date hired / Started',
@@ -406,7 +410,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Content of table `users`
 --
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `login`, `email`, `password`, `role`, `manager`, `country`, `organization`, `contract`, `position`, `datehired`, `identifier`, `language`) VALUES
-(1, 'Benjamin', 'BALET', 'bbalet', 'benjamin.balet@gmail.com', '$2a$08$LeUbaGFqJjLSAN7to9URsuHB41zcmsMBgBhpZuFp2y2OTxtVcMQ.C', 8, 1, NULL, 0, NULL, 1, '2013-10-28', 'PNC0025', 'en');
+(1, 'Benjamin', 'BALET', 'bbalet', 'benjamin.balet@gmail.com', '$2a$08$LeUbaGFqJjLSAN7to9URsuHB41zcmsMBgBhpZuFp2y2OTxtVcMQ.C', 1, 1, NULL, 0, NULL, 1, '2013-10-28', 'PNC0025', 'en');
 
 --
 -- Structure of table `delegations`
