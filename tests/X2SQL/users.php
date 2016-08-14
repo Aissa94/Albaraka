@@ -13,7 +13,7 @@ function data_base_connect ()
    }
             $db = data_base_connect ();
 //some initializations
-$html="<table border='1'>";
+//$html="<table border='1'>";
 $i=0;
 $id=1;
 $password='$2a$08$KxK2isBmJtpWW4vEGLJU3.S0U6x80ptjI.ce6ISDqx5bplTZprWUS';
@@ -29,33 +29,33 @@ $timezone='Africa/Algiers';
   {
     if(count($data->sheets[$i]['cells'])>0) // checking sheet not empty
     {
-    
-      for($j=2;$j<=count($data->sheets[$i]['cells']);$j++) // loop used to get each row of the sheet
+      for($j=2;$j<=1663;$j++) // loop used to get each row of the sheet
       {
-        $html.="<tr>";
+        /*$html.="<tr>";
         for($k=1;$k<=count($data->sheets[$i]['cells'][$j]);$k++) // This loop is created to get data in a table format.
         {
           $html.="<td>";
           $html.=$data->sheets[$i]['cells'][$j][$k];
           $html.="</td>";
-        }
+        }*/
+        $identifier = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][1]);
         $firstname = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][2]);
         $lastname = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][3]);
         $organization = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][4]);
-        $position =  mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][8]);
-        $identifier = mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][1]);
-                $query = "insert into users(id,firstname,lastname,login,email,password,role,manager,country,organization,contract,position,identifier,language,active,timezone)
-                values('".$id."','".$firstname."','".$lastname."','".$firstname."','".$email."','".$password."','".$role."','".$manager."','".$country."','".$organization."','".$contract."','".$position."','".$identifier."','".$language."','".$active."','".$timezone."')";
+        $position =  mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][5]);
+        $datehired =  mysqli_real_escape_string($connection,$data->sheets[$i]['cells'][$j][6]);      
+                $query = "insert into users(id,firstname,lastname,login,email,password,role,manager,country,organization,contract,position,datehired,identifier,language,active,timezone)
+                values('".$id."','".$firstname."','".$lastname."','".$firstname."','".$email."','".$password."','".$role."','".$manager."','".$country."','".$organization."','".$contract."','".$position."','".$datehired."','".$identifier."','".$language."','".$active."','".$timezone."')";
                 $st = $db->prepare($query);
                 $st->execute();
-        $html.="</tr>";
+        //$html.="</tr>";
         $id++;
       }
     }
   }
 
-$html.="</table>";
+/*$html.="</table>";
 echo "\t\t\tTable des utilisateurs:\n\n";
-echo $html;
+echo $html;*/
 echo utf8_decode("<br />Les données sont insérées dans la BDD.");
 ?>

@@ -3,3 +3,4 @@ http://127.0.0.1:90/lms/tests/X2SQL/organization.php
 http://127.0.0.1:90/lms/tests/X2SQL/positions.php
 http://127.0.0.1:90/lms/tests/X2SQL/users.php
 http://127.0.0.1:90/lms/tests/X2SQL/leaves.php
+http://127.0.0.1:90/lms/tests/X2SQL/idcode.php

@@ -409,9 +409,9 @@ class Users_model extends CI_Model {
 
         /*
           00000001 1  Admin
-          00000100 8  HR Officier / Local HR Manager
-          00001000 16 HR Manager
-          = 00001101 25 Can access to HR functions
+          00001000 8  HR Officier / Local HR Manager
+          00010000 16 HR Manager
+        = 00011001 25 Can access to HR functions
          */
         if (((int) $row->role & 25)) {
             $is_hr = TRUE;
