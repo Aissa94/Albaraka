@@ -19,6 +19,7 @@ $lang['requests_index_thead_enddate'] = 'End Date';
 $lang['requests_index_thead_duration'] = 'Duration';
 $lang['requests_index_thead_type'] = 'Type';
 $lang['requests_index_thead_status'] = 'Status';
+$lang['requests_index_thead_substitute'] = 'Substitute';
 
 $lang['requests_collaborators_title'] = 'List of my subordinates';
 $lang['requests_collaborators_description'] = 'This screen lists your direct report subordinates. If you are not a manager, this list will always be empty.';
@@ -63,6 +64,7 @@ $lang['requests_export_thead_duration'] = 'Duration';
 $lang['requests_export_thead_type'] = 'Type';
 $lang['requests_export_thead_cause'] = 'Reason';
 $lang['requests_export_thead_status'] = 'Status';
+$lang['requests_export_thead_substitute'] = 'Substitute';
 
 $lang['requests_delegations_title'] = 'List of delegations';
 $lang['requests_delegations_description'] = 'This is the list of employees who can accept or reject a request in your behalf.';

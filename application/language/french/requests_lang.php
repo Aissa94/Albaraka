@@ -19,6 +19,7 @@ $lang['requests_index_thead_enddate'] = 'Date fin';
 $lang['requests_index_thead_duration'] = 'Durée';
 $lang['requests_index_thead_type'] = 'Type';
 $lang['requests_index_thead_status'] = 'Statut';
+$lang['requests_index_thead_substitute'] = 'Remplaçant';
 
 $lang['requests_collaborators_title'] = 'Liste de mes collaborateurs';
 $lang['requests_collaborators_description'] = 'Cet écran liste vos collaborateurs. Si vous n\'êtes pas un manager, cette liste sera vide.';
@@ -63,6 +64,7 @@ $lang['requests_export_thead_duration'] = 'Durée';
 $lang['requests_export_thead_type'] = 'Type';
 $lang['requests_export_thead_cause'] = 'Cause';
 $lang['requests_export_thead_status'] = 'Statut';
+$lang['requests_export_thead_substitute'] = 'Remplaçant';
 
 $lang['requests_delegations_title'] = 'Liste des délégations';
 $lang['requests_delegations_description'] = 'Liste des employés pouvant accepter ou refuser des demandes à votre place.';

@@ -148,6 +148,7 @@ class Leaves extends CI_Controller {
         $this->form_validation->set_rules('type', lang('leaves_create_field_type'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('cause', lang('leaves_create_field_cause'), 'xss_clean|strip_tags');
         $this->form_validation->set_rules('status', lang('leaves_create_field_status'), 'required|xss_clean|strip_tags');
+        $this->form_validation->set_rules('substitute', lang('leaves_create_field_substitute'), 'required|xss_clean|strip_tags');
 
         $data['credit'] = 0;
         $default_type = $this->config->item('default_leave_type');
@@ -232,6 +233,7 @@ class Leaves extends CI_Controller {
         $this->form_validation->set_rules('type', lang('leaves_edit_field_type'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('cause', lang('leaves_edit_field_cause'), 'xss_clean|strip_tags');
         $this->form_validation->set_rules('status', lang('leaves_edit_field_status'), 'required|xss_clean|strip_tags');
+        $this->form_validation->set_rules('substitute', lang('leaves_create_field_substitute'), 'required|xss_clean|strip_tags');
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->model('users_model');
@@ -268,15 +270,21 @@ class Leaves extends CI_Controller {
         $leave = $this->leaves_model->getLeaves($id);
         $user = $this->users_model->getUsers($leave['employee']);
         $manager = $this->users_model->getUsers($user['manager']);
+        $substitute = $leave['substitute'];
 
-        //Test if the manager hasn't been deleted meanwhile
-        if (empty($manager['email'])) {
+        //Test if the manager or the substitute haven't been deleted meanwhile
+        if (empty($manager['email']) || empty($substitute['email'])) {
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error'));
         } else {
             //Send an e-mail to the manager
             $this->load->library('email');
             $this->load->library('polyglot');
             $usr_lang = $this->polyglot->code2language($manager['language']);
+
+            //Send an e-mail to the substitute
+            $this->load->library('email');
+            $this->load->library('polyglot');
+            $usr_lang = $this->polyglot->code2language($substitute['language']);
             
             //We need to instance an different object as the languages of connected user may differ from the UI lang
             $lang_mail = new CI_Lang();
@@ -301,9 +309,12 @@ class Leaves extends CI_Controller {
                 'Duration' => $leave['duration'],
                 'Balance' => $this->leaves_model->getLeavesTypeBalanceForEmployee($leave['employee'] , $leave['type_name'], $leave['startdate']),
                 'Reason' => $leave['cause'],
+                'FirstnameSubstitute' => $substitute['firstname'],
+                'LastnameSubstitute' => $substitute['lastname'],
                 'BaseUrl' => $this->config->base_url(),
                 'LeaveId' => $id,
-                'UserId' => $this->user_id
+                'UserId' => $this->user_id,
+                'SubstituteId' => $substitute['id']
             );
             $message = $this->parser->parse('emails/' . $manager['language'] . '/request', $data, TRUE);
             $this->email->set_encoding('quoted-printable');
@@ -318,6 +329,10 @@ class Leaves extends CI_Controller {
                 $subject = $this->config->item('subject_prefix');
             } else {
                $subject = '[Jorani] ';
+            }
+            //Copy to the substitute, if any
+            if ($substitute['email'] != '') {
+                $this->email->cc($substitute['email']);
             }
             //Copy to the delegates, if any
             $delegates = $this->delegations_model->listMailsOfDelegates($manager['id']);
@@ -461,6 +476,7 @@ class Leaves extends CI_Controller {
         $enddate = $this->input->post('enddate', TRUE);
         $startdatetype = $this->input->post('startdatetype', TRUE);     //Mandatory field checked by frontend
         $enddatetype = $this->input->post('enddatetype', TRUE);       //Mandatory field checked by frontend
+        $substitute = $this->input->post('substitute', TRUE);
         $leave_id = $this->input->post('leave_id', TRUE);
         $leaveValidator = new stdClass;
         if (isset($id) && isset($type)) {

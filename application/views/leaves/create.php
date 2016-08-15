@@ -67,6 +67,14 @@ echo form_open('leaves/create', $attributes) ?>
         <?php echo lang('leaves_flash_msg_overlap_dayoff');?>
     </div>
     
+    <label for="substitute"><?php echo lang('leaves_create_field_substitute');?></label>
+    <select name="substitute" id="substitute">
+    <?php
+    foreach ($substitute as $substitute_item): ?>
+        <option value="<?php echo $substitute_item['id'] ?>" ><?php echo $substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
+    <?php endforeach ?>
+    </select>
+
     <label for="cause"><?php echo lang('leaves_create_field_cause');?></label>
     <textarea name="cause"><?php echo set_value('cause'); ?></textarea>
     

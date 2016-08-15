@@ -415,6 +415,7 @@ class Leaves_model extends CI_Model {
             'type' => $this->input->post('type'),
             'cause' => $this->input->post('cause'),
             'status' => $this->input->post('status'),
+            'substitute' => $this->input->post('sustitute'),
             'employee' => $id
         );
         $this->db->insert('leaves', $data);
@@ -431,12 +432,13 @@ class Leaves_model extends CI_Model {
      * @param string $enddatetype End date type of the leave (Morning/Afternoon)
      * @param string $cause Identifier of the leave
      * @param int $status status of the leave
+     * @param int $substitute Identifier for the personne who will substitute the employee for this leave
      * @param array $employees List of DB Ids of the affected employees
      * @return int Result
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function createRequestForUserList($type, $duration, $startdate, $enddate,
-                    $startdatetype, $enddatetype, $cause, $status, $employees) {
+                    $startdatetype, $enddatetype, $cause, $status, $employees, $substitute) {
         $data = array();
         foreach ($employees as $id) {
             $data[] = array(
@@ -448,7 +450,9 @@ class Leaves_model extends CI_Model {
                 'type' => $this->input->post('type'),
                 'cause' => $this->input->post('cause'),
                 'status' => $this->input->post('status'),
-                'employee' => $id);
+                'substitute'=> $this->input->post('sustitute'),
+                'employee' => $id
+            );
         }
         return $this->db->insert_batch('leaves', $data); 
     }
@@ -458,6 +462,7 @@ class Leaves_model extends CI_Model {
      * @param string $startdate Start date (MySQL format YYYY-MM-DD)
      * @param string $enddate End date (MySQL format YYYY-MM-DD)
      * @param int $status Status of leave (see table status or doc)
+     * @param int $substitute Identifier for the personne who will substitute the employee for this leave
      * @param int $employee Identifier of the employee
      * @param string $cause Optional reason of the leave
      * @param string $startdatetype Start date type (Morning/Afternoon)
@@ -468,7 +473,7 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function createLeaveByApi($startdate, $enddate, $status, $employee, $cause,
-            $startdatetype, $enddatetype, $duration, $type) {
+            $startdatetype, $enddatetype, $duration, $type, $sustitute) {
         
         $data = array(
             'startdate' => $startdate,
@@ -479,7 +484,8 @@ class Leaves_model extends CI_Model {
             'startdatetype' => $startdatetype,
             'enddatetype' => $enddatetype,
             'duration' => abs($duration),
-            'type' => $type
+            'type' => $type,
+            'substitute' => $sustitute
         );
         $this->db->insert('leaves', $data);
         return $this->db->insert_id();
@@ -499,7 +505,8 @@ class Leaves_model extends CI_Model {
             'duration' => abs($this->input->post('duration')),
             'type' => $this->input->post('type'),
             'cause' => $this->input->post('cause'),
-            'status' => $this->input->post('status')
+            'status' => $this->input->post('status'),
+            'substitute'=> $this->input->post('sustitute')
         );
         $this->db->where('id', $id);
         $this->db->update('leaves', $data);
@@ -596,7 +603,8 @@ class Leaves_model extends CI_Model {
                 $enddatetype = "Afternoon";
                 $allDay = TRUE;
             }
-            
+            $substitute =  $entry->substitute;
+
             switch ($entry->status)
             {
                 case 1: $color = '#999'; break;     // Planned
@@ -614,7 +622,8 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype
+                'enddatetype' => $enddatetype,
+                'substitute' => $substitute  
             );
         }
         return json_encode($jsonevents);
@@ -681,7 +690,8 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype
+                'enddatetype' => $enddatetype,
+                'substitute' => $substitute 
             );
         }
         return json_encode($jsonevents);
@@ -747,7 +757,8 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype
+                'enddatetype' => $enddatetype,
+                'substitute' => $substitute 
             );
         }
         return json_encode($jsonevents);
@@ -832,7 +843,8 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype
+                'enddatetype' => $enddatetype,
+                'substitute' => $substitute
             );
         }
         return json_encode($jsonevents);
