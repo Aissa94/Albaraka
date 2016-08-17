@@ -161,6 +161,9 @@ class Leaves extends CI_Controller {
                     break;
                 }
             }
+
+            $data['substitute'] = $this->users_model->getUsers();
+
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);
             $this->load->view('leaves/create');
@@ -224,6 +227,8 @@ class Leaves extends CI_Controller {
                 break;
             }
         }
+        
+        $data['substitute'] = $this->users_model->getUsers();
         
         $this->form_validation->set_rules('startdate', lang('leaves_edit_field_start'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('startdatetype', 'Start Date type', 'required|xss_clean|strip_tags');

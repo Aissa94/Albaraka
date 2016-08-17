@@ -71,13 +71,13 @@ echo form_open('leaves/create', $attributes) ?>
     <select name="substitute" id="substitute">
     <?php
     foreach ($substitute as $substitute_item): ?>
-        <option value="<?php echo $substitute_item['id'] ?>" ><?php echo $substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
+        <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'] ?></option>
     <?php endforeach ?>
     </select>
-
+    
     <label for="cause"><?php echo lang('leaves_create_field_cause');?></label>
     <textarea name="cause"><?php echo set_value('cause'); ?></textarea>
-    
+  
     <label for="status"><?php echo lang('leaves_create_field_status');?></label>
     <select name="status">
         <option value="1" <?php if ($this->config->item('leave_status_requested') == FALSE) echo 'selected'; ?>><?php echo lang('Planned');?></option>

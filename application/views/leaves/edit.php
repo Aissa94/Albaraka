@@ -71,10 +71,10 @@ if (isset($_GET['source'])) {
     <label for="substitute"><?php echo lang('leaves_edit_field_substitute');?></label>
     <select name="substitute" id="substitute">
     <?php foreach ($substitute as $substitute_item): ?>
-        <option value="<?php echo $substitute_item['id'] ?>" ><?php echo $substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
+        <option value="<?php echo $substitute_item['id'] ?>" <?php if ($substitute_item['id'] == $leave['substitute']) echo "selected" ?> ><?php echo $substitute_item['id'] ?></option>
     <?php endforeach ?>
     </select>
-
+    
     <label for="cause"><?php echo lang('leaves_edit_field_cause');?></label>
     <textarea name="cause"><?php echo $leave['cause']; ?></textarea>
     

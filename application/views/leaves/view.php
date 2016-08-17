@@ -33,6 +33,11 @@
         <option selected><?php echo $leave['type_name']; ?></option>
     </select><br />
     
+    <label for="substitute"><?php echo lang('leaves_view_field_substitute');?></label>
+    <select name="substitute" readonly>
+        <option selected><?php echo $leave['substitute']; ?></option>
+    </select><br />
+    
     <label for="cause"><?php echo lang('leaves_view_field_cause');?></label>
     <textarea name="cause" readonly><?php echo $leave['cause']; ?></textarea>
     

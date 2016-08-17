@@ -29,10 +29,11 @@ class Leaves_model extends CI_Model {
      */
     public function getLeaves($id = 0) {
         $this->db->select('leaves.*');
-        $this->db->select('status.name as status_name, types.name as type_name');
+        $this->db->select('status.name as status_name, types.name as type_name');//, users.firstname as substitute_firstname,');
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
+        //$this->db->join('users', 'leaves.substitute = users.id');
         if ($id === 0) {
             return $this->db->get()->result_array();
         }
@@ -49,10 +50,11 @@ class Leaves_model extends CI_Model {
      */
     public function getLeavesOfEmployee($employee) {
         $this->db->select('leaves.*');
-        $this->db->select('status.name as status_name, types.name as type_name');
+        $this->db->select('status.name as status_name, types.name as type_name');//, users.id as substitute_id');
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
+        //$this->db->join('users', 'leaves.substitute = users.id');
         $this->db->where('leaves.employee', $employee);
         $this->db->order_by('leaves.id', 'desc');
         return $this->db->get()->result_array();
@@ -66,10 +68,11 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function getAcceptedLeavesBetweenDates($employee, $start, $end) {
-        $this->db->select('leaves.*, types.name as type');
+        $this->db->select('leaves.*, types.name as type');//, users.id as substitute');
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
+        //$this->db->join('users', 'leaves.substitute = users.id');
         $this->db->where('employee', $employee);
         $this->db->where("(startdate <= STR_TO_DATE('" . $end . "', '%Y-%m-%d') AND enddate >= STR_TO_DATE('" . $start . "', '%Y-%m-%d'))");
         $this->db->where('leaves.status', 3);   //Accepted
@@ -415,7 +418,7 @@ class Leaves_model extends CI_Model {
             'type' => $this->input->post('type'),
             'cause' => $this->input->post('cause'),
             'status' => $this->input->post('status'),
-            'substitute' => $this->input->post('sustitute'),
+            'substitute' => $this->input->post('substitute'),
             'employee' => $id
         );
         $this->db->insert('leaves', $data);
@@ -450,7 +453,7 @@ class Leaves_model extends CI_Model {
                 'type' => $this->input->post('type'),
                 'cause' => $this->input->post('cause'),
                 'status' => $this->input->post('status'),
-                'substitute'=> $this->input->post('sustitute'),
+                'substitute'=> $this->input->post('substitute'),
                 'employee' => $id
             );
         }
@@ -473,7 +476,7 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function createLeaveByApi($startdate, $enddate, $status, $employee, $cause,
-            $startdatetype, $enddatetype, $duration, $type, $sustitute) {
+            $startdatetype, $enddatetype, $duration, $type, $substitute) {
         
         $data = array(
             'startdate' => $startdate,
@@ -485,7 +488,7 @@ class Leaves_model extends CI_Model {
             'enddatetype' => $enddatetype,
             'duration' => abs($duration),
             'type' => $type,
-            'substitute' => $sustitute
+            'substitute' => $substitute
         );
         $this->db->insert('leaves', $data);
         return $this->db->insert_id();
@@ -506,7 +509,7 @@ class Leaves_model extends CI_Model {
             'type' => $this->input->post('type'),
             'cause' => $this->input->post('cause'),
             'status' => $this->input->post('status'),
-            'substitute'=> $this->input->post('sustitute')
+            'substitute'=> $this->input->post('substitute')
         );
         $this->db->where('id', $id);
         $this->db->update('leaves', $data);
@@ -568,8 +571,9 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function individual($user_id, $start = "", $end = "") {
-        $this->db->select('leaves.*, types.name as type');
+        $this->db->select('leaves.*, types.name as type');//, user.id as substitute');
         $this->db->join('types', 'leaves.type = types.id');
+        //$this->db->join('users', 'leaves.substitute = users.id');
         $this->db->where('employee', $user_id);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         $this->db->order_by('startdate', 'desc');
