@@ -71,7 +71,7 @@ echo form_open('leaves/create', $attributes) ?>
     <select name="substitute" id="substitute">
     <?php
     foreach ($substitute as $substitute_item): ?>
-        <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'] ?></option>
+        <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
     <?php endforeach ?>
     </select>
     

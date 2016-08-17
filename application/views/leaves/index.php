@@ -66,7 +66,8 @@
         <td><?php echo $leaves_item['duration']; ?></td>
         <td><?php echo $leaves_item['type_name']; ?></td>
         <td><?php echo lang($leaves_item['status_name']); ?></td>
-        <td><?php echo $leaves_item['substitute']; ?></td>
+        <!--td><?php echo $leaves_item['substitute']; ?></td-->
+        <td><?php echo $leaves_item['substitute_firstname'].' '.$leaves_item['substitute_lastname']; ?></td>
     </tr>
 <?php endforeach ?>
     </tbody>

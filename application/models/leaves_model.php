@@ -29,11 +29,11 @@ class Leaves_model extends CI_Model {
      */
     public function getLeaves($id = 0) {
         $this->db->select('leaves.*');
-        $this->db->select('status.name as status_name, types.name as type_name');//, users.firstname as substitute_firstname,');
+        $this->db->select('status.name as status_name, types.name as type_name, users.firstname as substitute_firstname, users.lastname as substitute_lastname');
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
-        //$this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->join('users', 'leaves.substitute = users.id');
         if ($id === 0) {
             return $this->db->get()->result_array();
         }
@@ -50,11 +50,11 @@ class Leaves_model extends CI_Model {
      */
     public function getLeavesOfEmployee($employee) {
         $this->db->select('leaves.*');
-        $this->db->select('status.name as status_name, types.name as type_name');//, users.id as substitute_id');
+        $this->db->select('status.name as status_name, types.name as type_name, users.firstname as substitute_firstname, users.lastname as substitute_lastname');//, users.id as substitute_id');
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
-        //$this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->join('users', 'leaves.substitute = users.id');
         $this->db->where('leaves.employee', $employee);
         $this->db->order_by('leaves.id', 'desc');
         return $this->db->get()->result_array();

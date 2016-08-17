@@ -24,6 +24,8 @@
             <th><?php echo lang('hr_leaves_thead_end');?></th>            
             <th><?php echo lang('hr_leaves_thead_duration');?></th>
             <th><?php echo lang('hr_leaves_thead_type');?></th>
+            <!--th><?php echo lang('hr_leaves_thead_id_substitute');?></th-->
+            <th><?php echo lang('hr_leaves_thead_substitute');?></th>
         </tr>
     </thead>
     <tbody>
@@ -51,6 +53,8 @@
         <td data-order="<?php echo $tmpEndDate; ?>"><?php echo $enddate . ' (' . lang($leave['enddatetype']) . ')'; ?></td>
         <td><?php echo $leave['duration']; ?></td>
         <td><?php echo $leave['type_name']; ?></td>
+        <!--td><?php echo $leave['substitute'] ?></td-->
+        <td><?php echo $leave['substitute_firstname'].' '.$leave['substitute_lastname']; ?></td>
     </tr>
 <?php endforeach ?>
 	</tbody>

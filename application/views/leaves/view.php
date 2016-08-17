@@ -35,7 +35,7 @@
     
     <label for="substitute"><?php echo lang('leaves_view_field_substitute');?></label>
     <select name="substitute" readonly>
-        <option selected><?php echo $leave['substitute']; ?></option>
+        <option selected><?php echo $leave['substitute'].' '.$leave['substitute_firstname'].' '.$leave['substitute_lastname']; ?></option>
     </select><br />
     
     <label for="cause"><?php echo lang('leaves_view_field_cause');?></label>
