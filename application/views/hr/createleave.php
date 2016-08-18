@@ -65,8 +65,9 @@ echo form_open($form_action, $attributes) ?>
         <?php echo lang('hr_leaves_flash_msg_overlap_dayoff');?>
     </div>
     
-    <label for="substitute"><?php echo lang('hr_leaves_create_field_substitute');?></label>
+    <label for="substitute" required><?php echo lang('hr_leaves_create_field_substitute');?></label>
     <select name="substitute" id="substitute">
+    <option value="<?php echo null ?>">aucun remplaçant</option>
     <?php
     foreach ($substitute as $substitute_item): ?>
         <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>

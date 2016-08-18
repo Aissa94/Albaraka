@@ -173,6 +173,7 @@ class Hr extends CI_Controller {
             $enddate = $this->input->post('enddate', TRUE);
             $startdatetype = $this->input->post('startdatetype', TRUE);
             $enddatetype = $this->input->post('enddatetype', TRUE);
+            $substitute = $this->input->post('substitute', TRUE);
             $cause = $this->input->post('cause', TRUE);
             $status = $this->input->post('status', TRUE);
             $employees = $this->input->post('employees', TRUE);
@@ -338,6 +339,7 @@ class Hr extends CI_Controller {
         $this->form_validation->set_rules('type', lang('hr_leaves_create_field_type'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('cause', lang('hr_leaves_create_field_cause'), 'xss_clean|strip_tags');
         $this->form_validation->set_rules('status', lang('hr_leaves_create_field_status'), 'required|xss_clean|strip_tags');
+        $this->form_validation->set_rules('substitute', lang('hr_leaves_create_field_substitute'), '|xss_clean|strip_tags');
 
         $data['credit'] = 0;
         $default_type = $this->config->item('default_leave_type');
@@ -351,6 +353,9 @@ class Hr extends CI_Controller {
                     break;
                 }
             }
+
+            $data['substitute'] = $this->users_model->getEmployeesOfOrganization($id);
+
             $this->load->model('users_model');
             $data['name'] = $this->users_model->getName($id);
             $this->load->view('templates/header', $data);

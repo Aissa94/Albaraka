@@ -70,6 +70,7 @@ if (isset($_GET['source'])) {
     
     <label for="substitute"><?php echo lang('leaves_edit_field_substitute');?></label>
     <select name="substitute" id="substitute">
+        <option value="<?php echo NULL ?>">aucun remplaçant</option>
     <?php foreach ($substitute as $substitute_item): ?>
         <option value="<?php echo $substitute_item['id'] ?>" <?php if ($substitute_item['id'] == $leave['substitute']) echo "selected" ?> ><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
     <?php endforeach ?>

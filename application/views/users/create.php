@@ -54,7 +54,7 @@ echo form_open('users/create', $attributes); ?>
     <i><?php echo lang('users_create_field_manager_description');?></i>
     <br /><br />
 
-    <label for="contract"><?php echo lang('users_create_field_contract');?></label>
+  <label for="contract"><?php echo lang('users_create_field_contract');?></label>
     <select name="contract" id="contract" class="selectized input-xlarge">
     <?php $index = 0;
          foreach ($contracts as $contract) { ?>
@@ -225,6 +225,7 @@ if ($language_code != 'en') { ?>
         if ($('#login').val() == "") fieldname = "login";
         if ($('#email').val() == "") fieldname = "email";
         if ($('#txtManager').val() == "") fieldname = "manager";
+        if ($('#txtSubstitute').val() == "") fieldname = "substitute";
         if ($('#contract').val() == "") fieldname = "contract";
         if ($('#password').val() == "") fieldname = "password";
         if (fieldname == "") {

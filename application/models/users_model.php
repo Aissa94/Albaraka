@@ -83,6 +83,36 @@ class Users_model extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    /**
+     * Get the list of employees that are in the same organization of the given user
+     * @param int $id identifier of the user
+     * @return array record of users
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function getEmployeesOfOrganization($id = 0) {
+        $organization = $this->getOrganization($id);
+        $this->db->select('users.*');
+        $this->db->from('users');
+        $this->db->where('organization', $organization[0]['org_id']);
+        $this->db->where('id != ', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    /**
+     * Get the id of organization of the given user
+     * @param int $id identifier of the user
+     * @return array record of users
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function getOrganization($id = 0) {
+        $this->db->select('users.organization as org_id');
+        $this->db->from('users');
+        $this->db->where('users.id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     
     /**
      * Check if an employee is the collaborator of the given user

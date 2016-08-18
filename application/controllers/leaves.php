@@ -148,7 +148,7 @@ class Leaves extends CI_Controller {
         $this->form_validation->set_rules('type', lang('leaves_create_field_type'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('cause', lang('leaves_create_field_cause'), 'xss_clean|strip_tags');
         $this->form_validation->set_rules('status', lang('leaves_create_field_status'), 'required|xss_clean|strip_tags');
-        $this->form_validation->set_rules('substitute', lang('leaves_create_field_substitute'), 'required|xss_clean|strip_tags');
+        $this->form_validation->set_rules('substitute', lang('leaves_create_field_substitute'), 'xss_clean|strip_tags');
 
         $data['credit'] = 0;
         $default_type = $this->config->item('default_leave_type');
@@ -162,7 +162,7 @@ class Leaves extends CI_Controller {
                 }
             }
 
-            $data['substitute'] = $this->users_model->getUsers();
+            $data['substitute'] = $this->users_model->getEmployeesOfOrganization($this->user_id);
 
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);
@@ -228,7 +228,7 @@ class Leaves extends CI_Controller {
             }
         }
         
-        $data['substitute'] = $this->users_model->getUsers();
+        $data['substitute'] = $this->users_model->getEmployeesOfOrganization($this->user_id);
         
         $this->form_validation->set_rules('startdate', lang('leaves_edit_field_start'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('startdatetype', 'Start Date type', 'required|xss_clean|strip_tags');
@@ -238,7 +238,7 @@ class Leaves extends CI_Controller {
         $this->form_validation->set_rules('type', lang('leaves_edit_field_type'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('cause', lang('leaves_edit_field_cause'), 'xss_clean|strip_tags');
         $this->form_validation->set_rules('status', lang('leaves_edit_field_status'), 'required|xss_clean|strip_tags');
-        $this->form_validation->set_rules('substitute', lang('leaves_create_field_substitute'), 'required|xss_clean|strip_tags');
+        $this->form_validation->set_rules('substitute', lang('leaves_edit_field_substitute'), 'xss_clean|strip_tags');
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->model('users_model');

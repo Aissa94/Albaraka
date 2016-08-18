@@ -33,7 +33,7 @@ class Leaves_model extends CI_Model {
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
-        $this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->join('users', 'leaves.substitute = users.id','LEFT');
         if ($id === 0) {
             return $this->db->get()->result_array();
         }
@@ -54,7 +54,7 @@ class Leaves_model extends CI_Model {
         $this->db->from('leaves');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
-        $this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->join('users', 'leaves.substitute = users.id','LEFT');
         $this->db->where('leaves.employee', $employee);
         $this->db->order_by('leaves.id', 'desc');
         return $this->db->get()->result_array();
@@ -300,7 +300,7 @@ class Leaves_model extends CI_Model {
                 }
                 $sum += (float) $entitled['duration']; //entitled
             }
-            $this->db->select('sum(leaves.duration) as taken');
+            /*$this->db->select('sum(leaves.duration) as taken');
             $this->db->from('leaves');
             $this->db->where('leaves.employee', $id);
             $this->db->where('leaves.status', 3);
@@ -312,7 +312,7 @@ class Leaves_model extends CI_Model {
                 $summary[$compensate_name][0] = (float) $taken_days[0]['taken']; //taken
             } else {
                 $summary[$compensate_name][0] = 0; //taken
-            }
+            }*/
             //Add the sum of validated catch up for the employee
             if (array_key_exists($compensate_name, $summary)) {
                 $summary[$compensate_name][1] = (float) $summary[$compensate_name][1] + $sum; //entitled

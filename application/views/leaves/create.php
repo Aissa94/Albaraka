@@ -69,11 +69,25 @@ echo form_open('leaves/create', $attributes) ?>
     
     <label for="substitute"><?php echo lang('leaves_create_field_substitute');?></label>
     <select name="substitute" id="substitute">
+    <option value="<?php echo null ?>">aucun remplaçant</option>
     <?php
     foreach ($substitute as $substitute_item): ?>
         <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
     <?php endforeach ?>
     </select>
+<?php /*
+<!-- C'est un test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <input type="hidden" name="substitute" id="substitute" /><br />
+    <label for="txtSubstistute"><?php echo lang('users_create_field_manager');?></label>
+    <div class="input-append">
+        <input type="text" id="txtSubstitute" name="txtSubstitute" required readonly />
+        <a id="cmdSelfSubstitute" class="btn btn-primary"><?php echo lang('users_create_button_self');?></a>
+        <a id="cmdSelectSubstitute" class="btn btn-primary"><?php echo lang('users_create_button_select');?></a>
+    </div><br />
+    <i><?php echo lang('users_create_field_manager_description');?></i>
+    <br /><br />
+ <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+  */?>
     
     <label for="cause"><?php echo lang('leaves_create_field_cause');?></label>
     <textarea name="cause"><?php echo set_value('cause'); ?></textarea>
@@ -112,15 +126,36 @@ echo form_open('leaves/create', $attributes) ?>
             <img src="<?php echo base_url();?>assets/images/loading.gif"  align="middle">
         </div>
  </div>
+<?php /*
+<!--////////////////////////////////////////////////////////////////////////////-->
+<div id="frmSelectSubstitute" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" onclick="$('#frmSelectSubstitute').modal('hide');" class="close">&times;</a>
+         <h3><?php echo lang('users_create_popup_substitute_title');?></h3>
+    </div>
+    <div class="modal-body" id="frmSelectSubstituteBody">
+        <img src="<?php echo base_url();?>assets/images/loading.gif">
+    </div>
+    <div class="modal-footer">
+        <a href="#" onclick="select_substitute();" class="btn"><?php echo lang('users_create_popup_manager_button_ok');?></a>
+        <a href="#" onclick="$('#frmSelectSubstitute').modal('hide');" class="btn"><?php echo lang('users_create_popup_manager_button_cancel');?></a>
+    </div>
+</div>
+<!--////////////////////////////////////////////////////////////////////////////-->
+*/?>
 
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jsencrypt.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url();?>assets/css/flick/jquery-ui.custom.min.css">
 <script src="<?php echo base_url();?>assets/js/jquery-ui.custom.min.js"></script>
 <?php //Prevent HTTP-404 when localization isn't needed
 if ($language_code != 'en') { ?>
 <script src="<?php echo base_url();?>assets/js/i18n/jquery.ui.datepicker-<?php echo $language_code;?>.js"></script>
+<script src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
 <?php } ?>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/moment-with-locales.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/selectize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/selectize.bootstrap2.css" />
 
 <?php require_once dirname(BASEPATH) . "/local/triggers/leave_view.php"; ?>
 
@@ -137,7 +172,20 @@ if ($language_code != 'en') { ?>
     
     var overlappingWithDayOff = "<?php echo lang('leaves_flash_msg_overlap_dayoff');?>";
     var listOfDaysOffTitle = "<?php echo lang('leaves_flash_spn_list_days_off');?>";
-    
+<?php /*
+    //----------------------------------------------------------------------------------
+   function select_substitute() {
+        var employees = $('#employees').DataTable();
+        if ( employees.rows({ selected: true }).any() ) {
+            var substitute = employees.rows({selected: true}).data()[0][0];
+            var text = employees.rows({selected: true}).data()[0][1] + ' ' + employees.rows({selected: true}).data()[0][2];
+            $('#substitute').val(substitute);
+            $('#txtSubstitute').val(text);
+        }
+        $("#frmSelectSubstitute").modal('hide');
+    }
+    //-----------------------------------------------------------------------------------
+*/?>
 function validate_form() {
     var fieldname = "";
     
@@ -164,7 +212,23 @@ $(function () {
             <?php echo $this->security->get_csrf_token_name();?>: "<?php echo $this->security->get_csrf_hash();?>",
         }
     });
+       
+       //Popup select substitute
+        /*$("#cmdSelectSubstitute").click(function() {
+            $("#frmSelectSubstitute").modal('show');
+            $("#frmSelectSubstituteBody").load('<?php echo base_url(); ?>users/employees');
+        });
+        
+        //Self substitute button
+        $("#cmdSelfSubstitute").click(function() {
+            $("#substitute").val('-1');
+            $('#txtSubstitute').val('<?php echo lang('users_create_field_manager_alt');?>');
+        });*/
+
+        
 });
 <?php }?>
+        
+        
 </script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/lms/leave.edit.js" type="text/javascript"></script>
