@@ -50,18 +50,15 @@ echo form_open($form_action, $attributes) ?>
     <label for="duration" required><?php echo lang('hr_leaves_create_field_duration');?></label>
     <input type="text" name="duration" id="duration" value="<?php echo set_value('duration'); ?>" />
     
-    <div class="alert hide alert-error" id="lblCreditAlert" onclick="$('#lblCreditAlert').hide();">
-        <button type="button" class="close">&times;</button>
+    <div class="alert hide alert-error" id="lblCreditAlert">
         <?php echo lang('hr_leaves_create_field_duration_message');?>
     </div>
     
-    <div class="alert hide alert-error" id="lblOverlappingAlert" onclick="$('#lblOverlappingAlert').hide();">
-        <button type="button" class="close">&times;</button>
+    <div class="alert hide alert-error" id="lblOverlappingAlert">
         <?php echo lang('hr_leaves_create_field_overlapping_message');?>
     </div>
     
-    <div class="alert hide alert-error" id="lblOverlappingDayOffAlert" onclick="$('#lblOverlappingDayOffAlert').hide();">
-        <button type="button" class="close">&times;</button>
+    <div class="alert hide alert-error" id="lblOverlappingDayOffAlert">
         <?php echo lang('hr_leaves_flash_msg_overlap_dayoff');?>
     </div>
     
@@ -147,6 +144,18 @@ $(function () {
     var listOfDaysOffTitle = "<?php echo lang('hr_leaves_flash_spn_list_days_off');?>";
     
 function validate_form() {
+    if ($('#lblCreditAlert').css('display') == "block") {
+        bootbox.alert($('#lblCreditAlert').html());
+        return false;
+    }
+    if ($('#lblOverlappingAlert').css('display') == "block") {
+        bootbox.alert($('#lblOverlappingAlert').html());
+        return false;
+    }
+    if ($('#lblOverlappingDayOffAlert').css('display') == "block") {
+        bootbox.alert($('#lblOverlappingDayOffAlert').html());
+        return false;
+    }
     var fieldname = "";
     
     //Call custom trigger defined into local/triggers/leave.js
