@@ -214,7 +214,7 @@ class Organization extends CI_Controller {
     }   
     
     /**
-     * Ajax endpoint: Add an employee to an entity of the organization
+     * Ajax endpoint: Remove an employee from an entity of the organization
      * takes parameters by GET
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */

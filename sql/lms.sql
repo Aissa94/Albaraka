@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `leaves` (
 CREATE TABLE IF NOT EXISTS `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   /*`id` varchar(512) CHARACTER SET utf8 NOT NULL,*/
-  `name` varchar(512) CHARACTER SET utf8 DEFAULT NULL,
+  `name` varchar(512) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
   /*`parent_id` varchar(512) CHARACTER SET utf8 DEFAULT NULL,*/
   `supervisor` INT NULL DEFAULT NULL COMMENT 'this user will receive a copy of accepted and rejected leave requests',
