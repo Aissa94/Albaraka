@@ -348,7 +348,7 @@
               },
               check_callback : true
             },
-            plugins: ["contextmenu", "dnd", "search", "state", "sort", "unique"]
+            plugins: [/*"contextmenu",*/ "dnd", "search", "state", "sort", "unique"]
         })
         .on('delete_node.jstree', function (e, data) {
             var id = data.node.id;
