@@ -47,6 +47,8 @@ $lang['requests_index_button_export'] = 'Export this list';
 $lang['requests_index_button_show_all'] = 'All requests';
 $lang['requests_index_button_show_pending'] = 'Pending requests ';
 
+$lang['requests_hrtomanager_flash_msg_success'] = 'This leave request is sent to the manager.';
+
 $lang['requests_accept_flash_msg_error'] = 'You are not the line manager of this employee. You cannot accept this leave request.';
 $lang['requests_accept_flash_msg_success'] = 'The leave request has been successfully accepted.';
 

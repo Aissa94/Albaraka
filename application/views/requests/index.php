@@ -27,6 +27,7 @@
             <th><?php echo lang('requests_index_thead_duration');?></th>
             <th><?php echo lang('requests_index_thead_type');?></th>
             <th><?php echo lang('requests_index_thead_status');?></th>
+            <th><?php echo lang('requests_index_thead_substitute');?></th>
         </tr>
     </thead>
     <tbody>
@@ -55,6 +56,7 @@
         <td><?php echo $requests_item['duration']; ?></td>
         <td><?php echo $requests_item['type_name']; ?></td>
         <td><?php echo lang($requests_item['status_name']); ?></td>
+        <td><?php echo $requests_item['substitute']; ?></td>
     </tr>
 <?php endforeach ?>
 	</tbody>

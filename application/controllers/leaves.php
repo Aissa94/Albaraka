@@ -174,9 +174,23 @@ class Leaves extends CI_Controller {
             }
             $leave_id = $this->leaves_model->setLeaves($this->session->userdata('id'));
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
-            //If the status is requested, send an email to the manager
+            
+            //If the status is requested, send an email
             if ($this->input->post('status') == 2) {
-                $this->sendMail($leave_id);
+
+                //If the type is (2 : right to leave), send an email to the hr admin
+                if ($this->input->post('type') == 2) {
+                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, 'Congé Annuel') > 0) 
+                    {   
+                        echo ('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
+                    }
+                    else {//choice an hr admin
+                    $this->load->model('users_model');
+                    $hr_id = $this->users_model->getAdmins()[0]['id'];
+                    $this->sendMailToRH($leave_id, $hr_id);
+                    }
+                 } 
+                 else $this->sendMail($leave_id); // send an email to the manager
             }
             if (isset($_GET['source'])) {
                 redirect($_GET['source']);
@@ -250,9 +264,20 @@ class Leaves extends CI_Controller {
         } else {
             $this->leaves_model->updateLeaves($id);       //We don't use the return value
             $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
-            //If the status is requested, send an email to the manager
+            
+            //If the status is requested, send an email
             if ($this->input->post('status') == 2) {
-                $this->sendMail($id);
+                
+                ///If the type is (2 : right to leave), send an email to the hr admin
+                if ($this->input->post('type') == 2) {
+                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, 'Congé Annuel') > 0) echo ('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
+                    else {//choice an hr admin
+                    $this->load->model('users_model');
+                    $hr_id = $this->users_model->getAdmins()[0]['id'];
+                    $this->sendMailToRH($leave_id, $hr_id);
+                    }
+                 } 
+                 else $this->sendMail($leave_id); // send an email to the manager
             }
             if (isset($_GET['source'])) {
                 redirect($_GET['source']);
@@ -267,7 +292,7 @@ class Leaves extends CI_Controller {
      * @param int $id Leave request identifier
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    private function sendMail($id) {
+    public function sendMail($id) {
         $this->load->model('users_model');
         $this->load->model('types_model');
         $this->load->model('delegations_model');
@@ -275,10 +300,13 @@ class Leaves extends CI_Controller {
         $leave = $this->leaves_model->getLeaves($id);
         $user = $this->users_model->getUsers($leave['employee']);
         $manager = $this->users_model->getUsers($user['manager']);
-        $substitute = $leave['substitute'];
+        $substitute = $this->users_model->getUsers($leave['substitute']);
 
         //Test if the manager or the substitute haven't been deleted meanwhile
-        if (empty($manager['email']) || empty($substitute['email'])) {
+        if (empty($substitute)) {
+            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error_substitute'));
+        }
+        if (empty($manager['email'])) {
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error'));
         } else {
             //Send an e-mail to the manager
@@ -286,11 +314,6 @@ class Leaves extends CI_Controller {
             $this->load->library('polyglot');
             $usr_lang = $this->polyglot->code2language($manager['language']);
 
-            //Send an e-mail to the substitute
-            $this->load->library('email');
-            $this->load->library('polyglot');
-            $usr_lang = $this->polyglot->code2language($substitute['language']);
-            
             //We need to instance an different object as the languages of connected user may differ from the UI lang
             $lang_mail = new CI_Lang();
             $lang_mail->load('email', $usr_lang);
@@ -335,14 +358,89 @@ class Leaves extends CI_Controller {
             } else {
                $subject = '[Jorani] ';
             }
-            //Copy to the substitute, if any
-            if ($substitute['email'] != '') {
-                $this->email->cc($substitute['email']);
-            }
             //Copy to the delegates, if any
             $delegates = $this->delegations_model->listMailsOfDelegates($manager['id']);
             if ($delegates != '') {
                 $this->email->cc($delegates);
+            }
+            //Copy to the substitute, if any
+            if ($substitute['email'] != '') {
+                $this->email->cc($substitute['email']);
+            }
+            $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .
+                    $this->session->userdata('firstname') . ' ' .
+                    $this->session->userdata('lastname'));
+            $this->email->message($message);
+            $this->email->send();
+        }
+    }
+    /**
+     * Send a leave request email to the RH
+     * @param int $id Leave request identifier
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    private function sendMailToRH($id, $id_hr) {
+        $this->load->model('users_model');
+        $this->load->model('types_model');
+        //We load everything from DB as the LR can be edited from HR/Employees
+        $leave = $this->leaves_model->getLeaves($id);
+        $user = $this->users_model->getUsers($leave['employee']);
+        $manager = $this->users_model->getUsers($user['manager']);
+        //$substitute = $this->users_model->getUsers($leave['substitute']);
+        $hr_admin = $this->users_model->getUsers($id_hr);
+
+        //Test if the hr admin haven't been deleted meanwhile
+        if (empty($hr_admin)) {
+            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error_admin'));
+        } else {
+            //Send an e-mail to the hr admin
+            $this->load->library('email');
+            $this->load->library('polyglot');
+            $usr_lang = $this->polyglot->code2language($hr_admin['language']);
+            
+            //We need to instance an different object as the languages of connected user may differ from the UI lang
+            $lang_mail = new CI_Lang();
+            $lang_mail->load('email', $usr_lang);
+            $lang_mail->load('global', $usr_lang);
+            
+            $date = new DateTime($leave['startdate']);
+            $startdate = $date->format($lang_mail->line('global_date_format'));
+            $date = new DateTime($leave['enddate']);
+            $enddate = $date->format($lang_mail->line('global_date_format'));
+
+            $this->load->library('parser');
+            $data = array(
+                'Title' => $lang_mail->line('email_leave_request_title'),
+                'Firstname' => $user['firstname'],
+                'Lastname' => $user['lastname'],
+                'StartDate' => $startdate,
+                'EndDate' => $enddate,
+                'StartDateType' => $lang_mail->line($leave['startdatetype']),
+                'EndDateType' => $lang_mail->line($leave['enddatetype']),
+                'Type' => $this->types_model->getName($leave['type']),
+                'Duration' => $leave['duration'],
+                'Balance' => $this->leaves_model->getLeavesTypeBalanceForEmployee($leave['employee'] , $leave['type_name'], $leave['startdate']),
+                'Reason' => $leave['cause'],
+                'FirstnameManager' => $manager['firstname'],
+                'LastnameManager' => $manager['lastname'],
+                'BaseUrl' => $this->config->base_url(),
+                'LeaveId' => $id,
+                'UserId' => $this->user_id,
+                'ManagerId' => $manager['id']
+            );
+            $message = $this->parser->parse('emails/' . $hr_admin['language'] . '/request', $data, TRUE);
+            $this->email->set_encoding('quoted-printable');
+            
+            if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
+                $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
+            } else {
+               $this->email->from('do.not@reply.me', 'LMS');
+            }
+            $this->email->to($hr_admin['email']);
+            if ($this->config->item('subject_prefix') != FALSE) {
+                $subject = $this->config->item('subject_prefix');
+            } else {
+               $subject = '[Jorani] ';
             }
             
             $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .

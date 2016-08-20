@@ -47,6 +47,8 @@ $lang['requests_index_button_export'] = 'Exporter cette liste';
 $lang['requests_index_button_show_all'] = 'Toutes les demandes';
 $lang['requests_index_button_show_pending'] = 'Demandes en cours';
 
+$lang['requests_hrtomanager_flash_msg_success'] = 'Cette demande a été envoyée au manager.';
+
 $lang['requests_accept_flash_msg_error'] = 'Vous n\'êtes pas le supérieur hiérarchique de cet employé. Vous ne pouvez pas accepter sa demande.';
 $lang['requests_accept_flash_msg_success'] = 'La demande d\'absence a été acceptée avec succès.';
 

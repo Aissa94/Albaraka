@@ -39,6 +39,18 @@ class Users_model extends CI_Model {
         $query = $this->db->get_where('users', array('users.id' => $id));
         return $query->row_array();
     }
+    /**
+     * Get the list of hr admin or one hr admin
+     * @return array record of users
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function getAdmins() {
+        $this->db->select('id');
+        $this->db->from('users');
+        $this->db->where('role',8);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     
     /**
      * Get the list of employees

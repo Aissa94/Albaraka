@@ -66,21 +66,30 @@ class Requests extends CI_Controller {
         if (empty($leave)) {
             redirect('notfound');
         }
-        $employee = $this->users_model->getUsers($leave['employee']);// employee qui a demandé
-        $is_delegate = $this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager']);//test si user_id est un delegue du manager de employee
-        if (($this->user_id == $employee['manager']) || ($this->is_hr)  || ($is_delegate)) {//si user_id est au moins l'un des 3 : le manager ou le adminHr ou un delegue de manager
-            $this->leaves_model->acceptLeave($id);
-            $this->sendMail($id);
-            $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_success'));
-            if (isset($_GET['source'])) {
-                redirect($_GET['source']);
+        $employee = $this->users_model->getUsers($leave['employee']);
+        $is_delegate = $this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager']);
+        if (($leave['type']==2) && ($this->is_hr)) {// if we have 'the right for leave' type and this is the hr admin
+            require 'leaves.php';
+            $leaves_controler = new Leaves();
+            $leaves_controler->sendMail($id);
+            $this->session->set_flashdata('msg', lang('requests_hrtomanager_flash_msg_success'));
+            redirect('hr/leaves/'.$employee['id']);
+        }
+        else{
+            if (($this->user_id == $employee['manager']) /*|| ($this->is_hr)*/  || ($is_delegate)) {
+                $this->leaves_model->acceptLeave($id);
+                $this->sendMail($id);
+                $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_success'));
+                if (isset($_GET['source'])) {
+                    redirect($_GET['source']);
+                } else {
+                    redirect('requests');
+                }
             } else {
-                redirect('requests');
+                log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
+                $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_error'));
+                redirect('leaves');
             }
-        } else {
-            log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
-            $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_error'));
-            redirect('leaves');
         }
     }
 
@@ -99,7 +108,7 @@ class Requests extends CI_Controller {
         }
         $employee = $this->users_model->getUsers($leave['employee']);
         $is_delegate = $this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager']);
-        if (($this->user_id == $employee['manager']) || ($this->is_hr)  || ($is_delegate)) {
+        if (($this->user_id == $employee['manager']) || ($is_delegate) || (($this->is_hr) && ($leave['type']==2)) ) {
             $this->leaves_model->rejectLeave($id);
             $this->sendMail($id);
             $this->session->set_flashdata('msg',  lang('requests_reject_flash_msg_success'));
@@ -239,6 +248,7 @@ class Requests extends CI_Controller {
             $this->form_validation->set_rules('type', lang('hr_leaves_create_field_type'), 'required|xss_clean|strip_tags');
             $this->form_validation->set_rules('cause', lang('hr_leaves_create_field_cause'), 'xss_clean|strip_tags');
             $this->form_validation->set_rules('status', lang('hr_leaves_create_field_status'), 'required|xss_clean|strip_tags');
+            $this->form_validation->set_rules('substitute', lang('hr_leaves_create_field_substitute'), 'xss_clean|strip_tags');
 
             $data['credit'] = 0;
             $default_type = $this->config->item('default_leave_type');
@@ -252,6 +262,9 @@ class Requests extends CI_Controller {
                         break;
                     }
                 }
+
+                $data['substitute'] = $this->users_model->getEmployeesOfOrganization($this->user_id);
+
                 $this->load->model('users_model');
                 $data['name'] = $this->users_model->getName($id);
                 $this->load->view('templates/header', $data);
@@ -281,6 +294,13 @@ class Requests extends CI_Controller {
         $leave = $this->leaves_model->getLeaves($id);
         $employee = $this->users_model->getUsers($leave['employee']);
         $supervisor = $this->organization_model->getSupervisor($employee['organization']);
+        $employee = $this->users_model->getUsers($leave['employee']);
+        $substitute = $this->users_model->getUsers($leave['substitute']);
+
+        //Test if the manager or the substitute haven't been deleted meanwhile
+        if (empty($substitute))  {
+            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error_substitute'));
+        }
 
         //Send an e-mail to the employee
         $this->load->library('email');
@@ -307,7 +327,9 @@ class Requests extends CI_Controller {
             'StartDateType' => $lang_mail->line($leave['startdatetype']),
             'EndDateType' => $lang_mail->line($leave['enddatetype']),
             'Cause' => $leave['cause'],
-            'Type' => $leave['type_name']
+            'Type' => $leave['type_name'],
+            'FirstnameSubstitute' => $substitute['firstname'],
+            'LastnameSubstitute' => $substitute['lastname'],
         );
         
         if ($leave['status'] == 3) {    //accepted
@@ -317,6 +339,11 @@ class Requests extends CI_Controller {
             $message = $this->parser->parse('emails/' . $employee['language'] . '/request_rejected', $data, TRUE);
             $subject = $lang_mail->line('email_leave_request_reject_subject');
         }
+        //Copy to the substitute, if any
+            if ($substitute['email'] != '') {
+                $this->email->cc($substitute['email']);
+            }
+
         // envoi du mail à l'employee et mettre le superviseur de l'organisation en cc 
         sendMailByWrapper($this, $subject, $message, $employee['email'], is_null($supervisor)?NULL:$supervisor->email);
     }

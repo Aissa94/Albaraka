@@ -53,7 +53,8 @@ $lang['leaves_create_button_create'] = 'Request leave';
 $lang['leaves_create_button_cancel'] = 'Cancel';
 $lang['leaves_create_flash_msg_success'] = 'The leave request has been succesfully created';
 $lang['leaves_create_flash_msg_error'] = 'The leave request has been succesfully created or updated, but you don\'t have a manager.';
-
+$lang['leaves_create_flash_msg_error_substitute'] = 'The leave request has been succesfully created or updated, but you don\'t have a substitute.';
+$lang['leaves_create_flash_msg_error_admin'] = 'The leave request has been succesfully created or updated, but the organization doesn\'t have an hr admin.';
 $lang['leaves_flash_spn_list_days_off'] = '%s non-working days in the period';
 $lang['leaves_flash_msg_overlap_dayoff'] = 'Your leave request matches with a non-working day.';
 
