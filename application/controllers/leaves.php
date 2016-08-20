@@ -274,10 +274,10 @@ class Leaves extends CI_Controller {
                     else {//choice an hr admin
                     $this->load->model('users_model');
                     $hr_id = $this->users_model->getAdmins()[0]['id'];
-                    $this->sendMailToRH($leave_id, $hr_id);
+                    $this->sendMailToRH($id, $hr_id);
                     }
                  } 
-                 else $this->sendMail($leave_id); // send an email to the manager
+                 else $this->sendMail($id); // send an email to the manager
             }
             if (isset($_GET['source'])) {
                 redirect($_GET['source']);

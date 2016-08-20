@@ -78,8 +78,10 @@ echo form_open($form_action, $attributes) ?>
     <select name="status">
         <option value="1" <?php if ($this->config->item('leave_status_requested') == FALSE) echo 'selected'; ?>><?php echo lang('Planned');?></option>
         <option value="2" <?php if ($this->config->item('leave_status_requested') == TRUE) echo 'selected'; ?>><?php echo lang('Requested');?></option>
+        <?php /*if (($is_hr) && ($leave['type'] == 2)) {?>
         <option value="3"><?php echo lang('Accepted');?></option>
-        <option value="4"><?php echo lang('Rejected');?></option>    
+        <option value="4"><?php echo lang('Rejected');?></option>
+        <?php } */?>    
     </select><br />
 
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp; <?php echo lang('hr_leaves_create_button_create');?></button>
