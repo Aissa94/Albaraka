@@ -152,7 +152,7 @@ class Leaves extends CI_Controller {
 
         $data['credit'] = 0;
         $default_type = $this->config->item('default_leave_type');
-        $default_type = $default_type == FALSE ? 0 : $default_type;
+        $default_type = $default_type == FALSE ? 1 : $default_type;
         if ($this->form_validation->run() === FALSE) {
             $data['types'] = $this->types_model->getTypes();
             foreach ($data['types'] as $type) {
@@ -169,25 +169,35 @@ class Leaves extends CI_Controller {
             $this->load->view('leaves/create');
             $this->load->view('templates/footer');
         } else {
-            if (function_exists('triggerCreateLeaveRequest')) {
-                triggerCreateLeaveRequest($this);
+            if ($this->input->post('type') != 2){
+                if (function_exists('triggerCreateLeaveRequest')) {
+                    triggerCreateLeaveRequest($this);
+                }
+                $leave_id = $this->leaves_model->setLeaves($this->session->userdata('id'));
+                $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
             }
-            $leave_id = $this->leaves_model->setLeaves($this->session->userdata('id'));
-            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
-            
             //If the status is requested, send an email
             if ($this->input->post('status') == 2) {
 
                 //If the type is (2 : right to leave), send an email to the hr admin
                 if ($this->input->post('type') == 2) {
-                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, 'Congé Annuel') > 0) 
-                    {   
-                        echo ('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
-                    }
-                    else {//choice an hr admin
-                    $this->load->model('users_model');
-                    $hr_id = $this->users_model->getAdmins()[0]['id'];
-                    $this->sendMailToRH($leave_id, $hr_id);
+                    foreach ($data['types'] as $type) {
+                        if ($type['id'] == 1) {
+                            $name_id = $type['name'];
+                            break;
+                        }
+                    } 
+                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $name_id) <= 0) 
+                    {//choice an hr admin
+                        if (function_exists('triggerCreateLeaveRequest')) {
+                            triggerCreateLeaveRequest($this);
+                        }
+                        $leave_id = $this->leaves_model->setLeaves($this->session->userdata('id'));
+                        $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
+
+                        $this->load->model('users_model');
+                        $hr_id = $this->users_model->getAdmins()[0]['id'];
+                        $this->sendMailToRH($leave_id, $hr_id);
                     }
                  } 
                  else $this->sendMail($leave_id); // send an email to the manager
@@ -571,7 +581,94 @@ class Leaves extends CI_Controller {
      *  If the user is linked to a contract, returns end date of the yearly leave period or NULL
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function validate() {
+    /**
+     * Calculate the actual length of a leave request without taking into account the non-working days
+     * Detect overlapping with non-working days. It returns a K/V arrays of 3 items.
+     * @param int $employee Identifier of the employee
+     * @param date $startdate start date of the leave request
+     * @param date $enddate end date of the leave request
+     * @param string $startdatetype start date type of leave request being created (Morning or Afternoon)
+     * @param string $enddatetype end date type of leave request being created (Morning or Afternoon)
+     * @param array List of non-working days
+     * @return array (length=>length of leave, overlapping=>excat match with a non-working day, daysoff=>sum of days off)
+     * @author Belkaid Aissa <da_belkaid@esi.dz>
+     */
+        public function actualLengthWithoutDaysOff($employee, $startdate, $enddate, $startdatetype, $enddatetype, $daysoff) {
+        $startDateObject = DateTime::createFromFormat('Y-m-d H:i:s', $startdate . ' 00:00:00');
+        $endDateObject = DateTime::createFromFormat('Y-m-d H:i:s', $enddate . ' 00:00:00');
+        $iDate = clone $startDateObject;
+
+        //Simplify logic
+        if ($startdate == $enddate) $one_day = TRUE; else $one_day = FALSE;
+        if ($startdatetype == 'Morning') $start_morning = TRUE; else $start_morning = FALSE;
+        if ($startdatetype == 'Afternoon') $start_afternoon = TRUE; else $start_afternoon = FALSE;
+        if ($enddatetype == 'Morning') $end_morning = TRUE; else $end_morning = FALSE;
+        if ($enddatetype == 'Afternoon') $end_afternoon = TRUE; else $end_afternoon = FALSE;
+
+        //Iteration between start and end dates of the leave request
+        $lengthDaysOff = 0;
+        $length = 0;
+        $hasDayOff = FALSE;
+        $overlapDayOff = FALSE;
+        while ($iDate <= $endDateObject)
+        {
+            if ($iDate == $startDateObject) $first_day = TRUE; else $first_day = FALSE;
+            $isDayOff = FALSE;
+            //Iterate on the list of days off with two objectives:
+            // - Compute sum of days off between the two dates
+            // - Detect if the leave request exactly overlaps with a day off
+            foreach ($daysoff as $dayOff) {
+                $dayOffObject = DateTime::createFromFormat('Y-m-d H:i:s', $dayOff['date'] . ' 00:00:00');
+                if ($dayOffObject == $iDate) {
+                    $lengthDaysOff+=$dayOff['length'];
+                    $hasDayOff = TRUE;
+                    switch ($dayOff['type']) {
+                        case 1: //1 : All day
+                            if ($one_day && $start_morning && $end_afternoon && $first_day)
+                                $overlapDayOff = TRUE;
+                            break;
+                        case 2: //2 : Morning
+                            if ($one_day && $start_morning && $end_morning && $first_day)
+                                $overlapDayOff = TRUE;
+                            else
+                                $length+=0.5;
+                            break;
+                        case 3: //3 : Afternnon
+                            if ($one_day && $start_afternoon && $end_afternoon && $first_day)
+                                $overlapDayOff = TRUE;
+                            else
+                                $length+=0.5;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                }
+            }
+            if (!$isDayOff) {
+                if ($one_day) {
+                    if ($start_morning && $end_afternoon) $length++;
+                    if ($start_morning && $end_morning) $length+=0.5;
+                    if ($start_afternoon && $end_afternoon) $length+=0.5;
+                } else {
+                    if ($iDate == $endDateObject) $last_day = TRUE; else $last_day = FALSE;
+                    if (!$first_day && !$last_day) $length++;
+                    if ($first_day && $start_morning) $length++;
+                    if ($first_day && $start_afternoon) $length+=0.5;
+                    if ($last_day && $end_morning) $length+=0.5;
+                    if ($last_day && $end_afternoon) $length++;
+                }
+                $overlapDayOff = FALSE;
+            }
+            $iDate->modify('+1 day');   //Next day
+        }
+
+        //Other obvious cases of overlapping
+        if ($hasDayOff && ($length == 0)) {
+            $overlapDayOff = TRUE;
+        }
+        return array('length' => $length, 'daysoff' => $lengthDaysOff, 'overlapping' => $overlapDayOff);
+    }public function validate() {
         header("Content-Type: application/json");
         $id = $this->input->post('id', TRUE);
         $type = $this->input->post('type', TRUE);
@@ -579,14 +676,23 @@ class Leaves extends CI_Controller {
         $enddate = $this->input->post('enddate', TRUE);
         $startdatetype = $this->input->post('startdatetype', TRUE);     //Mandatory field checked by frontend
         $enddatetype = $this->input->post('enddatetype', TRUE);       //Mandatory field checked by frontend
-        $substitute = $this->input->post('substitute', TRUE);
         $leave_id = $this->input->post('leave_id', TRUE);
         $leaveValidator = new stdClass;
+        $data = getUserContext($this);
+        $data['types'] = $this->types_model->getTypes();
+        foreach ($data['types'] as $type_1) {
+            if ($type_1['name'] == $type) {
+                $variable = $type_1['id'];
+                break; 
+            }
+        }
         if (isset($id) && isset($type)) {
             if (isset($startdate) && $startdate !== "") {
-                $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type, $startdate);
+                if ($variable!=1 && $variable!=2) $leaveValidator->credit = '';
+                else $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type, $startdate);
             } else {
-                $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type);
+                if ($variable!=1 && $variable!=2) $leaveValidator->credit = '';
+                else $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type, $startdate);
             }
         }
         if (isset($id) && isset($startdate) && isset($enddate)) {
@@ -611,7 +717,8 @@ class Leaves extends CI_Controller {
             $this->load->model('dayoffs_model');
             $leaveValidator->listDaysOff = $this->dayoffs_model->listOfDaysOffBetweenDates($id, $startdate, $enddate);
             //Sum non-working days and overlapping with day off detection
-            $result = $this->leaves_model->actualLengthAndDaysOff($id, $startdate, $enddate, $startdatetype, $enddatetype, $leaveValidator->listDaysOff);
+            if ($variable==1 || $variable==2) $result = $this->leaves_model->actualLengthWithoutDaysOff($id, $startdate, $enddate, $startdatetype, $enddatetype, $leaveValidator->listDaysOff);
+            else $result = $this->leaves_model->actualLengthAndDaysOff($id, $startdate, $enddate, $startdatetype, $enddatetype, $leaveValidator->listDaysOff);
             $leaveValidator->overlapDayOff = $result['overlapping'];
             $leaveValidator->lengthDaysOff = $result['daysoff'];
             $leaveValidator->length = $result['length'];
@@ -624,7 +731,6 @@ class Leaves extends CI_Controller {
         //Repeat start and end dates of the leave request
         $leaveValidator->RequestStartDate = $startdate;
         $leaveValidator->RequestEndDate = $enddate;
-        
         echo json_encode($leaveValidator);
     }
 }

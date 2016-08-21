@@ -196,6 +196,19 @@ function validate_form() {
         bootbox.alert($('#lblOverlappingDayOffAlert').html());
         return false;
     }
+    
+    <?php
+    require_once dirname(BASEPATH) . "/application/models/leaves_model.php";
+    $leaves_mod = new Leaves_model();
+    $name_id = null;
+    foreach ($types as $types_item){
+        if ($types_item['id'] == 1) $name_id = $types_item['name'];
+    }?>
+    var value_type = document.getElementById('type').value;
+    if (( value_type  == 2) && "<?php echo ($leaves_mod->getLeavesTypeBalanceForEmployee($user_id, $name_id) > 0) ?>") { 
+        bootbox.alert('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
+        return false;
+    }
     var fieldname = "";
     
     //Call custom trigger defined into local/triggers/leave.js
