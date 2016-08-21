@@ -40,6 +40,9 @@
             <tr>
                 <td>Cause &nbsp;</td><td>{Reason}</td>
             </tr>
+            <tr>
+                <td>Remplaçant &nbsp;</td><td>{FirstnameSubstitute} {LastnameSubstitute}</td>
+            </tr>
         </table>
         <br />
         <p>

@@ -20,8 +20,7 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        <p>Bonjour {Firstname} {Lastname},</p>
-        <p>La demande d'absence que vous avez soumise a été acceptée. Voici les détails :</p>
+        <p>{Firstname} {Lastname} veut soumettre une demande d'absence de type "{Type}" à son manager. Voici les <a href="{BaseUrl}leaves/requests/{LeaveId}">détails</a> :</p>
         <table>
             <tr>
                 <td>Du &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
@@ -33,13 +32,24 @@
                 <td>Type &nbsp;</td><td>{Type}</td>
             </tr>
             <tr>
-                <td>Cause &nbsp;</td><td>{Cause}</td>
+                <td>Durée &nbsp;</td><td>{Duration}</td>
             </tr>
             <tr>
-                <td>Remplaçant &nbsp;</td><td>{FirstnameSubstitute} {LastnameSubstitute}</td>
+                <td>Crédit &nbsp;</td><td>{Balance}</td>
+            </tr>
+            <tr>
+                <td>Cause &nbsp;</td><td>{Reason}</td>
+            </tr>
+            <tr>
+                <td>Manager &nbsp;</td><td>{FirstnameManager} {LastnameManager}</td>
             </tr>
         </table>
-        <hr>
+        <br />
+        <p>
+            <a href="{BaseUrl}requests/accept/{LeaveId}">Permettre</a>&nbsp;
+            <a href="{BaseUrl}requests/reject/{LeaveId}">Refuser</a>
+        </p>
+        <p>Si vous permettez, cette demande sera envoyée au manager.</p>
         <h5>*** Ceci est un message généré automatiquement, veuillez ne pas répondre à ce message ***</h5>
     </body>
 </html>

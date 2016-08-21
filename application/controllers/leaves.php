@@ -356,7 +356,7 @@ class Leaves extends CI_Controller {
             if ($this->config->item('subject_prefix') != FALSE) {
                 $subject = $this->config->item('subject_prefix');
             } else {
-               $subject = '[Jorani] ';
+               $subject = '[Baraka] ';
             }
             //Copy to the delegates, if any
             $delegates = $this->delegations_model->listMailsOfDelegates($manager['id']);
@@ -428,7 +428,7 @@ class Leaves extends CI_Controller {
                 'UserId' => $this->user_id,
                 'ManagerId' => $manager['id']
             );
-            $message = $this->parser->parse('emails/' . $hr_admin['language'] . '/request', $data, TRUE);
+            $message = $this->parser->parse('emails/' . $hr_admin['language'] . '/request_hr', $data, TRUE);
             $this->email->set_encoding('quoted-printable');
             
             if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
@@ -440,7 +440,7 @@ class Leaves extends CI_Controller {
             if ($this->config->item('subject_prefix') != FALSE) {
                 $subject = $this->config->item('subject_prefix');
             } else {
-               $subject = '[Jorani] ';
+               $subject = '[Baraka] ';
             }
             
             $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .

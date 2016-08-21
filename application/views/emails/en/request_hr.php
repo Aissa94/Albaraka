@@ -20,7 +20,7 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        {Firstname} {Lastname} requested time off. See the <a href="{BaseUrl}leaves/requests/{LeaveId}">details</a> below:<br />
+        {Firstname} {Lastname} wants to submit a time off request of {Type} type  for his manager. See the <a href="{BaseUrl}leaves/requests/{LeaveId}">details</a> below:<br />
         <table border="0">
             <tr>
                 <td>From &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
@@ -41,15 +41,15 @@
                 <td>Reason &nbsp;</td><td>{Reason}</td>
             </tr>
             <tr>
-                <td>Substitute &nbsp;</td><td>{FirstnameSubstitute} {LastnameSubstitute}</td>
+                <td>Manager &nbsp;</td><td>{FirstnameManager} {LastnameManager}</td>
             </tr>
             <tr>
-                <td><a href="{BaseUrl}requests/accept/{LeaveId}">Accept</a> &nbsp;</td><td><a href="{BaseUrl}requests/reject/{LeaveId}">Reject</a></td>
+                <td><a href="{BaseUrl}requests/accept/{LeaveId}">Allow</a> &nbsp;</td>
+                <td><a href="{BaseUrl}requests/reject/{LeaveId}">Reject</a></td>
             </tr>
         </table>
         <br />
-        You can check the <a href="{BaseUrl}hr/counters/collaborators/{UserId}">leave balance</a> before validating the leave request.
-        <hr>
+        <p> If you allow, this request will be sent to the manager.</p>
         <h5>*** This is an automatically generated message, please do not reply to this message ***</h5>
     </body>
 </html>

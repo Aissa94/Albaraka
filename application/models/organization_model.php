@@ -82,6 +82,15 @@ class Organization_model extends CI_Model {
         $arr = $query->result_array();
         return $arr;
     }
+
+    /*public function getAllChildren($id) {
+        $this->db->select("id");
+        $this->db->from('organization');
+        $this->db->where("parent_id",$id);
+        $query = $this->db->get(); 
+        $arr = $query->result_array();
+        return $arr;
+    }*/
     
     /**
      * Move an entity into the organization

@@ -622,7 +622,17 @@ class Users_model extends CI_Model {
                 if ($list[0]['id'] != '') {
                     $ids = explode(",", $list[0]['id']);
                 }
-            }
+            } /*    
+            foreach($ids as $sub_id){
+                $sub_list = $this->organization_model->getAllChildren($sub_id);
+                $sub_ids = array();
+                if (count($sub_list) > 0) {
+                    if ($sub_list[0]['id'] != '') {
+                        $sub_ids = explode(",", $sub_list[0]['id']);
+                    }
+                }
+                array_push($ids, $sub_id);
+            }*/
             array_push($ids, $id);
             $this->db->where_in('organization.id', $ids);
         } else {
