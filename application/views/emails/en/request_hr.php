@@ -20,7 +20,7 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        {Firstname} {Lastname} wants to submit a time off request of {Type} type  for his manager. See the <a href="{BaseUrl}leaves/requests/{LeaveId}">details</a> below:<br />
+        {Firstname} {Lastname} wants to submit a time off request of {Type} type  for his manager. See the <!--a href="{BaseUrl}leaves/requests/{LeaveId}">details</a-->details below:<br />
         <table border="0">
             <tr>
                 <td>From &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>

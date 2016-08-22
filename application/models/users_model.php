@@ -596,7 +596,7 @@ class Users_model extends CI_Model {
      * @return array record of users
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function employeesOfEntity($id = 0, $children = TRUE, $filterActive = "all",
+    /*public function employeesOfEntity($id = 0, $children = TRUE, $filterActive = "all",
             $criterion1 = NULL, $date1 = NULL, $criterion2 = NULL, $date2 = NULL) {
         $this->db->select('users.id as id,'
                 . ' users.firstname as firstname,'
@@ -622,17 +622,7 @@ class Users_model extends CI_Model {
                 if ($list[0]['id'] != '') {
                     $ids = explode(",", $list[0]['id']);
                 }
-            } /*    
-            foreach($ids as $sub_id){
-                $sub_list = $this->organization_model->getAllChildren($sub_id);
-                $sub_ids = array();
-                if (count($sub_list) > 0) {
-                    if ($sub_list[0]['id'] != '') {
-                        $sub_ids = explode(",", $sub_list[0]['id']);
-                    }
-                }
-                array_push($ids, $sub_id);
-            }*/
+            }
             array_push($ids, $id);
             $this->db->where_in('organization.id', $ids);
         } else {
@@ -658,7 +648,82 @@ class Users_model extends CI_Model {
         
         return $this->db->get()->result();
     }
-    
+    */
+
+    /**
+     * Get the list of employees or one employee
+     * @param int $id optional id of the entity, all entities if 0
+     * @param bool $children TRUE : include sub entities, FALSE otherwise
+     * @param string $filterActive "all"; "active" (only), or "inactive" (only)
+     * @param string $criterion1 "lesser" or "greater" (optional)
+     * @param string $date1 Date Hired (optional)
+     * @param string $criterion2 "lesser" or "greater" (optional)
+     * @param string $date2 Date Hired (optional)
+     * @return array record of users
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function employeesOfEntity($id = 0, $children = TRUE, $filterActive = "all",
+            $criterion1 = NULL, $date1 = NULL, $criterion2 = NULL, $date2 = NULL) {
+        $this->db->select('users.id as id,'
+                . ' users.firstname as firstname,'
+                . ' users.lastname as lastname,'
+                . ' users.email as email,'
+                . ' users.identifier as identifier,'
+                . ' users.datehired as datehired,'
+                . ' positions.name as position,'
+                . ' organization.name as entity,'
+                . ' contracts.name as contract,'
+                . ' CONCAT_WS(\' \',managers.firstname,  managers.lastname) as manager_name', FALSE);
+        $this->db->from('users');
+        $this->db->join('contracts', 'contracts.id = users.contract', 'left outer');
+        $this->db->join('positions', 'positions.id = users.position', 'left outer');
+        $this->db->join('users as managers', 'managers.id = users.manager', 'left outer');
+        $this->db->join('organization', 'organization.id = users.organization', 'left outer');
+
+        if ($children == TRUE) {
+            $this->load->model('organization_model');
+            $list = $this->organization_model->getAllChildren($id);
+            $ids = array();
+            if (count($list) > 0) {
+                foreach ($list as $a_list) {
+                    array_push($ids, $a_list['id']);
+                }
+                foreach($ids as $id2){
+                    $list2 = $this->organization_model->getAllChildren($id2);
+                    if (count($list2) > 0) {
+                        foreach ($list2 as $a_list2) {
+                            array_push($ids, $a_list2['id']);
+                        }
+                    }
+                }
+
+            }
+            array_push($ids, $id);
+            $this->db->where_in('organization.id', $ids);
+        } else {
+            $this->db->where('users.organization', $id);
+        }
+        
+        //Triple value for active filter ("all" = no where criteria)
+        if ($filterActive == "active") {
+            $this->db->where('users.active', TRUE);
+        }
+        if ($filterActive == "inactive") {
+            $this->db->where('users.active', FALSE);
+        }
+        
+        if (!is_null($criterion1) && !is_null($date1) && $date1!="empty" && $date1!="undefined") {
+            $criterion1 = ($criterion1 == "greater"?">":"<");
+            $this->db->where("users.datehired " . $criterion1 . " STR_TO_DATE('" . $date1 . "', '%Y-%m-%d')");
+        }
+        if (!is_null($criterion2) && !is_null($date2) && $date2!="empty" && $date2!="undefined") {
+            $criterion2 = ($criterion2 == "greater"?">":"<");
+            $this->db->where("users.datehired " . $criterion2 . " STR_TO_DATE('" . $date2 . "', '%Y-%m-%d')");
+        }
+        
+        return $this->db->get()->result();
+    }
+
     /**
      * Update all employees when a contract is deleted (set the field to NULL)
      * @param int $id Contract ID

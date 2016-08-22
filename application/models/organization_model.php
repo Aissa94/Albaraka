@@ -74,23 +74,26 @@ class Organization_model extends CI_Model {
      * @return array list of entity identifiers
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getAllChildren($id) {
+    /*public function getAllChildren($id) {
         $query = 'SELECT GetFamilyTree(id) as id' .
                     ' FROM organization' .
                     ' WHERE id =' . $id;
         $query = $this->db->query($query); 
         $arr = $query->result_array();
         return $arr;
-    }
+    }*/
 
-    /*public function getAllChildren($id) {
-        $this->db->select("id");
-        $this->db->from('organization');
-        $this->db->where("parent_id",$id);
-        $query = $this->db->get(); 
+    /**
+     * Get all children of an entity
+     * @param int $id identifier of the entity
+     * @return array list of entity identifiers
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function getAllChildren($id) {
+        $query = $this->db->query('SELECT organization.id FROM organization WHERE organization.parent_id = '.$id, FALSE); 
         $arr = $query->result_array();
         return $arr;
-    }*/
+    }
     
     /**
      * Move an entity into the organization

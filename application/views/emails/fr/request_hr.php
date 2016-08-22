@@ -20,7 +20,7 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        <p>{Firstname} {Lastname} veut soumettre une demande d'absence de type "{Type}" à son manager. Voici les <a href="{BaseUrl}leaves/requests/{LeaveId}">détails</a> :</p>
+        <p>{Firstname} {Lastname} veut soumettre une demande d'absence de type "{Type}" à son manager. Voici les <!--a href="{BaseUrl}leaves/requests/{LeaveId}">détails</a-->détails :</p>
         <table>
             <tr>
                 <td>Du &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
