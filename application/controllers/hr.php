@@ -363,9 +363,32 @@ class Hr extends CI_Controller {
             $this->load->view('hr/createleave');
             $this->load->view('templates/footer');
         } else {
-            $this->leaves_model->setLeaves($id);   //Return not used
-            $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
-            //No mail is sent, because the HR Officer would set the leave status to accepted
+            if ($this->input->post('type') != 2){
+                $this->leaves_model->setLeaves($id);   //Return not used
+                $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
+            }
+            //If the status is requested, send an email
+            if ($this->input->post('status') == 2) {
+
+                //If the type is (2 : right to leave), check the credit of the type (1 : annual leave)
+                if ($this->input->post('type') == 2) {
+                    /*$this->load->model('types_model');
+                    foreach ($data['types'] as $type) {
+                            if ($type['id'] == 1) {
+                                $name_id = $type['name'];
+                                break;
+                            }
+                    } */
+                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, 'Congé Annuel'/*$name_id*/) <= 0) 
+                    {
+                        $this->leaves_model->setLeaves($id);   //Return not used
+                        $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
+                    }
+                 }
+                 require_once dirname(BASEPATH) . "/application/controllers/leaves.php";
+                 $leaves_sender = new Leaves();
+                 $leaves_sender->sendMail($id); // send an email to the manager
+            }
             redirect('hr/employees');
         }
     }

@@ -44,7 +44,8 @@
                 <td>Substitute &nbsp;</td><td>{FirstnameSubstitute} {LastnameSubstitute}</td>
             </tr>
             <tr>
-                <td><a href="{BaseUrl}requests/accept/{LeaveId}">Accept</a> &nbsp;</td><td><a href="{BaseUrl}requests/reject/{LeaveId}">Reject</a></td>
+                <td><a href="{BaseUrl}requests/accept/{LeaveId}">Accept</a> &nbsp;</td>
+                <td><a href="{BaseUrl}requests/reject/{LeaveId}">Reject</a></td>
             </tr>
         </table>
         <br />

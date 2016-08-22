@@ -182,10 +182,10 @@ class Leaves extends CI_Controller {
                 //If the type is (2 : right to leave), send an email to the hr admin
                 if ($this->input->post('type') == 2) {
                     foreach ($data['types'] as $type) {
-                        if ($type['id'] == 1) {
-                            $name_id = $type['name'];
-                            break;
-                        }
+                            if ($type['id'] == 1) {
+                                $name_id = $type['name'];
+                                break;
+                            }
                     } 
                     if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $name_id) <= 0) 
                     {//choice an hr admin
@@ -252,7 +252,7 @@ class Leaves extends CI_Controller {
             }
         }
         
-        $data['substitute'] = $this->users_model->getEmployeesOfOrganization($this->user_id);
+        $data['substitute'] = $this->users_model->getEmployeesOfOrganization($data['leave']['employee']);
         
         $this->form_validation->set_rules('startdate', lang('leaves_edit_field_start'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('startdatetype', 'Start Date type', 'required|xss_clean|strip_tags');
@@ -272,19 +272,29 @@ class Leaves extends CI_Controller {
             $this->load->view('leaves/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->leaves_model->updateLeaves($id);       //We don't use the return value
-            $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
-            
+            if ($this->input->post('type') != 2){
+                $this->leaves_model->updateLeaves($id);       //We don't use the return value
+                $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
+            }
             //If the status is requested, send an email
             if ($this->input->post('status') == 2) {
                 
                 ///If the type is (2 : right to leave), send an email to the hr admin
                 if ($this->input->post('type') == 2) {
-                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, 'Congé Annuel') > 0) echo ('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
-                    else {//choice an hr admin
-                    $this->load->model('users_model');
-                    $hr_id = $this->users_model->getAdmins()[0]['id'];
-                    $this->sendMailToRH($id, $hr_id);
+                    foreach ($data['types'] as $type) {
+                            if ($type['id'] == 1) {
+                                $name_id = $type['name'];
+                                break;
+                            }
+                    } 
+                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $name_id) <= 0) 
+                    {//choice an hr admin
+                        $this->leaves_model->updateLeaves($id);       //We don't use the return value
+                        $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
+
+                        $this->load->model('users_model');
+                        $hr_id = $this->users_model->getAdmins()[0]['id'];
+                        $this->sendMailToRH($id, $hr_id);
                     }
                  } 
                  else $this->sendMail($id); // send an email to the manager

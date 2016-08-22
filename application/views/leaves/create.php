@@ -23,7 +23,7 @@ echo form_open('leaves/create', $attributes) ?>
     <select name="type" id="type">
     <?php
     $default_type = $this->config->item('default_leave_type');
-    $default_type = $default_type == FALSE ? 0 : $default_type;
+    $default_type = $default_type == FALSE ? 1 : $default_type;
     foreach ($types as $types_item): ?>
         <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
     <?php endforeach ?>
@@ -202,7 +202,11 @@ function validate_form() {
     $leaves_mod = new Leaves_model();
     $name_id = null;
     foreach ($types as $types_item){
-        if ($types_item['id'] == 1) $name_id = $types_item['name'];
+        if ($types_item['id'] == 1) 
+        {
+            $name_id = $types_item['name'];
+            break;
+        }
     }?>
     var value_type = document.getElementById('type').value;
     if (( value_type  == 2) && "<?php echo ($leaves_mod->getLeavesTypeBalanceForEmployee($user_id, $name_id) > 0) ?>") { 
