@@ -674,9 +674,9 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function individual($user_id, $start = "", $end = "") {
-        $this->db->select('leaves.*, types.name as type');//, user.id as substitute');
+        $this->db->select('leaves.*, types.name as type, users.firstname as substitute_firstname, users.lastname as substitute_lastname');
         $this->db->join('types', 'leaves.type = types.id');
-        //$this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->join('users', 'leaves.substitute = users.id');
         $this->db->where('employee', $user_id);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         $this->db->order_by('startdate', 'desc');
@@ -752,7 +752,7 @@ class Leaves_model extends CI_Model {
         $this->db->order_by('startdate', 'desc');
         $this->db->limit(1024);  //Security limit
         $events = $this->db->get('leaves')->result();
-        
+
         $jsonevents = array();
         foreach ($events as $entry) {
             if ($entry->startdatetype == "Morning") {
@@ -999,12 +999,12 @@ class Leaves_model extends CI_Model {
     public function getLeavesRequestedToManager($manager, $all = FALSE) {
         $this->load->model('delegations_model');
         $ids = $this->delegations_model->listManagersGivingDelegation($manager);
-        $this->db->select('leaves.id as leave_id, users.*, leaves.*, types.name as type_label');//, users.firstname as substitute_firstname, users.lastname as substitute_lastname');
+        $this->db->select('leaves.id as leave_id, users.*, leaves.*, types.name as type_label, users2.firstname as substitute_firstname, users2.lastname as substitute_lastname');
         $this->db->select('status.name as status_name, types.name as type_name');
         $this->db->join('status', 'leaves.status = status.id');
         $this->db->join('types', 'leaves.type = types.id');
         $this->db->join('users', 'users.id = leaves.employee');
-        //$this->db->join('users', 'users.id = leaves.substitute','LEFT');
+        $this->db->join('users as users2', 'users2.id = leaves.substitute','LEFT');
 
         if (count($ids) > 0) {
             array_push($ids, $manager);

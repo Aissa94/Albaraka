@@ -266,7 +266,7 @@ class Organization_model extends CI_Model {
     }
     
     /**
-     * Add an employee into an entity of the organization
+     * Attribute a supervisor to an entity
      * @param int $id identifier of the employee
      * @param int $entity identifier of the entity
      * @return int result of the query
@@ -297,5 +297,5 @@ class Organization_model extends CI_Model {
         } else {
             return NULL;
         }
-    }
+    }    
 }
