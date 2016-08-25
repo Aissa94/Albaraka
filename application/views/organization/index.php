@@ -38,7 +38,7 @@
         <button id="cmdRemoveEmployee" class="btn btn-primary"><?php echo lang('organization_index_button_remove_employee');?></button>
         <br />
         <h3><?php echo lang('organization_index_title_supervisor');?></h3>
-        <p><?php echo lang('organization_index_description_supervisor');?></p>
+        <p><?php echo lang('organization_index_description_supervisor');?></br><?php echo lang('organization_index_description_supervisor2');?></p>
         <div class="input-append">
             <input type="text" id="txtSupervisor" />
             <button id="cmdDeleteSupervisor" class="btn btn-danger"><i class="icon-remove icon-white"></i></button>

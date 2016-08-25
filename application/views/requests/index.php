@@ -56,7 +56,7 @@
         <td><?php echo $requests_item['duration']; ?></td>
         <td><?php echo $requests_item['type_name']; ?></td>
         <td><?php echo lang($requests_item['status_name']); ?></td>
-        <td><?php echo $requests_item['substitute']; ?></td>
+        <td><?php echo $requests_item['substitute_firstname'].' '.$requests_item['substitute_firstname']; ?></td>
     </tr>
 <?php endforeach ?>
 	</tbody>
