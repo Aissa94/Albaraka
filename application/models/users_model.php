@@ -882,22 +882,4 @@ class Users_model extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
-
-    /**
-     * Get the manager of the user
-     * @param int $id User identifier
-     * @author Nabil GHOUILA <dnghouila@gmail.com>
-     */
-    public function getManager($id) {
-        // the supervisor of the entity
-        $supervisor = $this->db->query('SELECT organization.supervisor FROM users join organization on users.organization = organization.id where users.id='.$id, FALSE)->result_array();
-        if(isset($supervisor[0]))
-        {   //the supervisor of the parent entity
-            if($id == $supervisor[0]['supervisor'])$supervisor = $this->db->query('SELECT supervisor FROM (select organization.parent_id from users join organization on users.organization = organization.id where users.id='.$id.') as parent_organization join organization on parent_organization.parent_id = organization.id', FALSE)->result_array();
-        }
-        if(isset($supervisor[0]))return $supervisor[0]['supervisor'];
-        // the supervisor of the root entity
-        //else return $this->db->query('SELECT supervisor FROM organization where organization.id = 0', FALSE)->result_array()[0]['supervisor'];
-        else return null;
-    }
 }

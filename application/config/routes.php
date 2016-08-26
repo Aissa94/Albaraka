@@ -135,7 +135,9 @@ $route['organization/addemployee'] = 'organization/addemployee';
 $route['organization/delemployee'] = 'organization/delemployee';
 $route['organization/getsupervisor'] = 'organization/getsupervisor';
 $route['organization/setsupervisor'] = 'organization/setsupervisor';
+$route['organization/reloadmanagers'] = 'organization/reloadmanagers';
 $route['organization'] = 'organization';
+$route['organization/index'] = 'organization/index';
 
 //_______________________________________________
 //Various calendars
