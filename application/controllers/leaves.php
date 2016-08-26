@@ -169,7 +169,7 @@ class Leaves extends CI_Controller {
             $this->load->view('leaves/create');
             $this->load->view('templates/footer');
         } else {
-            if ($this->input->post('type') != 2){
+            if (($this->input->post('type') != 2)||($this->input->post('status') == 1)){
                 if (function_exists('triggerCreateLeaveRequest')) {
                     triggerCreateLeaveRequest($this);
                 }
@@ -272,7 +272,7 @@ class Leaves extends CI_Controller {
             $this->load->view('leaves/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            if ($this->input->post('type') != 2){
+            if (($this->input->post('type') != 2)||($this->input->post('status') == 1)){
                 $this->leaves_model->updateLeaves($id);       //We don't use the return value
                 $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
             }
@@ -384,9 +384,9 @@ class Leaves extends CI_Controller {
                 $this->email->cc($delegates);
             }
             //Copy to the substitute, if any
-            if ($substitute['email'] != '') {
+            /*if ($substitute['email'] != '') {
                 $this->email->cc($substitute['email']);
-            }
+            }*/
             $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .
                     $this->session->userdata('firstname') . ' ' .
                     $this->session->userdata('lastname'));

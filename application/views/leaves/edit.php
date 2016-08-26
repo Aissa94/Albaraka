@@ -77,7 +77,7 @@ if (isset($_GET['source'])) {
     <textarea name="cause"><?php echo $leave['cause']; ?></textarea>
     
     <label for="status"><?php echo lang('leaves_edit_field_status');?></label>
-    <select name="status">
+    <select name="status" id="status">
         <option value="1" <?php if ($leave['status'] == 1) echo 'selected'; ?>><?php echo lang('Planned');?></option>
         <option value="2" <?php if (($leave['status'] == 2) || $this->config->item('leave_status_requested')) echo 'selected'; ?>><?php echo lang('Requested');?></option>
         <?php if (($is_hr) && ($leave['type'] == 2)) {?>
@@ -171,7 +171,8 @@ function validate_form() {
         }
     }?>
     var value_type = document.getElementById('type').value;
-    if (( value_type  == 2) && "<?php echo ($leaves_mod->getLeavesTypeBalanceForEmployee($user_id, $name_id) > 0) ?>") { 
+    var value_status = document.getElementById('status').value;
+    if (( value_status == 2) && ( value_type  == 2) && "<?php echo ($leaves_mod->getLeavesTypeBalanceForEmployee($user_id, $name_id) > 0) ?>") { 
         bootbox.alert('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
         return false;
     }

@@ -84,7 +84,7 @@ class Requests extends CI_Controller {
                     redirect($_GET['source']);
                 } else {
                     if($this->is_hr)redirect('hr/leaves/'.$employee['id']);
-                    if (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
+                    elseif (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
                 }
             } else {
                 log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
@@ -117,7 +117,7 @@ class Requests extends CI_Controller {
                 redirect($_GET['source']);
             } else {
                 if($this->is_hr)redirect('hr/leaves/'.$employee['id']);
-                if (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
+                elseif (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
             }
         } else {
             log_message('error', 'User #' . $this->user_id . ' illegally tried to reject leave #' . $id);
@@ -342,9 +342,9 @@ class Requests extends CI_Controller {
             $subject = $lang_mail->line('email_leave_request_reject_subject');
         }
         //Copy to the substitute, if any
-            if ($substitute['email'] != '') {
+            /*if ($substitute['email'] != '') {
                 $this->email->cc($substitute['email']);
-            }
+            }*/
 
         // envoi du mail à l'employee et mettre le superviseur de l'organisation en cc 
         sendMailByWrapper($this, $subject, $message, $employee['email'], is_null($supervisor)?NULL:$supervisor->email);

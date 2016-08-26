@@ -363,7 +363,7 @@ class Hr extends CI_Controller {
             $this->load->view('hr/createleave');
             $this->load->view('templates/footer');
         } else {
-            if ($this->input->post('type') != 2){
+            if (($this->input->post('type') != 2)||($this->input->post('status') == 1)){
                 $this->leaves_model->setLeaves($id);   //Return not used
                 $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
             }
@@ -372,14 +372,15 @@ class Hr extends CI_Controller {
 
                 //If the type is (2 : right to leave), check the credit of the type (1 : annual leave)
                 if ($this->input->post('type') == 2) {
-                    /*$this->load->model('types_model');
+                    $this->load->model('types_model');
+                    $data['types'] = $this->types_model->getTypes();
                     foreach ($data['types'] as $type) {
                             if ($type['id'] == 1) {
                                 $name_id = $type['name'];
                                 break;
                             }
-                    } */
-                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, 'Congé Annuel'/*$name_id*/) <= 0) 
+                    }
+                    if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $name_id) <= 0) 
                     {
                         $this->leaves_model->setLeaves($id);   //Return not used
                         $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
