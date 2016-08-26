@@ -297,5 +297,41 @@ class Organization_model extends CI_Model {
         } else {
             return NULL;
         }
-    }    
+    }   
+
+    
+    /**
+     * Calcul the manager of the user
+     * @param int $id User identifier
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function getManager($id) {
+        // the supervisor of the entity
+        $supervisor = $this->db->query('SELECT organization.supervisor FROM users join organization on users.organization = organization.id where users.id='.$id, FALSE)->result_array();
+        if(isset($supervisor[0]))
+        {   
+            if($id == $supervisor[0]['supervisor']){ // return the supervisor of the parent entity
+            $supervisor = $this->db->query('SELECT supervisor FROM (select organization.parent_id from users join organization on users.organization = organization.id where users.id='.$id.') as parent_organization join organization on parent_organization.parent_id = organization.id', FALSE)->result_array();
+            }
+        }
+        if(!isset($supervisor[0]) || $supervisor[0]['supervisor'] == null) return $id; //if no supervisor then return the employee
+        else return $supervisor[0]['supervisor'];
+        // the supervisor of the root entity
+        //else return $this->db->query('SELECT supervisor FROM organization where organization.id = 0', FALSE)->result_array()[0]['supervisor'];
+    } 
+
+     /**
+     * Set the managers of all users
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function reloadManagers() {
+        $query = $this->db->query('SELECT users.id FROM users', FALSE)->result_array();
+        foreach($query as $item){
+            $this->db->where('id', $item['id']); 
+            $this->db->set('manager', $this->getManager($item['id']));
+            $this->db->update('users');
+        }
+    }
+
+
 }

@@ -321,4 +321,20 @@ class Organization extends CI_Controller {
             echo json_encode($this->organization_model->setSupervisor($id, $entity));
         }
     }
+
+    /**
+     * Ajax endpoint: Select the supervisor of an entity of the organization
+     * takes parameters by GET
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function reloadmanagers() {
+        header("Content-Type: application/json");
+        setUserContext($this);
+        if ($this->auth->isAllowed('edit_organization') == FALSE) {
+            $this->output->set_header("HTTP/1.1 403 Forbidden");
+        } else {
+            $this->load->model('organization_model');
+            $this->organization_model->reloadManagers();
+        }
+    }
 }

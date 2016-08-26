@@ -40,15 +40,15 @@
     </select>
 
     <br />
-    <input type="hidden" name="manager" id="manager" value="<?php echo $users_item['manager']; ?>" /><br />
-    <label for="txtManager"><?php echo lang('users_edit_field_manager');?></label>
+    <!--input type="hidden" name="manager" id="manager" value="<?php// echo $users_item['manager']; ?>" /><br />
+    <label for="txtManager"><?php //echo lang('users_edit_field_manager');?></label>
     <div class="input-append">
         <input type="text" id="txtManager" name="txtManager" value="<?php echo $manager_label; ?>" required readonly/>
-        <a id="cmdSelfManager" class="btn btn-primary"><?php echo lang('users_edit_button_self');?></a>
-        <a id="cmdSelectManager" class="btn btn-primary"><?php echo lang('users_edit_button_select');?></a>
+        <a id="cmdSelfManager" class="btn btn-primary"><?php //echo lang('users_edit_button_self');?></a>
+        <a id="cmdSelectManager" class="btn btn-primary"><?php //echo lang('users_edit_button_select');?></a>
     </div><br />
-    <i><?php echo lang('users_edit_field_manager_description');?></i>
-    <br /><br />
+    <i><?php //echo lang('users_edit_field_manager_description');?></i>
+    <br /><br /-->
 
     <label for="contract"><?php echo lang('users_edit_field_contract');?></label>
     <select name="contract" id="contract" class="selectized input-xlarge">
@@ -123,19 +123,19 @@ echo $date->format(lang('global_date_format'));
     <?php } ?>
 </form>
 
-<div id="frmSelectManager" class="modal hide fade">
+<!--div id="frmSelectManager" class="modal hide fade">
     <div class="modal-header">
         <a href="#" onclick="$('#frmSelectManager').modal('hide');" class="close">&times;</a>
-         <h3><?php echo lang('users_edit_popup_manager_title');?></h3>
+         <h3><?php //echo lang('users_edit_popup_manager_title');?></h3>
     </div>
     <div class="modal-body" id="frmSelectManagerBody">
         <img src="<?php echo base_url();?>assets/images/loading.gif">
     </div>
     <div class="modal-footer">
-        <a href="#" onclick="select_manager();" class="btn"><?php echo lang('users_edit_popup_manager_button_ok');?></a>
-        <a href="#" onclick="$('#frmSelectManager').modal('hide');" class="btn"><?php echo lang('users_edit_popup_manager_button_cancel');?></a>
+        <a href="#" onclick="select_manager();" class="btn"><?php //echo lang('users_edit_popup_manager_button_ok');?></a>
+        <a href="#" onclick="$('#frmSelectManager').modal('hide');" class="btn"><?php //echo lang('users_edit_popup_manager_button_cancel');?></a>
     </div>
-</div>
+</div-->
 
 <div id="frmSelectEntity" class="modal hide fade">
     <div class="modal-header">
@@ -222,10 +222,10 @@ if ($language_code != 'en') { ?>
         $('#contract').selectize();
         
         //Popup select position
-        $("#cmdSelectManager").click(function() {
+        /*$("#cmdSelectManager").click(function() {
             $("#frmSelectManager").modal('show');
             $("#frmSelectManagerBody").load('<?php echo base_url(); ?>users/employees');
-        });
+        });*/
         
         //Popup select position
         $("#cmdSelectPosition").click(function() {
@@ -246,9 +246,9 @@ if ($language_code != 'en') { ?>
             $(this).removeData('modal');
         });
         //Self manager button
-        $("#cmdSelfManager").click(function() {
+        /*$("#cmdSelfManager").click(function() {
             $("#manager").val('-1');
-            $('#txtManager').val('<?php echo lang('users_edit_field_manager_alt');?>');
-        });
+            $('#txtManager').val('<?php //echo lang('users_edit_field_manager_alt');?>');
+        });*/
     });
 </script>

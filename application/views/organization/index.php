@@ -15,6 +15,7 @@
         <div class="input-append">
             <input type="text" class="input-medium" placeholder="<?php echo lang('organization_index_field_search_placeholder');?>" id="txtSearch" />
             <button id="cmdClearSearch" class="btn btn-primary"><i class="icon-remove icon-white"></i></button>
+            <button id="cmdReloadManagers" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
             <button id="cmdSearch" class="btn btn-primary"><i class="icon-search icon-white"></i>&nbsp;<?php echo lang('organization_index_button_search');?></button>
         </div>
         <div style="text-align: left;" id="organization"></div>
@@ -282,6 +283,12 @@
         });
         $(document).keyup(function(e) {
             if (e.keyCode == 27) { $("#organization").jstree("clear_search"); }   // escape key
+        });
+
+        //Reload the managers for all the users
+        $("#cmdReloadManagers").click(function () {    
+            url = "<?php echo base_url();?>organization/reloadmanagers";
+            document.location.href = url;
         });
         
         //Transform the HTML table in a fancy datatable

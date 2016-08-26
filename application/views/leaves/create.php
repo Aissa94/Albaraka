@@ -248,7 +248,7 @@ $(function () {
         //Self substitute button
         $("#cmdSelfSubstitute").click(function() {
             $("#substitute").val('-1');
-            $('#txtSubstitute').val('<?php echo lang('users_create_field_manager_alt');?>');
+            $('#txtSubstitute').val('<?php //echo lang('users_create_field_manager_alt');?>');
         });*/
 
         
