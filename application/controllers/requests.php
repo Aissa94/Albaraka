@@ -295,13 +295,17 @@ class Requests extends CI_Controller {
         $this->load->model('organization_model');
         $leave = $this->leaves_model->getLeaves($id);
         $employee = $this->users_model->getUsers($leave['employee']);
-        $supervisor = $this->organization_model->getSupervisor($employee['organization']);
-        $employee = $this->users_model->getUsers($leave['employee']);
+        $manager = $this->organization_model->getManager($leave['employee']);//id of the manager 1
+        $hierarchical_manager = $this->organization_model->getManager($manager);//id of the manager 2
+        $manager = $this->users_model->getUsers($manager);//the manager 1
+        $hierarchical_manager = $this->users_model->getUsers($hierarchical_manager);//the manager 2
+        $admin = $this->users_model->getAdmins()[0]['id'];
+        $admin = $this->users_model->getUsers($admin);
         $substitute = $this->users_model->getUsers($leave['substitute']);
 
         //Test if the manager or the substitute haven't been deleted meanwhile
-        if (empty($substitute))  {
-            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error_substitute'));
+        if (empty($manager['email']))  {
+            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error'));
         }
 
         //Send an e-mail to the employee
@@ -332,6 +336,8 @@ class Requests extends CI_Controller {
             'Type' => $leave['type_name'],
             'FirstnameSubstitute' => $substitute['firstname'],
             'LastnameSubstitute' => $substitute['lastname'],
+            'FirstnameManager' => $manager['firstname'],
+            'LastnameManager' => $manager['lastname'],
         );
         
         if ($leave['status'] == 3) {    //accepted
@@ -341,13 +347,9 @@ class Requests extends CI_Controller {
             $message = $this->parser->parse('emails/' . $employee['language'] . '/request_rejected', $data, TRUE);
             $subject = $lang_mail->line('email_leave_request_reject_subject');
         }
-        //Copy to the substitute, if any
-            /*if ($substitute['email'] != '') {
-                $this->email->cc($substitute['email']);
-            }*/
-
-        // envoi du mail à l'employee et mettre le superviseur de l'organisation en cc 
-        sendMailByWrapper($this, $subject, $message, $employee['email'], is_null($supervisor)?NULL:$supervisor->email);
+        $cc_list = array();
+        array_push($cc_list, $hierarchical_manager['email'], $admin['email']);
+        sendMailByWrapper($this, $subject, $message, $employee['email'], is_null($cc_list)?NULL:$cc_list, true);
     }
     
     /**

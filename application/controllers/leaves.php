@@ -322,10 +322,7 @@ class Leaves extends CI_Controller {
         $manager = $this->users_model->getUsers($user['manager']);
         $substitute = $this->users_model->getUsers($leave['substitute']);
 
-        //Test if the manager or the substitute haven't been deleted meanwhile
-        if (empty($substitute)) {
-            $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error_substitute'));
-        }
+        //Test if the manager haven't been deleted meanwhile
         if (empty($manager['email'])) {
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error'));
         } else {
@@ -383,10 +380,6 @@ class Leaves extends CI_Controller {
             if ($delegates != '') {
                 $this->email->cc($delegates);
             }
-            //Copy to the substitute, if any
-            /*if ($substitute['email'] != '') {
-                $this->email->cc($substitute['email']);
-            }*/
             $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .
                     $this->session->userdata('firstname') . ' ' .
                     $this->session->userdata('lastname'));
