@@ -20,8 +20,9 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        <p>Bonjour {Firstname} {Lastname},</p>
-        <p>La demande d'absence que vous avez soumise a été acceptée. Voici les détails :</p>
+        Bonjour {Firstname} {Lastname},<br />
+        <br />
+        La demande d'absence que vous avez soumise a été acceptée par votre responsable : {FirstnameManager} {LastnameManager}.<br />
         <table>
             <tr>
                 <td>Du &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>

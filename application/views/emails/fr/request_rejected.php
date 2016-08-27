@@ -22,7 +22,7 @@
         <h3>{Title}</h3>
         Bonjour {Firstname} {Lastname}, <br />
         <br />
-        <p>La demande d'absence que vous avez soumise a été refusée. Voici les détails :</p>
+        Malheureusement, la demande d'absence que vous avez soumise a été refusée. Veuillez contacter votre responsable : {FirstnameManager} {LastnameManager} pour discuter le problème. <br />
         <table border="0">
             <tr>
                 <td>Du &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>

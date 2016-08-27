@@ -92,9 +92,10 @@ function sanitize($value)
  * @param string $message Message of the e-mail
  * @param string $to Recipient of the e-mail
  * @param string $cc (optional) Copied to recipients
+ * @param bool   $i if true send as bcc (or cci)
  * @author Benjamin BALET <benjamin.balet@gmail.com>
  */
-function sendMailByWrapper(CI_Controller $controller, $subject, $message, $to, $cc = NULL)
+function sendMailByWrapper(CI_Controller $controller, $subject, $message, $to, $cc = NULL, $i = false)
 {
     $controller->load->library('email');
     if ($controller->config->item('subject_prefix') != FALSE) {
@@ -110,7 +111,10 @@ function sendMailByWrapper(CI_Controller $controller, $subject, $message, $to, $
     }
     $controller->email->to($to);
     if (!is_null($cc)) {
-        $controller->email->cc($cc);
+        switch ($i){
+            case false : $controller->email->cc($cc);break;
+            case true  : $controller->email->bcc($cc);break;
+        }
     }
     $controller->email->message($message);
     $controller->email->send();
