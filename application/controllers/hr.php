@@ -326,11 +326,13 @@ class Hr extends CI_Controller {
         $data = getUserContext($this);
         $this->load->helper('form');
         $this->load->library('form_validation');
+        $this->load->model('types_model');
         $data['title'] = lang('hr_leaves_create_title');
         $data['form_action'] = 'hr/leaves/create/' . $id;
         $data['source'] = 'hr/employees';
         $data['employee'] = $id;
-        
+        $data['types'] = $this->types_model->getTypes();
+
         $this->form_validation->set_rules('startdate', lang('hr_leaves_create_field_start'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('startdatetype', 'Start Date type', 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('enddate', lang('hr_leaves_create_field_end'), 'required|xss_clean|strip_tags');
@@ -343,10 +345,8 @@ class Hr extends CI_Controller {
 
         $data['credit'] = 0;
         $default_type = $this->config->item('default_leave_type');
-        $default_type = $default_type == FALSE ? 0 : $default_type;
+        $default_type = $default_type == FALSE ? 1 : $default_type;
         if ($this->form_validation->run() === FALSE) {
-            $this->load->model('types_model');
-            $data['types'] = $this->types_model->getTypes();
             foreach ($data['types'] as $type) {
                 if ($type['id'] == $default_type) {
                     $data['credit'] = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type['name']);
@@ -372,8 +372,6 @@ class Hr extends CI_Controller {
 
                 //If the type is (2 : right to leave), check the credit of the type (1 : annual leave)
                 if ($this->input->post('type') == 2) {
-                    $this->load->model('types_model');
-                    $data['types'] = $this->types_model->getTypes();
                     foreach ($data['types'] as $type) {
                             if ($type['id'] == 1) {
                                 $name_id = $type['name'];

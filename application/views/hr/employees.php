@@ -211,7 +211,7 @@
         <select name="leaveType" id="leaveType">
         <?php
         $default_type = $this->config->item('default_leave_type');
-        $default_type = $default_type == FALSE ? 0 : $default_type;
+        $default_type = $default_type == FALSE ? 1 : $default_type;
         foreach ($types as $types_item): ?>
             <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
         <?php endforeach ?>

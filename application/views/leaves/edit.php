@@ -80,10 +80,10 @@ if (isset($_GET['source'])) {
     <select name="status" id="status">
         <option value="1" <?php if ($leave['status'] == 1) echo 'selected'; ?>><?php echo lang('Planned');?></option>
         <option value="2" <?php if (($leave['status'] == 2) || $this->config->item('leave_status_requested')) echo 'selected'; ?>><?php echo lang('Requested');?></option>
-        <?php if (($is_hr) && ($leave['type'] == 2)) {?>
+        <?php /*if (($is_hr) && ($leave['type'] == 2)) {?>
         <option value="3" <?php if ($leave['status'] == 3) echo 'selected'; ?>><?php echo lang('Accepted');?></option>
         <option value="4" <?php if ($leave['status'] == 4) echo 'selected'; ?>><?php echo lang('Rejected');?></option>        
-        <?php } ?>
+        <?php } */?>
     </select><br />
 
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('leaves_edit_button_update');?></button>

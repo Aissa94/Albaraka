@@ -139,7 +139,8 @@ class Leaves extends CI_Controller {
         $this->load->library('form_validation');
         $data['title'] = lang('leaves_create_title');
         $data['help'] = $this->help->create_help_link('global_link_doc_page_request_leave');
-        
+        $data['types'] = $this->types_model->getTypes();
+
         $this->form_validation->set_rules('startdate', lang('leaves_create_field_start'), 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('startdatetype', 'Start Date type', 'required|xss_clean|strip_tags');
         $this->form_validation->set_rules('enddate', lang('leaves_create_field_end'), 'required|xss_clean|strip_tags');
@@ -154,7 +155,6 @@ class Leaves extends CI_Controller {
         $default_type = $this->config->item('default_leave_type');
         $default_type = $default_type == FALSE ? 1 : $default_type;
         if ($this->form_validation->run() === FALSE) {
-            $data['types'] = $this->types_model->getTypes();
             foreach ($data['types'] as $type) {
                 if ($type['id'] == $default_type) {
                     $data['credit'] = $this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $type['name']);
@@ -196,8 +196,8 @@ class Leaves extends CI_Controller {
                         $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
 
                         $this->load->model('users_model');
-                        $hr_id = $this->users_model->getAdmins()[0]['id'];
-                        $this->sendMailToRH($leave_id, $hr_id);
+                        $hr_admins = $this->users_model->getHrAdmins();
+                        $this->sendMailToRH($leave_id, $hr_admins);
                     }
                  } 
                  else $this->sendMail($leave_id); // send an email to the manager
@@ -219,6 +219,8 @@ class Leaves extends CI_Controller {
         $this->auth->checkIfOperationIsAllowed('edit_leaves');
         $data = getUserContext($this);
         $data['leave'] = $this->leaves_model->getLeaves($id);
+        $data['types'] = $this->types_model->getTypes();
+
         //Check if exists
         if (empty($data['leave'])) {
             redirect('notfound');
@@ -244,7 +246,6 @@ class Leaves extends CI_Controller {
         $data['id'] = $id;
         
         $data['credit'] = 0;
-        $data['types'] = $this->types_model->getTypes();
         foreach ($data['types'] as $type) {
             if ($type['id'] == $data['leave']['type']) {
                 $data['credit'] = $this->leaves_model->getLeavesTypeBalanceForEmployee($data['leave']['employee'], $type['name']);
@@ -293,8 +294,8 @@ class Leaves extends CI_Controller {
                         $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
 
                         $this->load->model('users_model');
-                        $hr_id = $this->users_model->getAdmins()[0]['id'];
-                        $this->sendMailToRH($id, $hr_id);
+                        $hr_admins = $this->users_model->getHrAdmins();
+                        $this->sendMailToRH($id, $hr_admins);
                     }
                  } 
                  else $this->sendMail($id); // send an email to the manager
@@ -381,8 +382,10 @@ class Leaves extends CI_Controller {
                 $this->email->cc($delegates);
             }
             $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .
-                    $this->session->userdata('firstname') . ' ' .
-                    $this->session->userdata('lastname'));
+                    /*$this->session->userdata('firstname') . ' ' .
+                    $this->session->userdata('lastname'));*/
+                    $user['firstname'] . ' '.
+                    $user['lastname']);
             $this->email->message($message);
             $this->email->send();
         }
@@ -390,9 +393,10 @@ class Leaves extends CI_Controller {
     /**
      * Send a leave request email to the RH
      * @param int $id Leave request identifier
+     * @param $hr_admins array of admins
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    private function sendMailToRH($id, $id_hr) {
+    private function sendMailToRH($id, $hr_admins) {
         $this->load->model('users_model');
         $this->load->model('types_model');
         //We load everything from DB as the LR can be edited from HR/Employees
@@ -400,16 +404,15 @@ class Leaves extends CI_Controller {
         $user = $this->users_model->getUsers($leave['employee']);
         $manager = $this->users_model->getUsers($user['manager']);
         //$substitute = $this->users_model->getUsers($leave['substitute']);
-        $hr_admin = $this->users_model->getUsers($id_hr);
 
         //Test if the hr admin haven't been deleted meanwhile
-        if (empty($hr_admin)) {
+        if (empty($hr_admins)) {
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error_admin'));
         } else {
             //Send an e-mail to the hr admin
             $this->load->library('email');
             $this->load->library('polyglot');
-            $usr_lang = $this->polyglot->code2language($hr_admin['language']);
+            $usr_lang = $this->polyglot->code2language($hr_admins[0]['language']);
             
             //We need to instance an different object as the languages of connected user may differ from the UI lang
             $lang_mail = new CI_Lang();
@@ -441,7 +444,7 @@ class Leaves extends CI_Controller {
                 'UserId' => $this->user_id,
                 'ManagerId' => $manager['id']
             );
-            $message = $this->parser->parse('emails/' . $hr_admin['language'] . '/request_hr', $data, TRUE);
+            $message = $this->parser->parse('emails/' . $hr_admins[0]['language'] . '/request_hr', $data, TRUE);
             $this->email->set_encoding('quoted-printable');
             
             if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
@@ -449,7 +452,9 @@ class Leaves extends CI_Controller {
             } else {
                $this->email->from('do.not@reply.me', 'LMS');
             }
-            $this->email->to($hr_admin['email']);
+            $hr_mails = array();
+            foreach ($hr_admins as $item) array_push($hr_mails, $item['email']);
+            $this->email->to($hr_mails);
             if ($this->config->item('subject_prefix') != FALSE) {
                 $subject = $this->config->item('subject_prefix');
             } else {

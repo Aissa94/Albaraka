@@ -254,7 +254,7 @@ class Requests extends CI_Controller {
 
             $data['credit'] = 0;
             $default_type = $this->config->item('default_leave_type');
-            $default_type = $default_type == FALSE ? 0 : $default_type;
+            $default_type = $default_type == FALSE ? 1 : $default_type;
             if ($this->form_validation->run() === FALSE) {
                 $this->load->model('types_model');
                 $data['types'] = $this->types_model->getTypes();
@@ -299,8 +299,8 @@ class Requests extends CI_Controller {
         $hierarchical_manager = $this->organization_model->getManager($manager);//id of the manager 2
         $manager = $this->users_model->getUsers($manager);//the manager 1
         $hierarchical_manager = $this->users_model->getUsers($hierarchical_manager);//the manager 2
-        $admin = $this->users_model->getAdmins()[0]['id'];
-        $admin = $this->users_model->getUsers($admin);
+        $admins = $this->users_model->getHrAdmins();
+        $admins = array_merge($admins, $this->users_model->getSysAdmins());
         $substitute = $this->users_model->getUsers($leave['substitute']);
 
         //Test if the manager or the substitute haven't been deleted meanwhile
@@ -348,7 +348,8 @@ class Requests extends CI_Controller {
             $subject = $lang_mail->line('email_leave_request_reject_subject');
         }
         $cc_list = array();
-        array_push($cc_list, $hierarchical_manager['email'], $admin['email']);
+        array_push($cc_list, $hierarchical_manager['email']);
+        foreach ($admins as $item) array_push($cc_list, $item['email']);
         sendMailByWrapper($this, $subject, $message, $employee['email'], is_null($cc_list)?NULL:$cc_list, true);
     }
     

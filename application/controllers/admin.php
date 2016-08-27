@@ -58,7 +58,7 @@ class Admin extends CI_Controller {
         $data['wrongDateType'] = $this->leaves_model->detectWrongDateTypes();
         $data['entitlmentOverflow'] = $this->entitleddays_model->detectOverflow();
         $data['daysOffYears'] = $this->dayoffs_model->checkIfDefined(date("Y"));
-        $data['negativeOvertime'] = $this->overtime_model->detectNegativeOvertime();
+        $data['negativeOvertime'] = null;//$this->overtime_model->detectNegativeOvertime();
         $data['unusedContracts'] = $this->contracts_model->notUsedContracts();
         //$data['leaveBalance'] = $this->leaves_model->detectBalanceProblems();
         

@@ -44,10 +44,23 @@ class Users_model extends CI_Model {
      * @return array record of users
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getAdmins() {
-        $this->db->select('id');
+    public function getHrAdmins() {
+        $this->db->select('id, email, language');
         $this->db->from('users');
         $this->db->where('role',8);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
+     * Get the list of system admin or one system admin
+     * @return array record of users
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function getSysAdmins() {
+        $this->db->select('id, email, language');
+        $this->db->from('users');
+        $this->db->where('role',16);
         $query = $this->db->get();
         return $query->result_array();
     }
