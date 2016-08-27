@@ -364,8 +364,7 @@ class Hr extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             if (($this->input->post('type') != 2)||($this->input->post('status') == 1)){
-                $this->leaves_model->setLeaves($id);   //Return not used
-                $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
+                $leave_id = $this->leaves_model->setLeaves($id);
             }
             //If the status is requested, send an email
             if ($this->input->post('status') == 2) {
@@ -380,15 +379,15 @@ class Hr extends CI_Controller {
                     }
                     if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $name_id) <= 0) 
                     {
-                        $this->leaves_model->setLeaves($id);   //Return not used
-                        $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
+                        $leave_id = $this->leaves_model->setLeaves($id);                  
                     }
                  }
                  require_once dirname(BASEPATH) . "/application/controllers/leaves.php";
                  $leaves_sender = new Leaves();
-                 $leaves_sender->sendMail($id); // send an email to the manager
+                 $leaves_sender->sendMail($leave_id); // send an email to the manager
             }
-            redirect('hr/employees');
+            if(isset($leave_id)) $this->session->set_flashdata('msg', lang('hr_leaves_create_flash_msg_success'));
+            redirect('hr/leaves/'.$id);
         }
     }
     

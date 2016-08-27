@@ -83,8 +83,7 @@ class Requests extends CI_Controller {
                 if (isset($_GET['source'])) {
                     redirect($_GET['source']);
                 } else {
-                    if($this->is_hr)redirect('hr/leaves/'.$employee['id']);
-                    elseif (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
+                    if (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
                 }
             } else {
                 log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
