@@ -35,6 +35,24 @@ class Delegations_model extends CI_Model {
         $query = $this->db->get_where('delegations', array('manager_id' => $manager));
         return $query->result_array();
     }
+
+    /**
+     * Get the substitute of a manager
+     * @param int $manager id of manager
+     * @param date $date the specific date to check in
+     * @return users
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function substituteForManager($manager) {
+        $date = date("Y-m-d");
+        $this->db->select('users.*, CONCAT(firstname, \' \', lastname) as substitute_name', FALSE);
+        $this->db->join('leaves', 'leaves.substitute = users.id');
+        $this->db->where('leaves.status', 3);
+        $this->db->where('leaves.startdate <=', $date);
+        $this->db->where('leaves.enddate >=', $date);
+        $query = $this->db->get_where('leaves', array('employee' => $manager));
+        return $query->result_array();
+    }
     
     /**
      * Return TRUE if an employee is the delegate of a manager, FALSE otherwise
@@ -47,6 +65,30 @@ class Delegations_model extends CI_Model {
         $this->db->from('delegations');
         $this->db->where('delegate_id', $employee);
         $this->db->where('manager_id', $manager);
+        $results = $this->db->get()->row_array();
+        if (count($results) > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * Return TRUE if an employee is the substite of a manager in a specific date, FALSE otherwise
+     * @param int $employee id of the employee to be checked
+     * @param int $manager id of a manager
+     * @param date $date the specific date to check in
+     * @return bool is delegate
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function isSubstituteOfManager($employee, $manager) {
+        $date = date("Y-m-d");
+        $this->db->from('leaves');
+        $this->db->where('substitute', $employee);
+        $this->db->where('employee', $manager);
+        $this->db->where('status', 3);
+        $this->db->where('startdate <=', $date);
+        $this->db->where('enddate >=', $date);
         $results = $this->db->get()->row_array();
         if (count($results) > 0) {
             return TRUE;
@@ -71,6 +113,30 @@ class Delegations_model extends CI_Model {
             return FALSE;
         }
     }
+
+    /**
+     * Return TRUE if an employee is a substitute of a manager in his absence, FALSE otherwise
+     * @param int $employee id of the employee to be checked
+     * @param date $date the specific date to check in
+     * @return bool has delegation
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function hasSubstitution($employee) {
+        $date = date("Y-m-d");
+        $this->db->from('leaves');
+        $this->db->where('substitute', $employee);
+        $this->db->where('status', 3);
+        $this->db->where('startdate <=', $date);
+        $this->db->where('enddate >=', $date);
+        $results = $this->db->get()->row_array();
+        $returned = false;
+        $this->load->model('users_model');
+        foreach($results as $row) if (count($this->users_model->getCollaboratorsOfManager($row['employee']))> 0){
+            $returned = true;
+            break;
+        }
+        return $returned;
+    }
     
     /**
      * Get the list of manager ids for which an employee has the delegation
@@ -89,9 +155,32 @@ class Delegations_model extends CI_Model {
         }
         return $ids;
     }
+
+    /**
+     * Get the list of manager ids for which an employee has the substitution
+     * @param int $employee id of an employee
+     * @param date $date the specific date to check in
+     * @return array of employee identifiers
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function listManagersGivingSubstitution($id) {
+        $date = date("Y-m-d");
+        $this->db->select("employee");
+        $this->db->from('leaves');
+        $this->db->where('substitute', $id);
+        $this->db->where('status', 3);
+        $this->db->where('startdate <=', $date);
+        $this->db->where('enddate >=', $date);
+        $results = $this->db->get()->result_array();
+        $ids = array();
+        foreach ($results as $row) {
+            array_push($ids, $row['employee']);
+        }
+        return $ids;
+    }
     
     /**
-     * Get the list of e-mails of employees having the delegation from a manager
+     * Get the e-mail of the substitute of a manager
      * @param int $id id of a manager
      * @return array record of users
      * @author Benjamin BALET <benjamin.balet@gmail.com>
@@ -106,6 +195,30 @@ class Delegations_model extends CI_Model {
         $results = $query->row_array();
         if (count($results) > 0) {
             return $results['list'];
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Get the list of e-mails of employees having the delegation from a manager
+     * @param int $id id of a manager
+     * @param date $date the specific date to check in
+     * @return a user
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function mailOfSubstitue($id) {
+        $date = date("Y-m-d");
+        $this->db->select('email');
+        $this->db->from('leaves');
+        $this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->where('leaves.employee', $id);
+        $this->db->where('leaves.status', 3);
+        $this->db->where('leaves.startdate <=', $date);
+        $this->db->where('leaves.enddate >=', $date);
+        $query = $this->db->get()->row_array();
+        if (isset($query['email'])) {
+            return $query['email'];
         } else {
             return '';
         }

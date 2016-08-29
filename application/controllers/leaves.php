@@ -103,7 +103,8 @@ class Leaves extends CI_Controller {
                 $employee = $this->users_model->getUsers($data['leave']['employee']);
                 if ($employee['manager'] != $this->user_id) {
                     $this->load->model('delegations_model');
-                    if (!$this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager'])) {
+                    if (!$this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager'])
+                    && !$this->delegations_model->isSubstituteOfManager($this->user_id, $employee['manager'])) {
                         log_message('error', 'User #' . $this->user_id . ' illegally tried to view leave #' . $id);
                         redirect('leaves');
                     }
@@ -330,6 +331,7 @@ class Leaves extends CI_Controller {
             //Send an e-mail to the manager
             $this->load->library('email');
             $this->load->library('polyglot');
+            $this->load->model('organization_model');
             $usr_lang = $this->polyglot->code2language($manager['language']);
 
             //We need to instance an different object as the languages of connected user may differ from the UI lang
@@ -371,16 +373,28 @@ class Leaves extends CI_Controller {
                $this->email->from('do.not@reply.me', 'LMS');
             }
             $this->email->to($manager['email']);
-            if ($this->config->item('subject_prefix') != FALSE) {
-                $subject = $this->config->item('subject_prefix');
-            } else {
-               $subject = '[Baraka] ';
-            }
             //Copy to the delegates, if any
             $delegates = $this->delegations_model->listMailsOfDelegates($manager['id']);
             if ($delegates != '') {
                 $this->email->cc($delegates);
             }
+            //send to the substitute if the manager is absent
+            if($this->users_model->isAbsent($manager['id'])){
+                $sub_manager_email = $this->delegations_model->mailOfSubstitue($manager['id']);
+                if ($sub_manager_email != '') $this->email->to($sub_manager_email);
+                //If no substitute and no delegates, send to the second manager
+                elseif ($delegates == ''){
+                    $hierarchical_manager = $this->organization_model->getManager($manager['id']);//id of the manager 2
+                    $hierarchical_manager = $this->users_model->getUsers($hierarchical_manager);//the manager 2
+                    $this->email->to($hierarchical_manager['email']);
+                }
+            }
+            if ($this->config->item('subject_prefix') != FALSE) {
+                $subject = $this->config->item('subject_prefix');
+            } else {
+               $subject = '[Baraka] ';
+            }
+             
             $this->email->subject($subject . $lang_mail->line('email_leave_request_subject') . ' ' .
                     /*$this->session->userdata('firstname') . ' ' .
                     $this->session->userdata('lastname'));*/

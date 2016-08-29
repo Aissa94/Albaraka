@@ -61,6 +61,7 @@ class Requests extends CI_Controller {
     public function accept($id) {
         $this->auth->checkIfOperationIsAllowed('accept_requests');
         $this->load->model('users_model');
+        $this->load->model('organization_model');
         $this->load->model('delegations_model');
         $leave = $this->leaves_model->getLeaves($id);
         if (empty($leave)) {
@@ -68,6 +69,8 @@ class Requests extends CI_Controller {
         }
         $employee = $this->users_model->getUsers($leave['employee']);
         $is_delegate = $this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager']);
+        $is_substitute = $this->delegations_model->isSubstituteOfManager($this->user_id, $employee['manager']);
+        $is_absent = $this->users_model->isAbsent($employee['manager']);
         if (($leave['type']==2) && ($this->is_hr)) {// if we have 'the right for leave' type and this is the hr admin
             require 'leaves.php';
             $leaves_controler = new Leaves();
@@ -76,14 +79,16 @@ class Requests extends CI_Controller {
             redirect('hr/leaves/'.$employee['id']);
         }
         else{
-            if (($this->user_id == $employee['manager']) /*|| ($this->is_hr)*/  || ($is_delegate)) {
+            if (($this->user_id == $employee['manager']) || ($is_absent && $is_substitute) || ($is_delegate)
+            || ($is_absent && ($this->user_id == $this->organization_model->getManager($employee['manager']))) ) {
                 $this->leaves_model->acceptLeave($id);
                 $this->sendMail($id);
                 $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_success'));
                 if (isset($_GET['source'])) {
                     redirect($_GET['source']);
                 } else {
-                    if (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
+                    if (($this->user_id == $employee['manager']) || ($is_substitute) || ($is_delegate)
+                    || ($this->user_id == $this->organization_model->getManager($employee['manager']))) redirect('requests');
                 }
             } else {
                 log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
@@ -101,6 +106,7 @@ class Requests extends CI_Controller {
     public function reject($id) {
         $this->auth->checkIfOperationIsAllowed('reject_requests');
         $this->load->model('users_model');
+        $this->load->model('organization_model');
         $this->load->model('delegations_model');
         $leave = $this->leaves_model->getLeaves($id);
         if (empty($leave)) {
@@ -108,7 +114,10 @@ class Requests extends CI_Controller {
         }
         $employee = $this->users_model->getUsers($leave['employee']);
         $is_delegate = $this->delegations_model->isDelegateOfManager($this->user_id, $employee['manager']);
-        if (($this->user_id == $employee['manager']) || ($is_delegate) || (($this->is_hr) && ($leave['type']==2)) ) {
+        $is_substitute = $this->delegations_model->isSubstituteOfManager($this->user_id, $employee['manager']);
+        $is_absent = $this->users_model->isAbsent($employee['manager']);
+        if (($this->user_id == $employee['manager']) || ($is_absent && $is_substitute) || ($is_delegate) || (($this->is_hr) && ($leave['type']==2))
+            || ($is_absent && ($this->user_id == $this->organization_model->getManager($employee['manager'])))  ) {
             $this->leaves_model->rejectLeave($id);
             $this->sendMail($id);
             $this->session->set_flashdata('msg',  lang('requests_reject_flash_msg_success'));
@@ -116,7 +125,8 @@ class Requests extends CI_Controller {
                 redirect($_GET['source']);
             } else {
                 if($this->is_hr)redirect('hr/leaves/'.$employee['id']);
-                elseif (($this->user_id == $employee['manager']) || ($is_delegate)) redirect('requests');
+                elseif (($this->user_id == $employee['manager']) || ($is_substitute) 
+                || ($this->user_id == $this->organization_model->getManager($employee['manager'])) || ($is_delegate)) redirect('requests');
             }
         } else {
             log_message('error', 'User #' . $this->user_id . ' illegally tried to reject leave #' . $id);
@@ -297,9 +307,6 @@ class Requests extends CI_Controller {
         $manager = $this->organization_model->getManager($leave['employee']);//id of the manager 1
         $hierarchical_manager = $this->organization_model->getManager($manager);//id of the manager 2
         $manager = $this->users_model->getUsers($manager);//the manager 1
-        $hierarchical_manager = $this->users_model->getUsers($hierarchical_manager);//the manager 2
-        $admins = $this->users_model->getHrAdmins();
-        $admins = array_merge($admins, $this->users_model->getSysAdmins());
         $substitute = $this->users_model->getUsers($leave['substitute']);
 
         //Test if the manager or the substitute haven't been deleted meanwhile
@@ -338,17 +345,20 @@ class Requests extends CI_Controller {
             'FirstnameManager' => $manager['firstname'],
             'LastnameManager' => $manager['lastname'],
         );
-        
+        $cc_list = array();
         if ($leave['status'] == 3) {    //accepted
             $message = $this->parser->parse('emails/' . $employee['language'] . '/request_accepted', $data, TRUE);
             $subject = $lang_mail->line('email_leave_request_accept_subject');
+
+            $hierarchical_manager = $this->users_model->getUsers($hierarchical_manager);//the manager 2
+            $admins = $this->users_model->getHrAdmins();
+            $admins = array_merge($admins, $this->users_model->getImalAdmins());
+            array_push($cc_list, $hierarchical_manager['email']);
+            foreach ($admins as $item) array_push($cc_list, $item['email']);
         } else {    //rejected
             $message = $this->parser->parse('emails/' . $employee['language'] . '/request_rejected', $data, TRUE);
             $subject = $lang_mail->line('email_leave_request_reject_subject');
         }
-        $cc_list = array();
-        array_push($cc_list, $hierarchical_manager['email']);
-        foreach ($admins as $item) array_push($cc_list, $item['email']);
         sendMailByWrapper($this, $subject, $message, $employee['email'], is_null($cc_list)?NULL:$cc_list, true);
     }
     

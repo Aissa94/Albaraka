@@ -999,6 +999,7 @@ class Leaves_model extends CI_Model {
     public function getLeavesRequestedToManager($manager, $all = FALSE) {
         $this->load->model('delegations_model');
         $ids = $this->delegations_model->listManagersGivingDelegation($manager);
+        $ids = array_merge($ids, $this->delegations_model->listManagersGivingSubstitution($manager));
         $this->db->select('leaves.id as leave_id, users.*, leaves.*, types.name as type_label, users2.firstname as substitute_firstname, users2.lastname as substitute_lastname');
         $this->db->select('status.name as status_name, types.name as type_name');
         $this->db->join('status', 'leaves.status = status.id');
@@ -1029,6 +1030,7 @@ class Leaves_model extends CI_Model {
     public function countLeavesRequestedToManager($manager) {
         $this->load->model('delegations_model');
         $ids = $this->delegations_model->listManagersGivingDelegation($manager);
+        $ids = array_merge($ids, $this->delegations_model->listManagersGivingSubstitution($manager));
         $this->db->select('count(*) as number', FALSE);
         $this->db->join('users', 'users.id = leaves.employee');
         $this->db->where('leaves.status', 2);

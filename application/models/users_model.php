@@ -53,6 +53,19 @@ class Users_model extends CI_Model {
     }
 
     /**
+     * Get the list of imal admin or one imal admin
+     * @return array record of users
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function getImalAdmins() {
+        $this->db->select('id, email, language');
+        $this->db->from('users');
+        $this->db->where('role',4);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    /**
      * Get the list of system admin or one system admin
      * @return array record of users
      * @author Nabil GHOUILA <dnghouila@gmail.com>
@@ -64,7 +77,7 @@ class Users_model extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     /**
      * Get the list of employees
      * @return array record of users
@@ -450,8 +463,13 @@ class Users_model extends CI_Model {
             $isManager = TRUE;
         } else {
             $this->load->model('delegations_model');
-            if ($this->delegations_model->hasDelegation($row->id))
+            if ($this->delegations_model->hasDelegation($row->id)){
                 $isManager = TRUE;
+            } else {
+                if ($this->delegations_model->hasSubstitution($row->id)){
+                    $isManager = TRUE;
+                }
+            }
         }
 
         $newdata = array(
@@ -769,6 +787,28 @@ class Users_model extends CI_Model {
         }
     }
     
+    /**
+     * Check if a user is absent in this day (TRUE) or (FALSE)
+     * @param int $id identifier of a user
+     * @return bool absent (TRUE) or not absent (FALSE)
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function isAbsent($id) {
+        $date = date("Y-m-d");
+        $this->db->from('leaves');
+        $this->db->where('status', 3);
+        $this->db->where('employee', $id);
+        $this->db->where('startdate <=', $date);
+        $this->db->where('enddate >=', $date);
+        $results = $this->db->get()->row_array();
+        if (count($results) > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
+
     /**
      * Try to return the user information from the login field
      * @param string $login Login
