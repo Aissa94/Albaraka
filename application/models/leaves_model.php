@@ -676,7 +676,7 @@ class Leaves_model extends CI_Model {
     public function individual($user_id, $start = "", $end = "") {
         $this->db->select('leaves.*, types.name as type, users.firstname as substitute_firstname, users.lastname as substitute_lastname');
         $this->db->join('types', 'leaves.type = types.id');
-        $this->db->join('users', 'leaves.substitute = users.id');
+        $this->db->join('users', 'leaves.substitute = users.id', 'LEFT');
         $this->db->where('employee', $user_id);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         $this->db->order_by('startdate', 'desc');
@@ -702,6 +702,7 @@ class Leaves_model extends CI_Model {
             $allDay = FALSE;
             $startdatetype =  $entry->startdatetype;
             $enddatetype = $entry->enddatetype;
+            $substitute =  $entry->substitute_firstname.' '.$entry->substitute_lastname;
             if ($startdate == $enddate) { //Deal with invalid start/end date
                 $imageUrl = base_url() . 'assets/images/date_error.png';
                 $startdate = $entry->startdate . 'T07:00:00';
@@ -710,8 +711,7 @@ class Leaves_model extends CI_Model {
                 $enddatetype = "Afternoon";
                 $allDay = TRUE;
             }
-            $substitute =  $entry->substitute;
-
+            
             switch ($entry->status)
             {
                 case 1: $color = '#999'; break;     // Planned
@@ -722,7 +722,7 @@ class Leaves_model extends CI_Model {
             
             $jsonevents[] = array(
                 'id' => $entry->id,
-                'title' => $entry->type,
+                'title' => $entry->type.' ('.$substitute.')',
                 'imageurl' => $imageUrl,
                 'start' => $startdate,
                 'color' => $color,
@@ -730,7 +730,6 @@ class Leaves_model extends CI_Model {
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
                 'enddatetype' => $enddatetype,
-                'substitute' => $substitute  
             );
         }
         return json_encode($jsonevents);
@@ -745,6 +744,8 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function workmates($user_id, $start = "", $end = "") {
+        //$this->db->select('users2.firstname as substitute_firstname, users2.lastname as substitute_lastname');
+        //$this->db->join('users as users2', 'leaves.substitute = users2.id', 'LEFT');
         $this->db->join('users', 'users.id = leaves.employee');
         $this->db->where('users.manager', $user_id);
         $this->db->where('leaves.status != ', 4);       //Exclude rejected requests
@@ -771,6 +772,8 @@ class Leaves_model extends CI_Model {
             $allDay = FALSE;
             $startdatetype =  $entry->startdatetype;
             $enddatetype = $entry->enddatetype;
+            //$substitute =  $entry->substitute_firstname.' '.$entry->substitute_lastname;
+            
             if ($startdate == $enddate) { //Deal with invalid start/end date
                 $imageUrl = base_url() . 'assets/images/date_error.png';
                 $startdate = $entry->startdate . 'T07:00:00';
@@ -790,7 +793,7 @@ class Leaves_model extends CI_Model {
             
             $jsonevents[] = array(
                 'id' => $entry->id,
-                'title' => $entry->firstname .' ' . $entry->lastname,
+                'title' => $entry->firstname .' ' . $entry->lastname,//.' '.$substitute,
                 'imageurl' => $imageUrl,
                 'start' => $startdate,
                 'color' => $color,
@@ -798,7 +801,6 @@ class Leaves_model extends CI_Model {
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
                 'enddatetype' => $enddatetype,
-                'substitute' => $substitute 
             );
         }
         return json_encode($jsonevents);
@@ -864,8 +866,7 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype,
-                'substitute' => $substitute 
+                'enddatetype' => $enddatetype
             );
         }
         return json_encode($jsonevents);
@@ -950,8 +951,7 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype,
-                'substitute' => $substitute
+                'enddatetype' => $enddatetype
             );
         }
         return json_encode($jsonevents);
