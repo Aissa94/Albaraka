@@ -67,6 +67,7 @@ $lang['hr_export_employees_thead_manager'] = 'Manager';
 
 $lang['hr_leaves_title'] = 'Liste des demandes de ';
 $lang['hr_leaves_html_title'] = 'Liste des demandes de congé de l\'employé n°';
+$lang['hr_leaves_thead_tip_print'] = 'Imprimer';
 $lang['hr_leaves_thead_tip_edit'] = 'Modifier';
 $lang['hr_leaves_thead_tip_accept'] = 'Accepter';
 $lang['hr_leaves_thead_tip_reject'] = 'Refuser';

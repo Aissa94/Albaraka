@@ -67,10 +67,11 @@ $lang['hr_export_employees_thead_manager'] = 'Manager';
 
 $lang['hr_leaves_title'] = 'List of requested leaves';
 $lang['hr_leaves_html_title'] = 'List of leaves for employee #';
-$lang['hr_leaves_thead_tip_edit'] = 'edit';
-$lang['hr_leaves_thead_tip_accept'] = 'accept';
-$lang['hr_leaves_thead_tip_reject'] = 'reject';
-$lang['hr_leaves_thead_tip_delete'] = 'delete';
+$lang['hr_leaves_thead_tip_print'] = 'Print';
+$lang['hr_leaves_thead_tip_edit'] = 'Edit';
+$lang['hr_leaves_thead_tip_accept'] = 'Accept';
+$lang['hr_leaves_thead_tip_reject'] = 'Reject';
+$lang['hr_leaves_thead_tip_delete'] = 'Delete';
 $lang['hr_leaves_thead_id'] = 'ID';
 $lang['hr_leaves_thead_status'] = 'Status';
 $lang['hr_leaves_thead_start'] = 'Start Date';
