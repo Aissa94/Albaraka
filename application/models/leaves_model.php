@@ -724,7 +724,8 @@ class Leaves_model extends CI_Model {
             
             $jsonevents[] = array(
                 'id' => $entry->id,
-                'title' => $entry->type.' ('.$substitute.')',
+                'title' => $entry->type,
+                'infos' => ' Remplaçant : '.$substitute.'',
                 'imageurl' => $imageUrl,
                 'start' => $startdate,
                 'color' => $color,

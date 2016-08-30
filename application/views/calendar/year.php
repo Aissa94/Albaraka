@@ -16,10 +16,10 @@ $currentDay = (int)date('d');
 
 <div class="row-fluid">
     <div class="span4">
-        <span class="label"><?php echo lang('Planned');?></span>&nbsp;
-        <span class="label label-success"><?php echo lang('Accepted');?></span>&nbsp;
-        <span class="label label-warning"><?php echo lang('Requested');?></span>&nbsp;
-        <span class="label label-important" style="background-color: #ff0000;"><?php echo lang('Rejected');?></span>
+        <div class="span3 btn conge"><?php echo lang('Planned');?></div>
+        <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
+        <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
+        <div class="span3 btn btn-danger red conge"><?php echo lang('Rejected');?></div>
     </div>
     <div class="span4">
         <a href="<?php echo base_url();?>calendar/year/export/<?php echo $employee_id;?>/<?php echo ($year);?>" class="btn btn-primary"><i class="fa fa-file-excel-o"></i>&nbsp;<?php echo lang('calendar_year_button_export');?></a>
