@@ -168,6 +168,16 @@ $this->lang->load('menu', $language);?>
                       <li><a href="<?php echo base_url();?>calendar/tabular"><?php echo lang('menu_calendar_tabular');?></a></li>
                   </ul>
                 </li>
+
+              <?php if ($is_hr == TRUE) { ?>
+                  <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_discordance_title');?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="<?php echo base_url();?>discordance"><?php echo lang('menu_discordance_leave');?></a></li>
+                      <li><a href="<?php echo base_url();?>discordance/pay"><?php echo lang('menu_discordance_pay');?></a></li>
+                    </ul>
+                  </li>
+              <?php } ?>
               </ul>
 
                 <ul class="nav pull-right">

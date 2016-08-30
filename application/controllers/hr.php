@@ -497,6 +497,14 @@ class Hr extends CI_Controller {
         $data['id'] = $id;
         $this->load->view('hr/export_overtime', $data);
     }
+    /**
+     * Export the list of all overtime requests of an employee into an Excel file
+     * @param int $id employee id
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function leaveTitle($id) {
+    }
+    
     
     /**
      * Export the list of all employees into an Excel file

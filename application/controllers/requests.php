@@ -98,6 +98,8 @@ class Requests extends CI_Controller {
         }
     }
 
+    
+
     /**
      * Reject a leave request
      * @param int $id leave request identifier
@@ -131,6 +133,31 @@ class Requests extends CI_Controller {
         } else {
             log_message('error', 'User #' . $this->user_id . ' illegally tried to reject leave #' . $id);
             $this->session->set_flashdata('msg', lang('requests_reject_flash_msg_error'));
+            redirect('leaves');
+        }
+    }
+
+    /**
+     * Print a leave request
+     * @param int $id leave request identifier 
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function printa($id) {
+        //$this->auth->checkIfOperationIsAllowed('print_requests');
+        //$this->load->model('users_model');
+       $query = $this->db->query("SELECT leaves.id AS conge, startdate, enddate, duration, types.name AS type, users.id, firstname, lastname, organization.name, description FROM leaves JOIN types ON types.id = leaves.type JOIN users ON employee = users.id JOIN organization ON organization = organization.id JOIN positions ON positions.id = position WHERE leaves.id=".$id, FALSE);
+       //$employee = $query->result();
+        //$employee = $this->users_model->getUsers($leave['employee']);// employee qui a demandé
+        if ($this->is_hr) {
+            $this->load->view('hr/leave_title', $query->row_array());
+            if (isset($_GET['source'])) {
+                redirect($_GET['source']);
+            } else {
+                redirect('requests');
+            }
+        } else {
+            log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
+            $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_error'));
             redirect('leaves');
         }
     }

@@ -35,6 +35,10 @@ $lang['menu_hr_reports_divider'] = 'Reports';
 $lang['menu_hr_report_leave_balance'] = 'Leave balance';
 $lang['menu_hr_report_leaves'] = 'Leave requests';
 
+$lang['menu_discordance_title'] = 'Unconformity';
+$lang['menu_discordance_leave'] = 'Leaves';
+$lang['menu_discordance_pay'] = 'Balances';
+
 $lang['menu_validation_title'] = 'Approval';
 $lang['menu_validation_delegations'] = 'Delegations';
 $lang['menu_validation_collaborators'] = 'My subordinates';

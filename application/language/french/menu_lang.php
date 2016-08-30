@@ -35,6 +35,10 @@ $lang['menu_hr_reports_divider'] = 'Rapports';
 $lang['menu_hr_report_leave_balance'] = 'État des congés';
 $lang['menu_hr_report_leaves'] = 'Demandes de congé';
 
+$lang['menu_discordance_title'] = 'Discordance';
+$lang['menu_discordance_leave'] = 'Les congés';
+$lang['menu_discordance_pay'] = 'Les soldes';
+
 $lang['menu_validation_title'] = 'Validation';
 $lang['menu_validation_delegations'] = 'Délégations';
 $lang['menu_validation_collaborators'] = 'Mes collaborateurs';

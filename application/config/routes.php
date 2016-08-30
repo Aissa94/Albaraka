@@ -72,6 +72,7 @@ $route['hr/employees/edit/entitlements'] = 'hr/editEntitlements';
 $route['hr/employees/create/leave'] = 'hr/createLeaveRequest';
 $route['hr/leaves/(:num)'] = 'hr/leaves/$1';
 $route['hr/leaves/export/(:num)'] = 'hr/exportLeaves/$1';
+$route['hr/leave_title/(:any)'] = 'hr/leaveTitle/$1';
 $route['hr/overtime/(:num)'] = 'hr/overtime/$1';
 $route['hr/counters/([^/]+)/(:num)'] = 'hr/counters/$1/$2';
 $route['hr/counters/([^/]+)/(:num)/(:num)'] = 'hr/counters/$1/$2/$3';
@@ -120,6 +121,24 @@ $route['contracts/calendar/userdayoffs'] = 'contracts/userDayoffs';
 $route['contracts/calendar/alldayoffs'] = 'contracts/allDayoffs';
 $route['contracts'] = 'contracts';
 
+//_______________________________________________
+//HR edit discordance
+$route['discordance/export'] = 'discordance/export';
+$route['discordance/create'] = 'discordance/create';
+$route['discordance/pay'] = 'discordance/pay';
+$route['discordance/edit/(:any)/(:any)/(:num)'] = 'discordance/edit/$1/$2/$3';
+$route['discordance/update'] = 'discordance/update';
+$route['discordance/delete/(:num)'] = 'discordance/delete/$1';
+$route['discordance/(:num)/calendar/(:num)'] = 'discordance/calendar/$1/$2';
+$route['discordance/(:num)/calendar'] = 'discordance/calendar/$1';
+$route['discordance/(:num)/calendar/(:num)/copy/(:num)'] = 'discordance/copydayoff/$1/$3/$2';
+$route['discordance/calendar/edit'] = 'discordance/editdayoff';
+$route['discordance/calendar/series'] = 'discordance/series';
+$route['discordance/calendar/import'] = 'discordance/import';
+$route['discordance/calendar/userdayoffs/(:num)'] = 'discordance/userDayoffs/$1';
+$route['discordance/calendar/userdayoffs'] = 'discordance/userDayoffs';
+$route['discordance/calendar/alldayoffs'] = 'discordance/allDayoffs';
+$route['discordance'] = 'discordance';
 //_______________________________________________
 //HR Organization
 $route['organization/select'] = 'organization/select';
@@ -194,6 +213,7 @@ $route['requests/counters/(:num)/(:num)'] = 'requests/counters/$1/$2';
 $route['requests/export/(:any)'] = 'requests/export/$1';
 $route['requests/accept/(:num)'] = 'requests/accept/$1';
 $route['requests/reject/(:num)'] = 'requests/reject/$1';
+$route['requests/printa/(:num)'] = 'requests/printa/$1';
 $route['requests/delegations/(:num)'] = 'requests/delegations/$1';
 $route['requests/delegations'] = 'requests/delegations';
 $route['requests/ajax/delegations/delete'] = 'requests/deleteDelegations';

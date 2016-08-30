@@ -309,6 +309,8 @@ class Leaves_model extends CI_Model {
         $this->db->select('SUM(entitleddays.days) as entitled');
         $this->db->select('MIN(startdate) as min_date');
         $this->db->select('MAX(enddate) as max_date');
+        $this->db->select('entitleddays.type as type_id_entitlment');
+        $this->db->select('entitleddays.employee as employee_id');
         $this->db->from('entitleddays');
         $this->db->join('types', 'types.id = entitleddays.type');
         $this->db->group_by('types.id');
@@ -360,7 +362,7 @@ class Leaves_model extends CI_Model {
                 $this->db->where('leaves.employee', $id);
                 $this->db->where('leaves.status', 3);
                 $this->db->where('leaves.startdate >= ', $entitlement['min_date']);
-                $this->db->where('leaves.enddate <=', $entitlement['max_date']);
+                $this->db->where('leaves.enddate <= ', $entitlement['max_date']);
                 $this->db->where('leaves.type', $entitlement['type_id']);
                 $this->db->group_by("leaves.type");
                 $taken_days = $this->db->get()->result_array();
@@ -729,7 +731,7 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype,
+                'enddatetype' => $enddatetype
             );
         }
         return json_encode($jsonevents);
@@ -800,7 +802,7 @@ class Leaves_model extends CI_Model {
                 'allDay' => $allDay,
                 'end' => $enddate,
                 'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype,
+                'enddatetype' => $enddatetype
             );
         }
         return json_encode($jsonevents);

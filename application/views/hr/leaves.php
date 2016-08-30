@@ -41,6 +41,11 @@
             <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_edit');?>"><?php echo $leave['id'] ?></a>
             <div class="pull-right">
                 &nbsp;
+                <?php if ($leave['status']==3) { ?>
+                <a href="<?php echo base_url();?>requests/printa/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_print');?>"><i class="icon-print"></i></a>
+                &nbsp;
+                <?php } ?>
+                &nbsp;
                 <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_edit');?>"><i class="icon-edit"></i></a>
             <?php if ($leave['type']==2)
             {?>
