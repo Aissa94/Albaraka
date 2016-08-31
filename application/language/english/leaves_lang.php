@@ -82,6 +82,7 @@ $lang['leaves_delete_flash_msg_success'] = 'The leave request has been succesful
 
 $lang['leaves_view_title'] = 'View leave request #';
 $lang['leaves_view_html_title'] = 'View a leave request';
+$lang['leaves_view_field_organization'] = 'Agency';
 $lang['leaves_view_field_start'] = 'Start Date';
 $lang['leaves_view_field_end'] = 'End Date';
 $lang['leaves_view_field_type'] = 'Leave type';

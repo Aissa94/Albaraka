@@ -159,13 +159,15 @@ $this->lang->load('menu', $language);?>
                   <ul class="dropdown-menu">
                       <li><a href="<?php echo base_url();?>calendar/individual"><?php echo lang('menu_calendar_individual');?></a></li>
                       <li><a href="<?php echo base_url();?>calendar/year"><?php echo lang('menu_calendar_year');?></a></li>
-                      <li><a href="<?php echo base_url();?>calendar/workmates"><?php echo lang('menu_calendar_workmates');?></a></li>
+                      <!--li><a href="<?php echo base_url();?>calendar/workmates"><?php //echo lang('menu_calendar_workmates');?></a></li-->
                       <?php if ($is_manager == TRUE) { ?>
                       <li><a href="<?php echo base_url();?>calendar/collaborators"><?php echo lang('menu_calendar_collaborators');?></a></li>
                       <?php } ?>
-                      <li><a href="<?php echo base_url();?>calendar/department"><?php echo lang('menu_calendar_department');?></a></li>
+                      <!--li><a href="<?php echo base_url();?>calendar/department"><?php //echo lang('menu_calendar_department');?></a></li-->
+                      <?php if ($is_hr == TRUE) { ?>
                       <li><a href="<?php echo base_url();?>calendar/organization"><?php echo lang('menu_calendar_organization');?></a></li>
                       <li><a href="<?php echo base_url();?>calendar/tabular"><?php echo lang('menu_calendar_tabular');?></a></li>
+                      <?php } ?>
                   </ul>
                 </li>
 

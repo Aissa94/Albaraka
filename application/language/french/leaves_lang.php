@@ -84,6 +84,7 @@ $lang['leaves_delete_flash_msg_success'] = 'La demande d\'absence a été suppri
 
 $lang['leaves_view_title'] = 'Visualiser la demande N°';
 $lang['leaves_view_html_title'] = 'Visualiser une demande';
+$lang['leaves_view_field_organization'] = 'Agence';
 $lang['leaves_view_field_start'] = 'Date de début';
 $lang['leaves_view_field_end'] = 'Date de fin';
 $lang['leaves_view_field_type'] = 'Type de congé';
