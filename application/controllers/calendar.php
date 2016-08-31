@@ -33,6 +33,7 @@ class Calendar extends CI_Controller {
     public function year($employee = 0, $year = 0) {
             setUserContext($this);
             $this->lang->load('calendar', $this->language);
+            $this->lang->load('leaves', $this->language);
             $this->auth->checkIfOperationIsAllowed('organization_calendar');
             $data = getUserContext($this);
             $this->load->model('users_model');
@@ -247,6 +248,7 @@ class Calendar extends CI_Controller {
             $this->load->library('polyglot');
             $data['language'] = $this->config->item('language');
             $data['language_code'] =  $this->polyglot->language2code($data['language']);
+            $this->lang->load('leaves', $data['language']);
             $this->lang->load('global', $data['language']);
             $this->lang->load('calendar', $data['language']);
             $this->load->model('leaves_model');
@@ -264,6 +266,7 @@ class Calendar extends CI_Controller {
             $this->load->view('templates/footer_simple');
         } else {
             setUserContext($this);
+            $this->lang->load('leaves', $this->language);
             $this->lang->load('global', $this->language);
             $this->lang->load('calendar', $this->language);
             $this->auth->checkIfOperationIsAllowed('organization_calendar');

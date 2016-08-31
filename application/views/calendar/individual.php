@@ -151,7 +151,7 @@ $(function () {
         },
         eventAfterRender: function(event, element, view) {
             //Add tooltip to the element
-            $(element).attr('title', event.title);
+            $(element).attr('title', event.substitute+event.cause);
             
             if (event.enddatetype == "Morning" || event.startdatetype == "Afternoon") {
                 var nb_days = event.end.diff(event.start, "days");

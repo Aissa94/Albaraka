@@ -74,22 +74,22 @@ class Organization_model extends CI_Model {
      * @return array list of entity identifiers
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    /*public function getAllChildren($id) {
+    public function getAllChildren($id) {
         $query = 'SELECT GetFamilyTree(id) as id' .
                     ' FROM organization' .
                     ' WHERE id =' . $id;
         $query = $this->db->query($query); 
         $arr = $query->result_array();
         return $arr;
-    }*/
+    }
 
     /**
-     * Get all children of an entity
+     * Get children of an entity
      * @param int $id identifier of the entity
      * @return array list of entity identifiers
      * @author Nabil GHOUILA <dnghouila@gmail.com>
      */
-    public function getAllChildren($id) {
+    public function getChildren($id) {
         $query = $this->db->query('SELECT organization.id FROM organization WHERE organization.parent_id = '.$id, FALSE); 
         $arr = $query->result_array();
         return $arr;
@@ -245,7 +245,7 @@ class Organization_model extends CI_Model {
         $this->db->join('contracts', 'contracts.id  = users.contract', 'left');
         if ($children === TRUE) {
             $this->load->model('organization_model');
-            $list = $this->organization_model->getAllChildren($id);
+            $list = $this->organization_model->getChildren($id);
             $ids = array();
             if (count($list) > 0) {
                 if ($list[0]['id'] != '') {

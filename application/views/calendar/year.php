@@ -74,19 +74,27 @@ $currentDay = (int)date('d');
                 $periods = explode(";", $day->display);
                 $statuses = explode(";", $day->status);
                 $types = explode(";", $day->type);
+                $substitutes = explode(";", $day->substitute);
+                $causes = explode(";", $day->cause);
                 if (($periods[0] == 1) || ($periods[0] == 2) || ($periods[0] == 4) || ($periods[0] == 5)) {
                     $display = $periods[0];
                     $status = $statuses[0];
                     $type = $types[0];
+                    $substitute = $substitutes[0];
+                    $cause = $causes[0];
                 } else {
                     $display = $periods[1];
                     $status = $statuses[1];
-                    $type = $types[1];   
+                    $type = $types[1];
+                    $substitute = $substitutes[1];
+                    $cause = $causes[1];   
                 }
             } else {
                 $display = $day->display;
                 $status = $day->status;
                 $type = $day->type;
+                $substitute = $day->substitute;
+                $cause = $day->cause; 
             }
             //0 - Working day  _
             //1 - All day           []
@@ -103,10 +111,10 @@ $currentDay = (int)date('d');
             if ($display == 1 || $display == 2) {
                 switch ($status)
                 {
-                  case 1: echo '<td title="' . $type .'" class="allplanned'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Planned
-                  case 2: echo '<td title="' . $type .'" class="allrequested'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Requested
-                  case 3: echo '<td title="' . $type .'" class="allaccepted'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Accepted
-                  case 4: echo '<td title="' . $type .'" class="allrejected'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Rejected
+                  case 1: echo ('<td title="' . $type . $substitute . $cause .'" class="allplanned'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Planned
+                  case 2: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Requested
+                  case 3: echo ('<td title="' . $type . $substitute . $cause .'" class="allaccepted'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Accepted
+                  case 4: echo ('<td title="' . $type . $substitute . $cause .'" class="allrejected'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Rejected
                 }
             }
         $pad_day++;
@@ -129,31 +137,39 @@ $currentDay = (int)date('d');
                 $periods = explode(";", $day->display);
                 $statuses = explode(";", $day->status);
                 $types = explode(";", $day->type);
+                $substitutes = explode(";", $day->substitute);
+                $causes = explode(";", $day->cause);
                 if (($periods[0] == 1) || ($periods[0] == 3) || ($periods[0] == 4) || ($periods[0] == 6)) {
                     $display = $periods[0];
                     $status = $statuses[0];
                     $type = $types[0];
+                    $substitute = $substitutes[0];
+                    $cause = $causes[0];
                 } else {
                     $display = $periods[1];
                     $status = $statuses[1];
-                    $type = $types[1];   
+                    $type = $types[1];
+                    $substitute = $substitutes[1];
+                    $cause = $causes[1];   
                 }
             } else {
                 $display = $day->display;
                 $status = $day->status;
                 $type = $day->type;
+                $substitute = $day->substitute;
+                $cause = $day->cause;
             }
             if ($display == 9) echo '<td'.($class?' class="'.$class.'"':'').'><img src="'.  base_url() .'assets/images/date_error.png"></td>';
             if ($display == 0) echo '<td'.($class?' class="'.$class.'"':'').'>&nbsp;</td>';
             if ($display == 2 || $display == 5) echo '<td'.($class?' class="'.$class.'"':'').'>&nbsp;</td>';
-            if ($display == 4 || $display == 6) echo '<td title="' . $type .'" class="dayoff'.($class?' '.$class:'').'">&nbsp;</td>';
+            if ($display == 4 || $display == 6) echo '<td title="' . $type. '" class="dayoff'.($class?' '.$class:'').'">&nbsp;</td>';
             if ($display == 1 || $display == 3) {
                 switch ($status)
                 {
-                  case 1: echo '<td title="' . $type .'" class="allplanned'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Planned
-                  case 2: echo '<td title="' . $type .'" class="allrequested'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Requested
-                  case 3: echo '<td title="' . $type .'" class="allaccepted'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Accepted
-                  case 4: echo '<td title="' . $type .'" class="allrejected'.($class?' '.$class:'').'">&nbsp;</td>'; break;  // Rejected
+                  case 1: echo ('<td title="' . $type . $substitute . $cause .'" class="allplanned'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Planned
+                  case 2: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Requested
+                  case 3: echo ('<td title="' . $type . $substitute . $cause .'" class="allaccepted'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Accepted
+                  case 4: echo ('<td title="' . $type . $substitute . $cause .'" class="allrejected'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Rejected
                 }
             }
       } ?>

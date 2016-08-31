@@ -327,6 +327,7 @@ class Hr extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->model('types_model');
+        $this->load->model('users_model');
         $data['title'] = lang('hr_leaves_create_title');
         $data['form_action'] = 'hr/leaves/create/' . $id;
         $data['source'] = 'hr/employees';
@@ -356,7 +357,6 @@ class Hr extends CI_Controller {
 
             $data['substitute'] = $this->users_model->getEmployeesOfOrganization($id);
 
-            $this->load->model('users_model');
             $data['name'] = $this->users_model->getName($id);
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);

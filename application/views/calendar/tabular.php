@@ -224,9 +224,9 @@
                 echo '<td><img src="'.  base_url() .'assets/images/date_error.png"></td>';
             } else {
                 if ($overlapping) {
-                    echo '<td title="' . $day->type . '" class="' . $class . '"><img src="' . base_url() . 'assets/images/date_error.png"></td>';
+                    echo '<td title="' . $day->type.$day->substitute.$day->cause. '" class="' . $class . '"><img src="' . base_url() . 'assets/images/date_error.png"></td>';
                 } else {
-                    echo '<td title="' . $day->type . '" class="' . $class . '">&nbsp;</td>';
+                    echo '<td title="' . $day->type.$day->substitute.$day->cause. '" class="' . $class . '">&nbsp;</td>';
                 }
             }
             ?>

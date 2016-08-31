@@ -704,7 +704,16 @@ class Leaves_model extends CI_Model {
             $allDay = FALSE;
             $startdatetype =  $entry->startdatetype;
             $enddatetype = $entry->enddatetype;
-            $substitute =  $entry->substitute_firstname.' '.$entry->substitute_lastname;
+            $substitute = '';
+            if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
+            {
+                $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
+            }
+            $cause = '';
+            if(isset($entry->cause))
+            {
+                $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
+            }
             if ($startdate == $enddate) { //Deal with invalid start/end date
                 $imageUrl = base_url() . 'assets/images/date_error.png';
                 $startdate = $entry->startdate . 'T07:00:00';
@@ -721,11 +730,11 @@ class Leaves_model extends CI_Model {
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
             }
-            
             $jsonevents[] = array(
                 'id' => $entry->id,
                 'title' => $entry->type,
-                'infos' => ' Remplaçant : '.$substitute.'',
+                'substitute' => $substitute,
+                'cause' => $cause,
                 'imageurl' => $imageUrl,
                 'start' => $startdate,
                 'color' => $color,
@@ -775,74 +784,7 @@ class Leaves_model extends CI_Model {
             $allDay = FALSE;
             $startdatetype =  $entry->startdatetype;
             $enddatetype = $entry->enddatetype;
-            //$substitute =  $entry->substitute_firstname.' '.$entry->substitute_lastname;
             
-            if ($startdate == $enddate) { //Deal with invalid start/end date
-                $imageUrl = base_url() . 'assets/images/date_error.png';
-                $startdate = $entry->startdate . 'T07:00:00';
-                $enddate = $entry->enddate . 'T18:00:00';
-                $startdatetype = "Morning";
-                $enddatetype = "Afternoon";
-                $allDay = TRUE;
-            }
-            
-            switch ($entry->status)
-            {
-                case 1: $color = '#999'; break;     // Planned
-                case 2: $color = '#f89406'; break;  // Requested
-                case 3: $color = '#468847'; break;  // Accepted
-                case 4: $color = '#ff0000'; break;  // Rejected
-            }
-            
-            $jsonevents[] = array(
-                'id' => $entry->id,
-                'title' => $entry->firstname .' ' . $entry->lastname,//.' '.$substitute,
-                'imageurl' => $imageUrl,
-                'start' => $startdate,
-                'color' => $color,
-                'allDay' => $allDay,
-                'end' => $enddate,
-                'startdatetype' => $startdatetype,
-                'enddatetype' => $enddatetype
-            );
-        }
-        return json_encode($jsonevents);
-    }
-
-    /**
-     * Leave requests of All users having the same manager (suitable for FullCalendar widget)
-     * @param int $user_id id of the manager
-     * @param string $start Unix timestamp / Start date displayed on calendar
-     * @param string $end Unix timestamp / End date displayed on calendar
-     * @return string JSON encoded list of full calendar events
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function collaborators($user_id, $start = "", $end = "") {
-        $this->db->join('users', 'users.id = leaves.employee');
-        $this->db->where('users.manager', $user_id);
-        $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
-        $this->db->order_by('startdate', 'desc');
-        $this->db->limit(1024);  //Security limit
-        $events = $this->db->get('leaves')->result();
-        
-        $jsonevents = array();
-        foreach ($events as $entry) {
-            if ($entry->startdatetype == "Morning") {
-                $startdate = $entry->startdate . 'T07:00:00';
-            } else {
-                $startdate = $entry->startdate . 'T12:00:00';
-            }
-
-            if ($entry->enddatetype == "Morning") {
-                $enddate = $entry->enddate . 'T12:00:00';
-            } else {
-                $enddate = $entry->enddate . 'T18:00:00';
-            }
-            
-            $imageUrl = '';
-            $allDay = FALSE;
-            $startdatetype =  $entry->startdatetype;
-            $enddatetype = $entry->enddatetype;
             if ($startdate == $enddate) { //Deal with invalid start/end date
                 $imageUrl = base_url() . 'assets/images/date_error.png';
                 $startdate = $entry->startdate . 'T07:00:00';
@@ -874,6 +816,183 @@ class Leaves_model extends CI_Model {
         }
         return json_encode($jsonevents);
     }
+
+    /**
+     * Leave requests of All users having the same manager (suitable for FullCalendar widget)
+     * @param int $user_id id of the manager
+     * @param string $start Unix timestamp / Start date displayed on calendar
+     * @param string $end Unix timestamp / End date displayed on calendar
+     * @return string JSON encoded list of full calendar events
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function collaborators($user_id, $start = "", $end = "") {
+        $this->load->model('organization_model');
+        // if the user is the first manager
+        if($user_id == $this->organization_model->getManager($user_id)){
+            return $this->collaboratorsOfFirstManager($start, $end);
+        }else{
+        $this->db->select('leaves.*, users.firstname, users.lastname, types.name as type, users2.firstname as substitute_firstname, users2.lastname as substitute_lastname');
+        $this->db->join('users', 'users.id = leaves.employee');
+        $this->db->join('users as users2', 'users2.id = leaves.substitute', 'LEFT');
+        $this->db->join('types', 'types.id = leaves.type');
+        $this->db->where('users.manager', $user_id);
+        $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
+        $this->db->order_by('startdate', 'desc');
+        $this->db->limit(1024);  //Security limit
+        $events = $this->db->get('leaves')->result();
+        
+        $jsonevents = array();
+        foreach ($events as $entry) {
+            if ($entry->startdatetype == "Morning") {
+                $startdate = $entry->startdate . 'T07:00:00';
+            } else {
+                $startdate = $entry->startdate . 'T12:00:00';
+            }
+
+            if ($entry->enddatetype == "Morning") {
+                $enddate = $entry->enddate . 'T12:00:00';
+            } else {
+                $enddate = $entry->enddate . 'T18:00:00';
+            }
+            
+            $imageUrl = '';
+            $allDay = FALSE;
+            $startdatetype =  $entry->startdatetype;
+            $enddatetype = $entry->enddatetype;
+            $substitute = '';
+            if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
+            {
+                $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
+            }
+            $cause = '';
+            if(isset($entry->cause))
+            {
+                $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
+            }
+            if ($startdate == $enddate) { //Deal with invalid start/end date
+                $imageUrl = base_url() . 'assets/images/date_error.png';
+                $startdate = $entry->startdate . 'T07:00:00';
+                $enddate = $entry->enddate . 'T18:00:00';
+                $startdatetype = "Morning";
+                $enddatetype = "Afternoon";
+                $allDay = TRUE;
+            }
+            
+            switch ($entry->status)
+            {
+                case 1: $color = '#999'; break;     // Planned
+                case 2: $color = '#f89406'; break;  // Requested
+                case 3: $color = '#468847'; break;  // Accepted
+                case 4: $color = '#ff0000'; break;  // Rejected
+            }
+            
+            $jsonevents[] = array(
+                'id' => $entry->id,
+                'title' => $entry->firstname .' ' . $entry->lastname,
+                'type' => $entry->type,
+                'substitute' => $substitute,
+                'cause' => $cause,
+                'imageurl' => $imageUrl,
+                'start' => $startdate,
+                'color' => $color,
+                'allDay' => $allDay,
+                'end' => $enddate,
+                'startdatetype' => $startdatetype,
+                'enddatetype' => $enddatetype
+            );
+        }
+        return json_encode($jsonevents);
+        }
+    }
+
+    /**
+     * Leave requests of All users having the same manager (suitable for FullCalendar widget)
+     * @param int $user_id id of the manager
+     * @param string $start Unix timestamp / Start date displayed on calendar
+     * @param string $end Unix timestamp / End date displayed on calendar
+     * @return string JSON encoded list of full calendar events
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function collaboratorsOfFirstManager($start = "", $end = "") {
+        $this->load->model('organization_model');
+        $children = array(); array_push($children, "0");
+        foreach ($this->organization_model->getChildren(0) as $child){
+            array_push($children, $child['id']);
+        }
+        $this->db->select('leaves.*, users.firstname, users.lastname, organization.name as organization_name, types.name as type, users2.firstname as substitute_firstname, users2.lastname as substitute_lastname');
+        $this->db->join('users', 'users.id = leaves.employee');
+        $this->db->join('users as users2', 'users2.id = leaves.substitute', 'LEFT');
+        $this->db->join('types', 'types.id = leaves.type');
+        $this->db->join('organization', 'organization.id = users.organization');
+        $this->db->where_in('users.organization', $children);
+        $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
+        $this->db->order_by('startdate', 'desc');
+        $this->db->limit(1024);  //Security limit
+        $events = $this->db->get('leaves')->result();
+        
+        $jsonevents = array();
+        foreach ($events as $entry) {
+            if ($entry->startdatetype == "Morning") {
+                $startdate = $entry->startdate . 'T07:00:00';
+            } else {
+                $startdate = $entry->startdate . 'T12:00:00';
+            }
+
+            if ($entry->enddatetype == "Morning") {
+                $enddate = $entry->enddate . 'T12:00:00';
+            } else {
+                $enddate = $entry->enddate . 'T18:00:00';
+            }
+            
+            $imageUrl = '';
+            $allDay = FALSE;
+            $startdatetype =  $entry->startdatetype;
+            $enddatetype = $entry->enddatetype;
+            $organization = lang('leaves_view_field_organization').'  : '.$entry->organization_name;
+            $substitute = '';
+            if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
+            {
+                $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
+            }
+            $cause = '';
+            if(isset($entry->cause))
+            {
+                $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
+            }
+            if ($startdate == $enddate) { //Deal with invalid start/end date
+                $imageUrl = base_url() . 'assets/images/date_error.png';
+                $startdate = $entry->startdate . 'T07:00:00';
+                $enddate = $entry->enddate . 'T18:00:00';
+                $startdatetype = "Morning";
+                $enddatetype = "Afternoon";
+                $allDay = TRUE;
+            }
+            
+            switch ($entry->status)
+            {
+                case 1: $color = '#999'; break;     // Planned
+                case 2: $color = '#f89406'; break;  // Requested
+                case 3: $color = '#468847'; break;  // Accepted
+                case 4: $color = '#ff0000'; break;  // Rejected
+            }
+            
+            $jsonevents[] = array(
+                'id' => $entry->id,
+                'title' => $entry->firstname .' ' . $entry->lastname,
+                'type' => $organization."\n".$entry->type,
+                'substitute' => $substitute,
+                'cause' => $cause,
+                'imageurl' => $imageUrl,
+                'start' => $startdate,
+                'color' => $color,
+                'allDay' => $allDay,
+                'end' => $enddate,
+                'startdatetype' => $startdatetype,
+                'enddatetype' => $enddatetype
+            );
+        }
+        return json_encode($jsonevents);
+    }
     
     /**
      * Leave requests of All users of a department (suitable for FullCalendar widget)
@@ -885,15 +1004,16 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function department($entity_id, $start = "", $end = "", $children = FALSE) {
-        $this->db->select('users.firstname, users.lastname,  leaves.*, types.name as type');
+        $this->db->select('users.firstname, users.lastname,  leaves.*, types.name as type, users1.firstname as substitute_firstname, users1.lastname as substitute_lastname');
         $this->db->from('organization');
         $this->db->join('users', 'users.organization = organization.id');
         $this->db->join('leaves', 'leaves.employee  = users.id');
         $this->db->join('types', 'leaves.type = types.id');
+        $this->db->join('users as users1', 'leaves.substitute = users1.id','LEFT');
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         if ($children === TRUE) {
             $this->load->model('organization_model');
-            $list = $this->organization_model->getAllChildren($entity_id);
+            $list = $this->organization_model->getChildren($entity_id);
             $ids = array();
             if ($list[0]['id'] != '') {
                 $ids = explode(",", $list[0]['id']);
@@ -928,6 +1048,16 @@ class Leaves_model extends CI_Model {
             $allDay = FALSE;
             $startdatetype =  $entry->startdatetype;
             $enddatetype = $entry->enddatetype;
+            $substitute = '';
+            if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
+            {
+                $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
+            }
+            $cause = '';
+            if(isset($entry->cause))
+            {
+                $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
+            }
             if ($startdate == $enddate) { //Deal with invalid start/end date
                 $imageUrl = base_url() . 'assets/images/date_error.png';
                 $startdate = $entry->startdate . 'T07:00:00';
@@ -948,6 +1078,9 @@ class Leaves_model extends CI_Model {
             $jsonevents[] = array(
                 'id' => $entry->id,
                 'title' => $entry->firstname .' ' . $entry->lastname,
+                'type' => $entry->type,
+                'substitute' => $substitute,
+                'cause' => $cause,
                 'imageurl' => $imageUrl,
                 'start' => $startdate,
                 'color' => $color,
@@ -975,7 +1108,7 @@ class Leaves_model extends CI_Model {
         $this->db->join('types', 'leaves.type = types.id');
         if ($children === TRUE) {
             $this->load->model('organization_model');
-            $list = $this->organization_model->getAllChildren($entity_id);
+            $list = $this->organization_model->getChildren($entity_id);
             $ids = array();
             if (count($list) > 0) {
                 $ids = explode(",", $list[0]['id']);
@@ -1199,6 +1332,8 @@ class Leaves_model extends CI_Model {
             $day = new stdClass;
             $day->type = '';
             $day->status = '';
+            $day->substitute = '';
+            $day->cause = '';
             $day->display = 0; //working day
             $user->days[$ii] = $day;
         }
@@ -1211,12 +1346,15 @@ class Leaves_model extends CI_Model {
             $user->days[$dayNum]->display = (string) $dayoff->type + 3;
             $user->days[$dayNum]->status = (string) $dayoff->type + 3;
             $user->days[$dayNum]->type = $dayoff->title;
+            //$user->days[$dayNum]->substitute = '$substitute0';
+            //$user->days[$dayNum]->cause = '$cause0';
         }
         
         //Build the complex query for all leaves
-        $this->db->select('leaves.*, types.name as type');
+        $this->db->select('leaves.*, types.name as type, users.firstname as substitute_firstname, users.lastname as substitute_lastname');
         $this->db->from('leaves');
         $this->db->join('types', 'leaves.type = types.id');
+        $this->db->join('users', 'leaves.substitute = users.id', 'LEFT');
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         if (!$planned) $this->db->where('leaves.status != ', 1);
         if (!$requested) $this->db->where('leaves.status != ', 2);
@@ -1237,7 +1375,18 @@ class Leaves_model extends CI_Model {
             $iDate = clone $startDate;
             $endDate = DateTime::createFromFormat('Y-m-d H:i:s', $entry->enddate . ' 00:00:00');
             if ($endDate > $limitDate) $endDate = $limitDate;
-            
+
+            $substitute = '';
+            if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
+            {
+                $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
+            }
+            $cause = '';
+            if(isset($entry->cause))
+            {
+                $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
+            }
+
             //Iteration between 2 dates
             while ($iDate <= $endDate)
             {
@@ -1287,15 +1436,21 @@ class Leaves_model extends CI_Model {
                             $user->days[$dayNum]->type .= ';' . $entry->type;
                             $user->days[$dayNum]->display .= ';' . $display;
                             $user->days[$dayNum]->status .= ';' . $entry->status;
+                            //$user->days[$dayNum]->substitute .= ';' .'$substitute1';
+                            //$user->days[$dayNum]->cause .= ';' .'$cause1';
                         } else {
                             $user->days[$dayNum]->type = $entry->type . ';' . $user->days[$dayNum]->type;
                             $user->days[$dayNum]->display = $display . ';' . $user->days[$dayNum]->display;
                             $user->days[$dayNum]->status = $entry->status . ';' . $user->days[$dayNum]->status;
+                            //$user->days[$dayNum]->substitute = '$substitute2'. ';' . $user->days[$dayNum]->substitute;
+                            //$user->days[$dayNum]->cause = '$cause2'. ';' . $user->days[$dayNum]->cause;
                         }
                     } else  {   //All day entry
                         $user->days[$dayNum]->type = $entry->type;
                         $user->days[$dayNum]->display = $display;
                         $user->days[$dayNum]->status = $entry->status;
+                        $user->days[$dayNum]->substitute = $substitute;
+                        $user->days[$dayNum]->cause = $cause;
                     }
                 }
                 $iDate->modify('+1 day');   //Next day

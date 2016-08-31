@@ -138,6 +138,7 @@ class Leaves extends CI_Controller {
         $data = getUserContext($this);
         $this->load->helper('form');
         $this->load->library('form_validation');
+        $this->load->model('users_model');
         $data['title'] = lang('leaves_create_title');
         $data['help'] = $this->help->create_help_link('global_link_doc_page_request_leave');
         $data['types'] = $this->types_model->getTypes();
@@ -196,7 +197,6 @@ class Leaves extends CI_Controller {
                         $leave_id = $this->leaves_model->setLeaves($this->session->userdata('id'));
                         $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
 
-                        $this->load->model('users_model');
                         $hr_admins = $this->users_model->getHrAdmins();
                         $this->sendMailToRH($leave_id, $hr_admins);
                     }
@@ -242,6 +242,7 @@ class Leaves extends CI_Controller {
         
         $this->load->helper('form');
         $this->load->library('form_validation');
+        $this->load->model('users_model');
         $data['title'] = lang('leaves_edit_html_title');
         $data['help'] = $this->help->create_help_link('global_link_doc_page_request_leave');
         $data['id'] = $id;
@@ -267,7 +268,6 @@ class Leaves extends CI_Controller {
         $this->form_validation->set_rules('substitute', lang('leaves_edit_field_substitute'), 'xss_clean|strip_tags');
 
         if ($this->form_validation->run() === FALSE) {
-            $this->load->model('users_model');
             $data['name'] = $this->users_model->getName($data['leave']['employee']);
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);
@@ -294,7 +294,6 @@ class Leaves extends CI_Controller {
                         $this->leaves_model->updateLeaves($id);       //We don't use the return value
                         $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
 
-                        $this->load->model('users_model');
                         $hr_admins = $this->users_model->getHrAdmins();
                         $this->sendMailToRH($id, $hr_admins);
                     }

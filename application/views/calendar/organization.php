@@ -218,8 +218,8 @@
             },
             eventAfterRender: function(event, element, view) {
                 //Add tooltip to the element
-                $(element).attr('title', event.title);
-
+                if(event.substitute != undefined || event.cause != undefined) $(element).attr('title', event.type+event.substitute+event.cause);
+                else $(element).attr('title', event.title);
                 if (event.enddatetype == "Morning" || event.startdatetype == "Afternoon") {
                     var nb_days = event.end.diff(event.start, "days");
                     var duration = 0.5;
