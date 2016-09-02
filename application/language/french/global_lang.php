@@ -22,10 +22,11 @@ $lang['global_false'] = 'FAUX';
 $lang['footer_link_go_top'] = 'Aller en haut';
 $lang['footer_copyright_notice'] = '&copy; 2014 Les auteurs de Jorani';
 
-$lang['Requested'] = 'Demandée';
-$lang['Planned'] = 'Planifiée';
-$lang['Accepted'] = 'Acceptée';
-$lang['Rejected'] = 'Rejetée';
+$lang['Requested'] = 'Demandé';
+$lang['Planned'] = 'Planifié';
+$lang['Accepted'] = 'Accepté';
+$lang['Rejected'] = 'Rejeté';
+$lang['Allowed'] = 'Permis';
 
 $lang['global_link_doc_page_calendar_individual'] = 'http://fr.jorani.org/ecrans/page-mon-calendrier.html';
 $lang['global_link_doc_page_calendar_yearly'] = 'http://fr.jorani.org/ecrans/page-calendrier-annuel.html';

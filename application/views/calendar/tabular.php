@@ -67,9 +67,9 @@
 </div>
 
 <div class="row-fluid">
-    <div class="span3"><span class="label"><?php echo lang('Planned');?></span></div>
-    <div class="span3"><span class="label label-success"><?php echo lang('Accepted');?></span></div>
-    <div class="span3"><span class="label label-warning"><?php echo lang('Requested');?></span></div>
+    <div class="span3 btn conge"><?php echo lang('Planned');?></div>
+    <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
+    <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
     <div class="span3">&nbsp;</div>
 </div>
 
@@ -158,10 +158,10 @@
                 if (($statuses[0] == $statuses[1]) && ($periods[0] != $periods[1])){
                     switch (intval($statuses[0]))
                     {
-                        case 1: $class = "allplanned"; break;  // Planned
-                        case 2: $class = "allrequested"; break;  // Requested
-                        case 3: $class = "allaccepted"; break;  // Accepted
-                        case 4: $class = "allrejected"; break;  // Rejected
+                        case 1: $class = "allplanned tabColor"; break;  // Planned
+                        case 2: $class = "allrequested tabColor"; break;  // Requested
+                        case 3: $class = "allaccepted tabColor"; break;  // Accepted
+                        case 4: $class = "allrejected tabColor"; break;  // Rejected
                         //The 2 cases below would be weird...
                         case 5: $class ="dayoff"; break;
                         case 6: $class ="dayoff"; break;
@@ -177,10 +177,10 @@
                 case '1':
                       switch ($day->status)
                       {
-                          case 1: $class = "allplanned"; break;  // Planned
-                          case 2: $class = "allrequested"; break;  // Requested
-                          case 3: $class = "allaccepted"; break;  // Accepted
-                          case 4: $class = "allrejected"; break;  // Rejected
+                          case 1: $class = "allplanned tabColor"; break;  // Planned
+                          case 2: $class = "allrequested tabColor"; break;  // Requested
+                          case 3: $class = "allaccepted tabColor"; break;  // Accepted
+                          case 4: $class = "allrejected tabColor"; break;  // Rejected
                       }
                       break;
                 case '2':
@@ -224,9 +224,9 @@
                 echo '<td><img src="'.  base_url() .'assets/images/date_error.png"></td>';
             } else {
                 if ($overlapping) {
-                    echo '<td title="' . $day->type.$day->substitute.$day->cause. '" class="' . $class . '"><img src="' . base_url() . 'assets/images/date_error.png"></td>';
+                    echo '<td title="' . $day->type .$day->substitute.$day->cause. '" class="' . $class . '"><img src="' . base_url() . 'assets/images/date_error.png"></td>';
                 } else {
-                    echo '<td title="' . $day->type.$day->substitute.$day->cause. '" class="' . $class . '">&nbsp;</td>';
+                    echo '<td title="' . $day->type .$day->substitute.$day->cause. '" class="' . $class . '">&nbsp;</td>';
                 }
             }
             ?>
@@ -367,6 +367,52 @@ date_sub($datePrev, date_interval_create_from_date_string('1 month'));?>
         //Prevent to load always the same content (refreshed each time)
         $('#frmSelectEntity').on('hidden', function() {
             $(this).removeData('modal');
+            });
+            var links = document.querySelectorAll(".tabColor");
+            var tabRed = [], tabGreen = [], tabOrange = [], tabGrey = [];
+            var affect = "white";
+            for (var i = 0, c = links.length ; i < c ; i++) {
+                //alert();
+                switch ($(links[i]).attr('class'))
+                {
+                    case "allrejected tabColor":
+                        tabRed.push(i);
+                        break;
+                    case "allplanned tabColor":
+                        tabGrey.push(i);
+                        break;
+                    case "allrequested tabColor":
+                        tabOrange.push(i);
+                        break;
+                    case "allaccepted tabColor":
+                        tabGreen.push(i);
+                        break;
+                }
+            }  
+            $('.conge').on('click', function() {
+                switch ($(this).text())
+                {
+                    case "<?php echo lang('Rejected');?>":
+                        if (tabRed.length !=0 && links[tabRed[0]].style.backgroundColor == "white") affect = "rgb(255, 0, 0)";
+                        else affect = "white";
+                        for (var i=0, c = tabRed.length ; i < c ; i++) links[tabRed[i]].style.backgroundColor = affect;
+                        break;
+                    case "<?php echo lang('Planned');?>": 
+                        if (tabGrey.length !=0 && links[tabGrey[0]].style.backgroundColor == "white") affect = "rgb(153, 153, 153)";
+                        else affect = "white";
+                        for (var i=0, c = tabGrey.length ; i < c ; i++) links[tabGrey[i]].style.backgroundColor = affect;
+                        break;
+                    case "<?php echo lang('Requested');?>": 
+                        if (tabOrange.length !=0 && links[tabOrange[0]].style.backgroundColor == "white") affect = "rgb(248, 148, 6)";
+                        else affect = "white";
+                        for (var i=0, c = tabOrange.length ; i < c ; i++) links[tabOrange[i]].style.backgroundColor = affect;
+                        break;
+                    case "<?php echo lang('Accepted');?>":
+                        if (tabGreen.length !=0 && links[tabGreen[0]].style.backgroundColor == "white") affect = "rgb(70, 136, 71)";
+                        else affect = "white";
+                        for (var i=0, c = tabGreen.length ; i < c ; i++) links[tabGreen[i]].style.backgroundColor = affect;
+                        break;
+                }
         });
     });
 </script>

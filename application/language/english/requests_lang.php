@@ -9,6 +9,8 @@
 
 $lang['requests_index_title'] = 'Leave Requests submitted to me';
 $lang['requests_index_description'] = 'This screen lists the leave requests submitted to you. If you are not a manager, this list will always be empty.';
+$lang['hr_requests_index_title'] = 'Leave Requests of Right to the next year';
+$lang['hr_requests_index_description'] = 'This screen lists the requests that require your acceptation before being sent to the relevant manager';
 $lang['requests_index_thead_tip_view'] = 'view';
 $lang['requests_index_thead_tip_accept'] = 'accept';
 $lang['requests_index_thead_tip_reject'] = 'reject';
@@ -19,6 +21,8 @@ $lang['requests_index_thead_enddate'] = 'End Date';
 $lang['requests_index_thead_duration'] = 'Duration';
 $lang['requests_index_thead_type'] = 'Type';
 $lang['requests_index_thead_status'] = 'Status';
+$lang['requests_index_thead_cause'] = 'Cause';
+$lang['requests_index_thead_manager'] = 'Manager';
 $lang['requests_index_thead_substitute'] = 'Substitute';
 
 $lang['requests_collaborators_title'] = 'List of my subordinates';

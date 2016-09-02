@@ -8,7 +8,7 @@
  */
 
 $lang['overtime_index_title'] = 'Déclarations d\'heures supp. à valider';
-$lang['overtime_index_description'] = 'Cet écran liste les déclarations d\'heures supp. qui m\'ont été soumises pour validation. Si vous n\'êtes pas un manager, cette liste sera vide.';
+$lang['overtime_index_description'] = 'Cet écran liste les déclarations d\'heures supp. qui m\'ont été soumises pour validation. Si vous n\'êtes pas un responsable, cette liste sera vide.';
 $lang['overtime_index_thead_tip_view'] = 'voir';
 $lang['overtime_index_thead_tip_accept'] = 'accepter';
 $lang['overtime_index_thead_tip_reject'] = 'refuser';

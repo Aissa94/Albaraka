@@ -43,7 +43,7 @@ $currentDay = (int)date('d');
     <div class="span12">
 <table class="table table-bordered table-condensed">
     <thead>
-        <tr>
+        <tr style="background-color:#f0f0f0;">
             <td>&nbsp;</td>
             <?php for ($ii = 1; $ii <=31; $ii++) {
                     echo '<td'.($ii === $currentDay ?' class="currentday-bg"':'').'>' . $ii . '</td>';
@@ -60,7 +60,7 @@ $currentDay = (int)date('d');
 
   ?>
     <tr>
-      <td rowspan="2"<?php echo $isCurrentMonth ?' class="currentday-bg"':'';?>><?php echo $month_name; ?></td>
+      <td rowspan="1"<?php echo $isCurrentMonth ?' class="currentday-bg"':'';?>><?php echo $month_name; ?></td>
         <?php //Iterate so as to display all mornings
         $pad_day = 1;
         foreach ($month->days as $dayNumber => $day) {
@@ -107,23 +107,21 @@ $currentDay = (int)date('d');
             if ($display == 9) echo '<td'.($class?' class="'.$class.'"':'').'><img src="'.  base_url() .'assets/images/date_error.png"></td>';
             if ($display == 0) echo '<td'.($class?' class="'.$class.'"':'').'>&nbsp;</td>';
             if ($display == 3 || $display == 6) echo '<td'.($class?' '.$class:'').'>&nbsp;</td>';
-            if ($display == 4 || $display == 5) echo '<td title="' . $type .'" class="dayoff'.($class?' '.$class:'').'">&nbsp;</td>';
+            if ($display == 4 || $display == 5) echo '<td title="' . $type .'" class="dayoff'.($class?' '.$class:'').'" style="background-color:#f5f5f5;">&nbsp;</td>';
             if ($display == 1 || $display == 2) {
                 switch ($status)
                 {
-                  case 1: echo ('<td title="' . $type . $substitute . $cause .'" class="allplanned'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Planned
-                  case 2: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Requested
-                  case 3: echo ('<td title="' . $type . $substitute . $cause .'" class="allaccepted'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Accepted
-                  case 4: echo ('<td title="' . $type . $substitute . $cause .'" class="allrejected'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Rejected
+                  case 1: echo ('<td title="' . $type . $substitute . $cause .'" class="allplanned tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Planned
+                  case 2: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Requested
+                  case 3: echo ('<td title="' . $type . $substitute . $cause .'" class="allaccepted tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Accepted
+                  case 4: echo ('<td title="' . $type . $substitute . $cause .'" class="allrejected tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Rejected
                 }
             }
         $pad_day++;
         } ?>
       <?php //Fill 
-      if ($pad_day <= 31) echo '<td colspan="' . (32 - $pad_day) . '" rowspan="2" style="background-color:#00FFFF;">&nbsp;</td>';
+      if ($pad_day <= 31) echo '<td colspan="' . (32 - $pad_day) . '" rowspan="1" style="background-color:#f5f5f5;">&nbsp;</td>';
         ?>
-    </tr>
-    <tr>
     </tr>
   <?php } ?>
         <tr>
@@ -137,3 +135,55 @@ $currentDay = (int)date('d');
         
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+            var links = document.querySelectorAll(".tabColor");
+           // alert(links[5].style.backgroundColor);
+            var tabRed = [], tabGreen = [], tabOrange = [], tabGrey = [];
+            var affect = "white";
+            for (var i = 0, c = links.length ; i < c ; i++) {
+                //alert();
+                switch ($(links[i]).attr('class'))
+                {
+                    case "allrejected tabColor":
+                        tabRed.push(i);
+                        break;
+                    case "allplanned tabColor":
+                        tabGrey.push(i);
+                        break;
+                    case "allrequested tabColor":
+                        tabOrange.push(i);
+                        break;
+                    case "allaccepted tabColor":
+                        tabGreen.push(i);
+                        break;
+                }
+            }  
+            $('.conge').on('click', function() {
+                switch ($(this).text())
+                {
+                    case "<?php echo lang('Rejected');?>":
+                        if (tabRed.length !=0 && links[tabRed[0]].style.backgroundColor == "white") affect = "rgb(255, 0, 0)";
+                        else affect = "white";
+                        for (var i=0, c = tabRed.length ; i < c ; i++) links[tabRed[i]].style.backgroundColor = affect;
+                        break;
+                    case "<?php echo lang('Planned');?>": 
+                        if (tabGrey.length !=0 && links[tabGrey[0]].style.backgroundColor == "white") affect = "rgb(153, 153, 153)";
+                        else affect = "white";
+                        for (var i=0, c = tabGrey.length ; i < c ; i++) links[tabGrey[i]].style.backgroundColor = affect;
+                        break;
+                    case "<?php echo lang('Requested');?>": 
+                        if (tabOrange.length !=0 && links[tabOrange[0]].style.backgroundColor == "white") affect = "rgb(248, 148, 6)";
+                        else affect = "white";
+                        for (var i=0, c = tabOrange.length ; i < c ; i++) links[tabOrange[i]].style.backgroundColor = affect;
+                        break;
+                    case "<?php echo lang('Accepted');?>":
+                        if (tabGreen.length !=0 && links[tabGreen[0]].style.backgroundColor == "white") affect = "rgb(70, 136, 71)";
+                        else affect = "white";
+                        for (var i=0, c = tabGreen.length ; i < c ; i++) links[tabGreen[i]].style.backgroundColor = affect;
+                        break;
+                }
+            });
+});
+</script>
+

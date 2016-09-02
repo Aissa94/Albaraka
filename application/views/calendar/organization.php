@@ -47,10 +47,10 @@
     </div>
 </div>
 
-<div class="row-fluid">
-    <div class="span3"><span class="label"><?php echo lang('Planned');?></span></div>
-    <div class="span3"><span class="label label-success"><?php echo lang('Accepted');?></span></div>
-    <div class="span3"><span class="label label-warning"><?php echo lang('Requested');?></span></div>
+<div class="row-fluid" data-toggle="buttons">
+    <div class="span3 btn conge"><?php echo lang('Planned');?></div>
+    <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
+    <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
     <div class="span3">&nbsp;</div>
 </div>
 
@@ -253,6 +253,53 @@
             },
             windowResize: function(view) {
                 $('#calendar').fullCalendar( 'rerenderEvents' );
+                },
+        eventAfterAllRender: function(view) {
+            var links = document.querySelectorAll(".fc-event-container a");
+            var tabRed = [], tabGreen = [], tabOrange = [], tabGrey = [];
+            var affect = "block";
+            for (var i = 0, c = links.length ; i < c ; i++) {
+                switch (links[i].style.backgroundColor)
+                {
+                    case "rgb(255, 0, 0)":
+                        tabRed.push(i);
+                        break;
+                    case "rgb(153, 153, 153)":
+                        tabGrey.push(i);
+                        break;
+                    case "rgb(248, 148, 6)":
+                        tabOrange.push(i);
+                        break;
+                    case "rgb(70, 136, 71)":
+                        tabGreen.push(i);
+                        break;
+                }
+            }  
+            $('.conge').on('click', function() {
+                switch ($(this).text())
+                {
+                    case "<?php echo lang('Rejected');?>":
+                        if (tabRed.length !=0 && links[tabRed[0]].style.display == "none") affect = "block";
+                        else affect = "none";
+                        for (var i=0, c = tabRed.length ; i < c ; i++) links[tabRed[i]].style.display = affect;
+                        break;
+                    case "<?php echo lang('Planned');?>": 
+                        if (tabGrey.length !=0 && links[tabGrey[0]].style.display == "none") affect = "block";
+                        else affect = "none";
+                        for (var i=0, c = tabGrey.length ; i < c ; i++) links[tabGrey[i]].style.display = affect;
+                        break;
+                    case "<?php echo lang('Requested');?>": 
+                        if (tabOrange.length !=0 && links[tabOrange[0]].style.display == "none") affect = "block";
+                        else affect = "none";
+                        for (var i=0, c = tabOrange.length ; i < c ; i++) links[tabOrange[i]].style.display = affect;
+                        break;
+                    case "<?php echo lang('Accepted');?>":
+                        if (tabGreen.length !=0 && links[tabGreen[0]].style.display == "none") affect = "block";
+                        else affect = "none";
+                        for (var i=0, c = tabGreen.length ; i < c ; i++) links[tabGreen[i]].style.display = affect;
+                        break;
+                }
+                  });
             }
         });
         

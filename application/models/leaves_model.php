@@ -635,6 +635,20 @@ class Leaves_model extends CI_Model {
     }
 
     /**
+     * Accept a leave for request type 2 (by hr admin)
+     * @param int $id leave request identifier
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function hrAcceptLeave($id) {
+        $data = array(
+            'status' => 5
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('leaves', $data);
+    }
+
+    /**
      * Reject a leave request
      * @param int $id leave request identifier
      * @return int number of affected rows
@@ -1156,6 +1170,29 @@ class Leaves_model extends CI_Model {
         $query = $this->db->get('leaves');
         return $query->result_array();
     }
+
+    /**
+     * List all leave requests (type 2) submitted to the hr
+     * Can be filtered with "Requested" status.
+     * @param bool $all TRUE all requests, FALSE otherwise
+     * @return array Recordset (can be empty if no requests or not a manager)
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function getLeavesRequestedToHr($all = FALSE) {
+        $this->db->select('leaves.id as leave_id, cause,users.*, leaves.*, users2.firstname as manager_firstname, users2.lastname as manager_lastname');
+        $this->db->select('status.name as status_name');
+        $this->db->join('status', 'leaves.status = status.id');
+        $this->db->join('users', 'users.id = leaves.employee');
+        $this->db->join('users as users2', 'users2.id = users.manager','LEFT');
+        $this->db->where('leaves.type', 2);
+
+        if ($all == FALSE) {
+            $this->db->where('leaves.status', 2);
+        }
+        $this->db->order_by('leaves.startdate', 'desc');
+        $query = $this->db->get('leaves');
+        return $query->result_array();
+    }
     
     /**
      * Count leave requests submitted to the connected user (or if delegate of a manager)
@@ -1177,6 +1214,21 @@ class Leaves_model extends CI_Model {
         } else {
             $this->db->where('users.manager', $manager);
         }
+        $result = $this->db->get('leaves');
+        return $result->row()->number;
+    }
+
+    /**
+     * Count leave requests (type 2) submitted to the hr admin
+     * @return int number of requests
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function countLeavesRequestedToHr() {
+        $this->db->select('count(*) as number', FALSE);
+        $this->db->join('users', 'users.id = leaves.employee');
+        $this->db->where('leaves.status', 2);
+        $this->db->where('leaves.type', 2);
+
         $result = $this->db->get('leaves');
         return $result->row()->number;
     }

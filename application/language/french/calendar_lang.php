@@ -22,7 +22,7 @@ $lang['calendar_workmates_title'] = 'Calendrier de mes collègues';
 $lang['calendar_workmates_description'] = 'Demandes de congé des employés ayant le même supérieur hierarchique.';
 
 $lang['calendar_collaborators_title'] = 'Calendrier de mes collaborateurs';
-$lang['calendar_collaborators_description'] = 'Demandes de congé de mes collaborateurs. Cette page sera vide si je ne suis pas manager.';
+$lang['calendar_collaborators_description'] = 'Demandes de congé de mes collaborateurs. Cette page sera vide si vous n\'êtes pas un responsable.';
 
 $lang['calendar_department_title'] = 'Calendrier de mon service';
 $lang['calendar_department_description'] = 'Calendrier des employés travaillant dans mon service';

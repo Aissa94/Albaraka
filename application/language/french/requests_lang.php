@@ -8,7 +8,9 @@
  */
 
 $lang['requests_index_title'] = 'Demandes d\'absence à valider';
-$lang['requests_index_description'] = 'Cet écran liste les demandes de congé qui m\'ont été soumises pour validation. Si vous n\'êtes pas un manager, cette liste sera vide.';
+$lang['requests_index_description'] = 'Cet écran liste les demandes de congé qui m\'ont été soumises pour validation. Si vous n\'êtes pas un responsable, cette liste sera vide.';
+$lang['hr_requests_index_title'] = 'Demandes d\'absence de type Droit au prochain exercice';
+$lang['hr_requests_index_description'] = 'Cet écran liste les demandes qui nécessitent votre accord avant d\'être envoyées au responsable concerné.';
 $lang['requests_index_thead_tip_view'] = 'voir';
 $lang['requests_index_thead_tip_accept'] = 'accepter';
 $lang['requests_index_thead_tip_reject'] = 'refuser';
@@ -19,10 +21,12 @@ $lang['requests_index_thead_enddate'] = 'Date fin';
 $lang['requests_index_thead_duration'] = 'Durée';
 $lang['requests_index_thead_type'] = 'Type';
 $lang['requests_index_thead_status'] = 'Statut';
+$lang['requests_index_thead_cause'] = 'Cause';
+$lang['requests_index_thead_manager'] = 'Responsable';
 $lang['requests_index_thead_substitute'] = 'Remplaçant';
 
 $lang['requests_collaborators_title'] = 'Liste de mes collaborateurs';
-$lang['requests_collaborators_description'] = 'Cet écran liste vos collaborateurs. Si vous n\'êtes pas un manager, cette liste sera vide.';
+$lang['requests_collaborators_description'] = 'Cet écran liste vos collaborateurs. Si vous n\'êtes pas un responsable, cette liste sera vide.';
 $lang['requests_collaborators_thead_id'] = 'ID';
 $lang['requests_collaborators_thead_link_balance'] = 'Etat des congés';
 $lang['requests_collaborators_thead_link_presence'] = 'Rapport sur la présence';
@@ -47,7 +51,7 @@ $lang['requests_index_button_export'] = 'Exporter cette liste';
 $lang['requests_index_button_show_all'] = 'Toutes les demandes';
 $lang['requests_index_button_show_pending'] = 'Demandes en cours';
 
-$lang['requests_hrtomanager_flash_msg_success'] = 'Cette demande a été envoyée au manager.';
+$lang['requests_hrtomanager_flash_msg_success'] = 'Cette demande a été envoyée au responsable.';
 
 $lang['requests_accept_flash_msg_error'] = 'Vous n\'êtes pas le supérieur hiérarchique de cet employé. Vous ne pouvez pas accepter sa demande.';
 $lang['requests_accept_flash_msg_success'] = 'La demande d\'absence a été acceptée avec succès.';
@@ -81,5 +85,5 @@ $lang['requests_delegations_confirm_delete_cancel'] = 'Annuler';
 $lang['requests_delegations_confirm_delete_yes'] = 'Oui';
 
 $lang['requests_balance_title'] = 'État des congés (collaborateurs)';
-$lang['requests_balance_description'] = 'État des congés de mes collaborateurs. Si vous n\'êtes pas un manager, cette liste sera vide.';
+$lang['requests_balance_description'] = 'État des congés de mes collaborateurs. Si vous n\'êtes pas un responsable, cette liste sera vide.';
 $lang['requests_balance_date_field'] = 'Date du rapport';
