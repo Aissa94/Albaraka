@@ -324,7 +324,7 @@ class Leaves extends CI_Controller {
         $substitute = $this->users_model->getUsers($leave['substitute']);
 
         //Test if the manager haven't been deleted meanwhile
-        if (empty($manager['email'])) {
+        if (empty($manager)) {
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error'));
         } else {
             //Send an e-mail to the manager

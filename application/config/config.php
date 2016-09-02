@@ -69,7 +69,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'french';
 
 /*
 |--------------------------------------------------------------------------
@@ -382,8 +382,8 @@ $config['proxy_ips'] = '';
 //____________________________________________________________________________
 //default email from
 $config['from_mail'] = 'do.not@reply.me';
-$config['from_name'] = 'Jorani';
-$config['subject_prefix'] = '[Jorani] ';
+$config['from_name'] = 'Al-Baraka';
+$config['subject_prefix'] = '[Gestion d\'Absence] ';
 
 //____________________________________________________________________________
 //User management
@@ -391,18 +391,18 @@ $config['disable_capitalization'] = FALSE;    //Set this value to TRUE if you wa
 $config['password_length'] = 8;                    //Password minimal length
 $config['default_role_id'] = 2;                       //Default role id (e.g. 2 for user)
 //Login pattern (automatically created from firstname and lastname)
-$config['login_pattern'] = 'jdoe';            //(default) First letter of firstname and lastname (up to field limit)
+//$config['login_pattern'] = 'jdoe';            //(default) First letter of firstname and lastname (up to field limit)
 //$config['login_pattern'] = 'john.doe';    //Firstname plus dot plus lastname (up to field limit)
 //$config['login_pattern'] = 'john_doe';    //Firstname plus underscore plus lastname (up to field limit)
-//$config['login_pattern'] = '#email';       //Copy another field of the form (use an existing field name with the pound sign)
+$config['login_pattern'] = '#email';       //Copy another field of the form (use an existing field name with the pound sign)
 
 //____________________________________________________________________________
 //Set this value to TRUE if you want to create leaves at status requested instead of planned
 $config['leave_status_requested'] = FALSE;
-$config['default_leave_type'] = FALSE;      //Set this value with the default leave type identifier (integer).
+$config['default_leave_type'] = 1;      //Set this value with the default leave type identifier (integer).
 
 //Create a leave request / Allow overwrite of the duration
-$config['disable_edit_leave_duration'] = FALSE;             //Switch to read-only (the duration of leave is computed)
+$config['disable_edit_leave_duration'] = TRUE;             //Switch to read-only (the duration of leave is computed)
 
 //____________________________________________________________________________
 //Set this value to TRUE if you want to create extras at status requested instead of planned
@@ -412,8 +412,8 @@ $config['extra_status_requested'] = FALSE;
 //Set this value to TRUE if you want to allow employees to edit or delete rejected leave requests, 2 use cases :
 // - Cancel an accepted leave request : the manager reject it, then the employee can delete it.
 // - Modify a leave request containing a mistake : the manager reject it, then the employee can edit it.
-$config['delete_rejected_requests'] = FALSE;
-$config['edit_rejected_requests'] = FALSE;
+$config['delete_rejected_requests'] = TRUE;
+$config['edit_rejected_requests'] = TRUE;
 
 //____________________________________________________________________________
 //Set this value to TRUE if you want to allow manager to create leave requests in behalf of their collaborators
@@ -421,7 +421,7 @@ $config['requests_by_manager'] = FALSE;
 
 //____________________________________________________________________________
 //List of available languages. If you limit this list to one language, the list of available languages will be hidden from the login form
-$config['languages'] = 'en,en-gb,fr,es,nl,de,it,ru,uk,km,fa,vi,tr,zh';
+$config['languages'] = 'en,fr,es';
 
 //If you want to use another font for a specific language, put the font into assets/fonts folder and map as in this example
 //Extra fonts are coming from Google noto font project: https://www.google.com/get/noto/
