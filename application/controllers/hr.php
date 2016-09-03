@@ -240,6 +240,27 @@ class Hr extends CI_Controller {
     }
     
     /**
+     * Display the list of requests submitted to the hr admin
+     * Status is submitted or accepted/rejected depending on the filter parameter.
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function requests($filter = 'requested') {
+        $this->auth->checkIfOperationIsAllowed('hr_list_requests');
+        $data = getUserContext($this);
+        $data['filter'] = $filter;
+        $this->lang->load('datatable', $this->language);
+        $data['title'] = lang('hr_requests_index_title');
+        //$data['help'] = $this->help->create_help_link('global_link_doc_page_leave_validation');
+        ($filter == 'all')? $showAll = TRUE : $showAll = FALSE;
+        $data['requests'] = $this->leaves_model->getLeavesRequestedToHr($showAll);
+        $data['flash_partial_view'] = $this->load->view('templates/flash', $data, TRUE);
+        $this->load->view('templates/header', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('hr/requests', $data);
+        $this->load->view('templates/footer');
+    }
+
+    /**
      * Display the list of overtime requests for a given employee
      * @param int $id employee id
      * @author Benjamin BALET <benjamin.balet@gmail.com>

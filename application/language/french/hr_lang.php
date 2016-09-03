@@ -119,6 +119,8 @@ $lang['hr_leaves_validate_mandatory_js_msg'] = '"Le champ " + fieldname + " est 
 $lang['hr_leaves_validate_flash_msg_no_contract'] = 'Il semble que vous n\'ayez pas de contrat. Veuillez contacter un responsable des ressources humaines.';
 $lang['hr_leaves_validate_flash_msg_overlap_period'] = 'Vous ne pouvez pas créer une demande de congé pour deux périodes annuelles de congé. Veuillez créer deux demandes différentes.';
 
+$lang['hr_requests_index_title'] = 'Demandes d\'absence de type Droit au prochain exercice';
+$lang['hr_requests_index_description'] = 'Cet écran liste les demandes qui nécessitent votre accord avant d\'être envoyées au responsable concerné.';
 
 $lang['hr_overtime_title'] = 'Déclarations d\'heures supp.';
 $lang['hr_overtime_html_title'] = 'Déclarations d\'heures supp. de l\'employé n°';

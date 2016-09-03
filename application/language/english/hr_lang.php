@@ -119,6 +119,9 @@ $lang['hr_leaves_validate_mandatory_js_msg'] = '"The field " + fieldname + " is 
 $lang['hr_leaves_validate_flash_msg_no_contract'] = 'It appears that you have no contract. Please contact your HR Officer / Manager.';
 $lang['hr_leaves_validate_flash_msg_overlap_period'] = 'You can\'t create a leave request for two yearly leave periods. Please create two different leave requests.';
 
+$lang['hr_requests_index_title'] = 'Leave Requests of Right to the next year';
+$lang['hr_requests_index_description'] = 'This screen lists the requests that require your acceptation before being sent to the relevant manager';
+
 $lang['hr_overtime_title'] = 'List of overtime requests';
 $lang['hr_overtime_html_title'] = 'List of overtime requests for employee #';
 $lang['hr_overtime_thead_tip_edit'] = 'edit';

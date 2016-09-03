@@ -40,7 +40,7 @@
     $enddate = $date->format(lang('global_date_format'));?>
     <tr>
         <td data-order="<?php echo $requests_item['leave_id']; ?>">
-            <a href="<?php echo base_url();?>leaves/requests/<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('requests_index_thead_tip_view');?>"><?php echo $requests_item['leave_id']; ?></a>
+            <a href="<?php echo base_url();?>leaves/view/<?php echo $requests_item['leave_id']; ?>?source=requests" title="<?php echo lang('requests_index_thead_tip_view');?>"><?php echo $requests_item['leave_id']; ?></a>
             &nbsp;
             <div class="pull-right">
                 <?php if (($requests_item['status']==2)||($requests_item['status']==3)||($requests_item['status']==5)){
@@ -55,7 +55,7 @@
                 <?php } 
                 ?>
                 &nbsp;
-                <a href="<?php echo base_url();?>leaves/requests/<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('requests_index_thead_tip_view');?>"><i class="icon-eye-open"></i></a>
+                <a href="<?php echo base_url();?>leaves/view/<?php echo $requests_item['leave_id']; ?>?source=requests" title="<?php echo lang('requests_index_thead_tip_view');?>"><i class="icon-eye-open"></i></a>
             </div>
         </td>
         <td><?php echo $requests_item['firstname'] . ' ' . $requests_item['lastname']; ?></td>

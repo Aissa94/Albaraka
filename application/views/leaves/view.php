@@ -49,8 +49,16 @@
     <?php if (($leave['status'] == 1) || ($is_hr)) { ?>
     <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id'] ?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i>&nbsp;<?php echo lang('leaves_view_button_edit');?></a>
     &nbsp;
-    <?php } ?>    
-   <a href="<?php echo base_url() . $source; ?>" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php echo lang('leaves_view_button_back_list');?></a>
+    <?php } ?>
+
+    <?php if (isset($_GET['source'])) {?>
+        <a href="<?php echo base_url() . $_GET['source']; ?>" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php echo lang('leaves_view_button_back_list');?></a>
+    <?php } else {?>
+        <a href="<?php echo base_url(); ?>leaves" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php echo lang('leaves_view_button_back_list');?></a>
+    <?php } ?>
+
+
+   <!--a href="<?php echo base_url() . $source; ?>" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php //echo lang('leaves_view_button_back_list');?></a-->
    
     </div>
 </div>

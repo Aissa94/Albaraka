@@ -9,8 +9,6 @@
 
 $lang['requests_index_title'] = 'Demandes d\'absence à valider';
 $lang['requests_index_description'] = 'Cet écran liste les demandes de congé qui m\'ont été soumises pour validation. Si vous n\'êtes pas un responsable, cette liste sera vide.';
-$lang['hr_requests_index_title'] = 'Demandes d\'absence de type Droit au prochain exercice';
-$lang['hr_requests_index_description'] = 'Cet écran liste les demandes qui nécessitent votre accord avant d\'être envoyées au responsable concerné.';
 $lang['requests_index_thead_tip_view'] = 'voir';
 $lang['requests_index_thead_tip_accept'] = 'accepter';
 $lang['requests_index_thead_tip_reject'] = 'refuser';
