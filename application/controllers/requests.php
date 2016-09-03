@@ -34,7 +34,6 @@ class Requests extends CI_Controller {
     /**
      * Display the list of all requests submitted to you
      * Status is submitted or accepted/rejected depending on the filter parameter.
-     * @param string $name Filter the list of submitted leave requests (all or requested)
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function index($filter = 'requested') {
@@ -74,9 +73,11 @@ class Requests extends CI_Controller {
         if (($leave['type']==2) && ($this->is_hr)) {// if we have 'the right for leave' type and this is the hr admin
             require 'leaves.php';
             $leaves_controler = new Leaves();
+            $this->leaves_model->hrAcceptLeave($id);
             $leaves_controler->sendMail($id);
             $this->session->set_flashdata('msg', lang('requests_hrtomanager_flash_msg_success'));
-            redirect('hr/leaves/'.$employee['id']);
+            if (isset($_GET['source'])) redirect($_GET['source']);
+            else redirect('hr/leaves/'.$employee['id']);
         }
         else{
             if (($this->user_id == $employee['manager']) || ($is_absent && $is_substitute) || ($is_delegate)
@@ -84,9 +85,8 @@ class Requests extends CI_Controller {
                 $this->leaves_model->acceptLeave($id);
                 $this->sendMail($id);
                 $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_success'));
-                if (isset($_GET['source'])) {
-                    redirect($_GET['source']);
-                } else {
+                if (isset($_GET['source'])) redirect($_GET['source']);
+                else {
                     if (($this->user_id == $employee['manager']) || ($is_substitute) || ($is_delegate)
                     || ($this->user_id == $this->organization_model->getManager($employee['manager']))) redirect('requests');
                 }
@@ -143,11 +143,8 @@ class Requests extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function printa($id) {
-        //$this->auth->checkIfOperationIsAllowed('print_requests');
-        //$this->load->model('users_model');
        $query = $this->db->query("SELECT leaves.id AS conge, startdate, enddate, duration, types.name AS type, users.id, firstname, lastname, organization.name, description FROM leaves JOIN types ON types.id = leaves.type JOIN users ON employee = users.id JOIN organization ON organization = organization.id JOIN positions ON positions.id = position WHERE leaves.id=".$id, FALSE);
-       //$employee = $query->result();
-        //$employee = $this->users_model->getUsers($leave['employee']);// employee qui a demandé
+       
         if ($this->is_hr) {
             $this->load->view('hr/leave_title', $query->row_array());
             if (isset($_GET['source'])) {
@@ -337,7 +334,7 @@ class Requests extends CI_Controller {
         $substitute = $this->users_model->getUsers($leave['substitute']);
 
         //Test if the manager or the substitute haven't been deleted meanwhile
-        if (empty($manager['email']))  {
+        if (empty($manager))  {
             $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_error'));
         }
 

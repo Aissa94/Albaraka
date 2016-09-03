@@ -21,10 +21,10 @@
             <th><?php echo lang('leaves_index_thead_id');?></th>
             <th><?php echo lang('leaves_index_thead_start_date');?></th>
             <th><?php echo lang('leaves_index_thead_end_date');?></th>
-            <th><?php echo lang('leaves_index_thead_cause');?></th>
             <th><?php echo lang('leaves_index_thead_duration');?></th>
             <th><?php echo lang('leaves_index_thead_type');?></th>
             <th><?php echo lang('leaves_index_thead_status');?></th>
+            <th><?php echo lang('leaves_index_thead_cause');?></th>
             <th><?php echo lang('leaves_index_thead_substitute');?></th>
         </tr>
     </thead>
@@ -62,10 +62,10 @@
         </td>
         <td data-order="<?php echo $tmpStartDate; ?>"><?php echo $startdate . ' (' . lang($leaves_item['startdatetype']). ')'; ?></td>
         <td data-order="<?php echo $tmpEndDate; ?>"><?php echo $enddate . ' (' . lang($leaves_item['enddatetype']) . ')'; ?></td>
-        <td><?php echo $leaves_item['cause']; ?></td>
         <td><?php echo $leaves_item['duration']; ?></td>
         <td><?php echo $leaves_item['type_name']; ?></td>
         <td><?php echo lang($leaves_item['status_name']); ?></td>
+        <td><?php echo $leaves_item['cause']; ?></td>
         <td><?php echo $leaves_item['substitute_firstname'].' '.$leaves_item['substitute_lastname']; ?></td>
     </tr>
 <?php endforeach ?>

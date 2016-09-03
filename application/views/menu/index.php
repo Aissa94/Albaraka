@@ -89,11 +89,24 @@ $this->lang->load('menu', $language);?>
 
               <?php if ($is_hr == TRUE) { ?>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_hr_title');?> <b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <?php echo lang('menu_hr_title');?>&nbsp;
+                      <?php if ($requests_count > 0) { ?>
+                      <span class="badge badge-warning"><?php echo $requests_count;?></span>
+                      <?php } ?>
+                      &nbsp;<b class="caret"></b>
+                  </a>
                   <ul class="dropdown-menu">
                     <li class="nav-header"><?php echo lang('menu_hr_employees_divider');?></li>
                     <li><a href="<?php echo base_url();?>hr/employees"><?php echo lang('menu_hr_list_employees');?></a></li>
                     <li><a href="<?php echo base_url();?>organization"><?php echo lang('menu_hr_list_organization');?></a></li>
+                    <li><a href="<?php echo base_url();?>hr/requests">
+                        <?php if ($requested_leaves_count > 0) { ?>
+                        <span class="badge badge-info"><?php echo $requested_leaves_count;?></span>
+                        <?php } ?>
+                        <?php echo lang('menu_hr_request_leave');?>
+                        </a>
+                    </li>
                     <li class="divider"></li>
                     <li class="nav-header"><?php echo lang('menu_hr_contracts_divider');?></li>
                     <li><a href="<?php echo base_url();?>contracts"><?php echo lang('menu_hr_list_contracts');?></a></li>

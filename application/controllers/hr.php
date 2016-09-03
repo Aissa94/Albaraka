@@ -250,7 +250,7 @@ class Hr extends CI_Controller {
         $data['filter'] = $filter;
         $this->lang->load('datatable', $this->language);
         $data['title'] = lang('hr_requests_index_title');
-        //$data['help'] = $this->help->create_help_link('global_link_doc_page_leave_validation');
+        $data['help'] = $this->help->create_help_link('global_link_doc_page_leave_validation');
         ($filter == 'all')? $showAll = TRUE : $showAll = FALSE;
         $data['requests'] = $this->leaves_model->getLeavesRequestedToHr($showAll);
         $data['flash_partial_view'] = $this->load->view('templates/flash', $data, TRUE);

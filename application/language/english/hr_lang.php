@@ -88,6 +88,10 @@ $lang['hr_leaves_popup_delete_question'] = 'Do you want to proceed?';
 $lang['hr_leaves_popup_delete_button_yes'] = 'Yes';
 $lang['hr_leaves_popup_delete_button_no'] = 'No';
 
+$lang['requests_index_button_export'] = 'Export this list';
+$lang['requests_index_button_show_all'] = 'All requests';
+$lang['requests_index_button_show_pending'] = 'Pending requests ';
+
 $lang['hr_export_leaves_title'] = 'List of requested leaves';
 $lang['hr_export_leaves_thead_id'] = 'ID';
 $lang['hr_export_leaves_thead_status'] = 'Status';

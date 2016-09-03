@@ -1,6 +1,6 @@
 <?php 
 /**
- * This view displays the list of leave requests submitted to a manager.
+ * This view displays the list of leave requests type 2 submitted to the hr admin before being sent to the manager.
  * @copyright  Copyright (c) 2014-2016 Benjamin BALET
  * @license      http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
  * @link            https://github.com/bbalet/jorani
@@ -11,24 +11,23 @@
 <div class="row-fluid">
     <div class="span12">
 
-<h2><?php echo lang('requests_index_title');?><?php echo $help;?></h2>
+<h2><?php echo lang('hr_requests_index_title');?><?php echo $help;?></h2>
 
 <?php echo $flash_partial_view;?>
 
-<p><?php echo lang('requests_index_description');?></p>
+<p><?php echo lang('hr_requests_index_description');?></p>
 
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="leaves" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('requests_index_thead_id');?></th>
+            <th><?php echo lang('requests_index_thead_status');?></th>
             <th><?php echo lang('requests_index_thead_fullname');?></th>
             <th><?php echo lang('requests_index_thead_startdate');?></th>
             <th><?php echo lang('requests_index_thead_enddate');?></th>            
             <th><?php echo lang('requests_index_thead_duration');?></th>
-            <th><?php echo lang('requests_index_thead_type');?></th>
-            <th><?php echo lang('requests_index_thead_status');?></th>
             <th><?php echo lang('requests_index_thead_cause');?></th>
-            <th><?php echo lang('requests_index_thead_substitute');?></th>
+            <th><?php echo lang('requests_index_thead_manager');?></th>
         </tr>
     </thead>
     <tbody>
@@ -41,32 +40,37 @@
     $enddate = $date->format(lang('global_date_format'));?>
     <tr>
         <td data-order="<?php echo $requests_item['leave_id']; ?>">
-            <a href="<?php echo base_url();?>leaves/view/<?php echo $requests_item['leave_id']; ?>?source=requests" title="<?php echo lang('requests_index_thead_tip_view');?>"><?php echo $requests_item['leave_id']; ?></a>
+            <a href="<?php echo base_url();?>leaves/view/<?php echo $requests_item['leave_id']; ?>?source=hr%2Frequests" title="<?php echo lang('hr_leaves_thead_tip_view');?>"><?php echo $requests_item['leave_id']; ?></a>
             &nbsp;
             <div class="pull-right">
-                <?php if (($requests_item['status']==2)||($requests_item['status']==3)||($requests_item['status']==5)){
-                ?>
+                <?php if (($requests_item['status']==2)||($requests_item['status']==3)||($requests_item['status']==5))
+                {?>
+                    &nbsp;
+                    <a href="#" class="lnkReject" data-id="<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('hr_leaves_thead_tip_reject');?>"><i class="icon-remove"></i></a>   
+                <?php 
+                }?> 
+                <?php if ($requests_item['status']==3) 
+                { ?>
+                    &nbsp;
+                    <a href="<?php echo base_url();?>requests/printa/<?php echo $requests_item['leave_id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_print');?>"><i class="icon-print"></i></a>
+                 <?php 
+                } ?>
+                <?php if (($requests_item['status']==2)||($requests_item['status']==4))
+                {?>
+                    &nbsp;
+                    <a href="#" class="lnkAccept" data-id="<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('hr_leaves_thead_tip_accept');?>"><i class="icon-ok"></i></a>   
+                <?php 
+                }?>
                 &nbsp;
-                <a href="#" class="lnkReject" data-id="<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('requests_index_thead_tip_reject');?>"><i class="icon-remove"></i></a>
-                <?php } 
-                if (($requests_item['status']==2)||($requests_item['status']==4)||($requests_item['status']==5)){
-                ?>
-                &nbsp;
-                <a href="#" class="lnkAccept" data-id="<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('requests_index_thead_tip_accept');?>"><i class="icon-ok"></i></a>
-                <?php } 
-                ?>
-                &nbsp;
-                <a href="<?php echo base_url();?>leaves/view/<?php echo $requests_item['leave_id']; ?>?source=requests" title="<?php echo lang('requests_index_thead_tip_view');?>"><i class="icon-eye-open"></i></a>
             </div>
         </td>
+        <td><?php echo lang($requests_item['status_name']); ?></td>
         <td><?php echo $requests_item['firstname'] . ' ' . $requests_item['lastname']; ?></td>
         <td data-order="<?php echo $tmpStartDate; ?>"><?php echo $startdate . ' (' . lang($requests_item['startdatetype']). ')'; ?></td>
         <td data-order="<?php echo$tmpEndDate; ?>"><?php echo $enddate . ' (' . lang($requests_item['enddatetype']) . ')'; ?></td>
         <td><?php echo $requests_item['duration']; ?></td>
-        <td><?php echo $requests_item['type_name']; ?></td>
-        <td><?php echo lang($requests_item['status_name']); ?></td>
         <td><?php echo $requests_item['cause']; ?></td>
-        <td><?php echo $requests_item['substitute_firstname'].' '.$requests_item['substitute_firstname']; ?></td>
+        <td><?php echo $requests_item['manager_firstname'].' '.$requests_item['manager_firstname']; ?></td>
     </tr>
 <?php endforeach ?>
 	</tbody>
@@ -78,11 +82,9 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <a href="<?php echo base_url();?>requests/export/<?php echo $filter; ?>" class="btn btn-primary"><i class="fa fa-file-excel-o"></i>&nbsp; <?php echo lang('requests_index_button_export');?></a>
+        <a href="<?php echo base_url();?>hr/requests/all" class="btn btn-primary"><i class="icon-filter icon-white"></i>&nbsp; <?php echo lang('requests_index_button_show_all');?></a>
         &nbsp;&nbsp;
-        <a href="<?php echo base_url();?>requests/all" class="btn btn-primary"><i class="icon-filter icon-white"></i>&nbsp; <?php echo lang('requests_index_button_show_all');?></a>
-        &nbsp;&nbsp;
-        <a href="<?php echo base_url();?>requests/requested" class="btn btn-primary"><i class="icon-filter icon-white"></i>&nbsp; <?php echo lang('requests_index_button_show_pending');?></a>
+        <a href="<?php echo base_url();?>hr/requests/requested" class="btn btn-primary"><i class="icon-filter icon-white"></i>&nbsp; <?php echo lang('requests_index_button_show_pending');?></a>
         &nbsp;&nbsp;
         <?php if ($this->config->item('ics_enabled') == TRUE) {?>
         <a id="lnkICS" href="#"><i class="icon-globe"></i> ICS</a>
@@ -152,14 +154,14 @@ $(document).ready(function() {
         event.preventDefault();
         if (!clicked) {
             clicked = true;
-            window.location.href = "<?php echo base_url();?>requests/accept/" + $(this).data("id");
+            window.location.href = "<?php echo base_url();?>requests/accept/" + $(this).data("id")+"?source=hr%2Frequests";
         }
      });
      $("#leaves").on('click', '.lnkReject', function (event) {
         event.preventDefault();
         if (!clicked) {
             clicked = true;
-            window.location.href = "<?php echo base_url();?>requests/reject/" + $(this).data("id");
+            window.location.href = "<?php echo base_url();?>requests/reject/" + $(this).data("id")+"?source=hr%2Frequests";
         }
      });
      

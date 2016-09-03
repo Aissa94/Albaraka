@@ -37,24 +37,36 @@
     $enddate = $date->format(lang('global_date_format'));?>
     <tr>
         <td data-order="<?php echo $leave['id']; ?>">
-            <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_edit');?>"><?php echo $leave['id'] ?></a>
+            <a href="<?php echo base_url();?>leaves/view/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_view');?>"><?php echo $leave['id'] ?></a>
             <div class="pull-right">
-                &nbsp;
-            <?php if ($leave['status']==3) 
-            { ?>
-                <a href="<?php echo base_url();?>requests/printa/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_print');?>"><i class="icon-print"></i></a>
-                &nbsp;
-                <?php 
-            } ?>
-                &nbsp;
-                <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_edit');?>"><i class="icon-edit"></i></a>
             <?php if ($leave['type']==2)
             {?>
+                <?php if (($leave['status']==2)||($leave['status']==3)||($leave['status']==5))
+                {?>
+                    &nbsp;
+                    <a href="<?php echo base_url();?>requests/reject/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_reject');?>"><i class="icon-remove"></i></a>
+                <?php 
+                }?> 
+            <?php 
+            }?> 
+            <?php if ($leave['status']==3) 
+            { ?>
                 &nbsp;
-                <a href="<?php echo base_url();?>requests/accept/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_accept');?>"><i class="icon-ok"></i></a>
+                <a href="<?php echo base_url();?>requests/printa/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_print');?>"><i class="icon-print"></i></a>
+                 <?php 
+            } ?>
+            <?php if ($leave['type']==2)
+            {?>
+                <?php if (($leave['status']==2)||($leave['status']==4))
+                {?>
+                    &nbsp;
+                    <a href="<?php echo base_url();?>requests/accept/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_accept');?>"><i class="icon-ok"></i></a>
+                <?php 
+                }?>
+            <?php 
+            }?> 
                 &nbsp;
-                <a href="<?php echo base_url();?>requests/reject/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_reject');?>"><i class="icon-remove"></i></a>
-            <?php }?>    
+                <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_edit');?>"><i class="icon-edit"></i></a>
                 &nbsp;
                 <a href="#" class="confirm-delete" data-id="<?php echo $leave['id'];?>" title="<?php echo lang('hr_leaves_thead_tip_delete');?>"><i class="icon-trash"></i></a>
             </div>

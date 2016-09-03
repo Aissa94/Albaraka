@@ -20,7 +20,6 @@ foreach ($users as $user) {
     $result[$user->id]['datehired'] = $user->datehired;
     $result[$user->id]['department'] = $user->department;
     $result[$user->id]['position'] = $user->position;
-    $result[$user->id]['contract'] = $user->contract;
     //Init type columns
     foreach ($types as $type) {
         $result[$user->id][$type['name']] = '';
@@ -36,7 +35,7 @@ foreach ($users as $user) {
 
 $max = 0;
 $line = 2;
-$i18n = array("identifier", "firstname", "lastname", "datehired", "department", "position", "contract");
+$i18n = array("identifier", "firstname", "lastname", "datehired", "department", "position");
 foreach ($result as $row) {
     $index = 1;
     foreach ($row as $key => $value) {

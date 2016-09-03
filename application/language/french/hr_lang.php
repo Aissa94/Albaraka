@@ -88,6 +88,10 @@ $lang['hr_leaves_popup_delete_question'] = 'Voulez-vous continuer ?';
 $lang['hr_leaves_popup_delete_button_yes'] = 'Oui';
 $lang['hr_leaves_popup_delete_button_no'] = 'Non';
 
+$lang['requests_index_button_export'] = 'Exporter cette liste';
+$lang['requests_index_button_show_all'] = 'Toutes les demandes';
+$lang['requests_index_button_show_pending'] = 'Demandes en cours';
+
 $lang['hr_export_leaves_title'] = 'Liste des demandes de congés';
 $lang['hr_export_leaves_thead_id'] = 'N°';
 $lang['hr_export_leaves_thead_status'] = 'Statut';
