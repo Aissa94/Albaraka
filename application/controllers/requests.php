@@ -376,7 +376,7 @@ class Requests extends CI_Controller {
 
             $hierarchical_manager = $this->users_model->getUsers($hierarchical_manager);//the manager 2
             $admins = $this->users_model->getHrAdmins();
-            $admins = array_merge($admins, $this->users_model->getImalAdmins());
+            //$admins = array_merge($admins, $this->users_model->getImalAdmins());
             array_push($cc_list, $hierarchical_manager['email']);
             foreach ($admins as $item) array_push($cc_list, $item['email']);
         } else {    //rejected

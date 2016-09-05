@@ -58,4 +58,4 @@ $lang['entitleddays_user_index_field_step'] = 'Step';
 
 $lang['entitleddays_counters_title_contract'] = 'Entitled days to Contract #';
 $lang['entitleddays_counters_description_contract'] = 'Yearly leave period: ';
-$lang['entitleddays_counters_title_employee'] = 'Entitled days to Employee';
+$lang['entitleddays_counters_title_employee'] = 'Historical balance for Employee';

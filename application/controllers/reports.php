@@ -240,7 +240,7 @@ class Reports extends CI_Controller {
             $result[$user->id]['datehired'] = $date->format(lang('global_date_format'));
             $result[$user->id]['department'] = $user->department;
             $result[$user->id]['position'] = $user->position;
-            $result[$user->id]['contract'] = $user->contract;
+            //$result[$user->id]['contract'] = $user->contract;
             $non_working_days = $this->dayoffs_model->lengthDaysOffBetweenDates($user->contract_id, $start, $end);
             $opened_days = $total_days - $non_working_days;
             
@@ -273,25 +273,25 @@ class Reports extends CI_Controller {
                 $leaves_detail = $this->leaves_model->monthlyLeavesByType($linear);
                 if ($requests) $leave_requests[$user->id] = $this->leaves_model->getAcceptedLeavesBetweenDates($user->id, $start, $end);
                 //Init type columns
-                foreach ($types as $type) {
+               /*foreach ($types as $type) {
                     if (array_key_exists($type['name'], $leaves_detail)) {
                         $result[$user->id][$type['name']] = $leaves_detail[$type['name']];
                     } else {
                         $result[$user->id][$type['name']] = '';
                     }
-                }
+                }*/
             }
-            $result[$user->id]['leave_duration'] = $leave_duration;
-            $result[$user->id]['total_days'] = $total_days;
-            $result[$user->id]['non_working_days'] = $non_working_days;
-            $result[$user->id]['work_duration'] = $work_duration;
+            $result[$user->id][lang('reports_leave_duration')] = $leave_duration;
+            $result[$user->id][lang('reports_non_working_days')] = $non_working_days;
+            $result[$user->id][lang('reports_work_duration')] = $work_duration;
+            $result[$user->id][lang('reports_total_days')] = $total_days;
         }
 
         $table = '';
         $thead = '';
         $tbody = '';
         $line = 2;
-        $i18n = array("identifier", "firstname", "lastname", "datehired", "department", "position", "contract");
+        $i18n = array("identifier", "firstname", "lastname", "datehired", "department", "position"/*, "contract"*/);
         foreach ($result as $user_id => $row) {
             $index = 1;
             $tbody .= '<tr>';

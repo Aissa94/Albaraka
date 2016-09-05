@@ -20,18 +20,23 @@
         <thead>
             <tr>
               <th><?php echo lang('hr_summary_thead_type');?></th>
-              <th><?php echo lang('hr_summary_thead_available');?></th>
               <th><?php echo lang('hr_summary_thead_taken');?></th>
+              <th><?php echo lang('hr_summary_thead_available');?></th>
               <th><?php echo lang('hr_summary_thead_entitled');?></th>
               <th><?php echo lang('hr_summary_thead_description');?></th>
             </tr>
           </thead>
           <tbody>
-          <?php foreach ($summary as $key => $value) { ?>
+          <?php 
+            $i = 1;
+            foreach ($summary as $key => $value) { 
+             if($i == 1 || $i == 2) $key = '.' . $key;
+             $i++;
+              ?>
             <tr>
               <td><?php echo $key; ?></td>
-              <td><?php echo round(((float) $value[1] - (float) $value[0]), 3, PHP_ROUND_HALF_DOWN); ?></td>
               <td><?php if ($value[2] == '') { echo ((float) $value[0]); } else { echo '-'; } ?></td>
+              <td><?php echo round(((float) $value[1] - (float) $value[0]), 3, PHP_ROUND_HALF_DOWN); ?></td>
               <td><?php if ($value[2] == '') { echo ((float) $value[1]); } else { echo '-'; } ?></td>
               <td><?php echo $value[2]; ?></td>
             </tr>
@@ -40,7 +45,7 @@
         </table>
     </div>
 </div>
-
+<?php /*?>
 <div class="row-fluid">
     <div class="span12">
         <?php if ($source == 'employees') {?>
@@ -75,7 +80,7 @@
         </table>
     </div>
 </div>
-
+<?php */?>
 <div class="row-fluid">
     <div class="span12">
         <?php if ($source == 'employees') {?>
@@ -159,7 +164,10 @@ if ($language_code != 'en') { ?>
         
         //Transform the HTML tables into fancy datatables
         $('#counters').dataTable({
-            order: [[ 0, "desc" ]],
+            "bPaginate": false, //height
+            "bFilter": false, //search
+            "bInfo": false,
+            order: [[ 0, "asc" ]],
             language: {
                 decimal:            "<?php echo lang('datatable_sInfoThousands');?>",
                 processing:       "<?php echo lang('datatable_sProcessing');?>",
@@ -180,7 +188,7 @@ if ($language_code != 'en') { ?>
                 },
                 aria: {
                     sortAscending:  "<?php echo lang('datatable_sSortAscending');?>",
-                    sortDescending: "<?php echo lang('datatable_sSortDescending');?>"
+                    sortDescending: "<?php echo lang('datatable_sSortDescending');?>",
                 }
             }
         });
@@ -213,6 +221,9 @@ if ($language_code != 'en') { ?>
         });
             
         $('#entitleddaysemployee').dataTable({
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false,
             order: [[ 0, "desc" ]],
             language: {
                 decimal:            "<?php echo lang('datatable_sInfoThousands');?>",

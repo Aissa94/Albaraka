@@ -335,6 +335,8 @@ class Organization extends CI_Controller {
         } else {
             $this->load->model('organization_model');
             $this->organization_model->reloadManagers();
+            if (isset ($_GET['source'])) redirect($_GET['source']);
+            else redirect('organization');
         }
     }
 }

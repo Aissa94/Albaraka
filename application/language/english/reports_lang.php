@@ -43,3 +43,8 @@ $lang['reports_leaves_popup_entity_button_ok'] = 'OK';
 $lang['reports_leaves_popup_entity_button_cancel'] = 'Cancel';
 
 $lang['reports_export_leaves_title'] = 'Monthly abcence';
+
+$lang['reports_leave_duration'] = 'Absance days';
+$lang['reports_non_working_days'] = 'No working days';
+$lang['reports_work_duration'] = 'Working days';
+$lang['reports_total_days'] = 'Total';

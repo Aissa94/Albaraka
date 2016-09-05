@@ -41,3 +41,8 @@ $lang['reports_leaves_popup_entity_button_ok'] = 'OK';
 $lang['reports_leaves_popup_entity_button_cancel'] = 'Annuler';
 
 $lang['reports_export_leaves_title'] = 'Absence du mois';
+
+$lang['reports_leave_duration'] = 'Absence';
+$lang['reports_non_working_days'] = 'Jours non travaillés';
+$lang['reports_work_duration'] = 'Jours ouvrés';
+$lang['reports_total_days'] = 'Total';

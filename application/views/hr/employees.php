@@ -76,8 +76,8 @@
                           <i class="fa fa-pencil"></i>&nbsp;<?php echo lang('hr_employees_button_selection');?>&nbsp;<span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="cmdCreateRequest"><i class="fa fa-plus"></i>&nbsp;<?php echo lang('hr_employees_button_create_request');?></a></li>
-                            <li><a href="#" id="cmdSelectManager"><i class="fa fa-user"></i>&nbsp;<?php echo lang('hr_employees_button_select_manager');?></a></li>
+                            <!--li><a href="#" id="cmdCreateRequest"><i class="fa fa-plus"></i>&nbsp;<?php //echo lang('hr_employees_button_create_request');?></a></li-->
+                            <!--li><a href="#" id="cmdSelectManager"><i class="fa fa-user"></i>&nbsp;<?php //echo lang('hr_employees_button_select_manager');?></a></li-->
                             <li><a href="#" id="cmdAddEntitlments"><i class="fa fa-pencil-square-o"></i>&nbsp;<?php echo lang('hr_employees_button_entitleddays');?></a></li>
                             <li><a href="#" id="cmdSelectContract"><i class="fa fa-file-text-o"></i>&nbsp;<?php echo lang('hr_employees_button_select_contract');?></a></li>
                             <li><a href="#" id="cmdChangeEntity"><i class="fa fa-sitemap"></i>&nbsp;<?php echo lang('hr_employees_button_select_entity');?></a></li>

@@ -482,6 +482,56 @@ class Leaves extends CI_Controller {
         }
     }
 
+    public function sendMailToImal(){
+        $query = $this->db->query("SELECT * FROM users WHERE role = 4 limit 1", false);
+        $imal = $query->result()[0];
+        if(isset ($imal)){
+            $query = $this->db->query("SELECT employee, startdate, enddate, 'Désactiver' as doing 
+                            FROM leaves WHERE (status = 3 and startdate = CURDATE() and startdate != enddate)", false); 
+            $results_desactivate = $query->result();
+            $query = $this->db->query("SELECT employee, startdate, enddate, 'Activer'    as doing 
+                            FROM leaves WHERE (status = 3 and enddate   = CURDATE() and startdate != enddate)", false); 
+            $results_activate = $query->result();
+            if ($results_activate || $results_desactivate){
+            //Send an e-mail to the imal admin
+            $this->load->library('email');
+            $this->load->library('polyglot');
+            $imal_lang = $this->polyglot->code2language($imal->language);
+
+            //We need to instance an different object as the languages of connected user may differ from the UI lang
+            $lang_mail = new CI_Lang();
+            $lang_mail->load('email', $imal_lang);
+            $lang_mail->load('global', $imal_lang);
+
+            $this->load->library('parser');
+            $data = array(
+                'Title' => '(Dés)Activation des comptes',
+                'Id' => $imal->id,
+                'Firstname' => $imal->firstname,
+                'Lastname' => $imal->lastname,
+                'Date' => date('d-m-Y'),
+                'Data_Activate' => $results_activate,
+                'Data_Desactivate' => $results_desactivate,
+                );
+                
+                $message = $this->parser->parse('emails/' . $imal->language . '/imal', $data, TRUE);
+                $this->email->set_encoding('quoted-printable');
+                
+                if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) 
+                    $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
+                else $this->email->from('do.not@reply.me', 'LMS');
+        
+                if ($this->config->item('subject_prefix') != FALSE) $subject = $this->config->item('subject_prefix');
+                else $subject = '[Baraka] ';
+
+                $this->email->to($imal->email);
+                $this->email->subject($subject);
+                $this->email->message($message);
+                $this->email->send();
+            }
+        }
+    }
+
     /**
      * Delete a leave request
      * @param int $id identifier of the leave request
