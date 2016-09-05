@@ -8,7 +8,7 @@
  */
 ?>
 
-<?php 
+<?php  /* 
 $boolean_to_send = $this->db->query('SELECT boolean_to_send FROM imal_sender');
 $boolean_to_send = $boolean_to_send->result()[0]->boolean_to_send;
 if($boolean_to_send){
@@ -17,7 +17,7 @@ if($boolean_to_send){
     $leave_object->sendMailToImal();
     $boolean_to_send = $this->db->query('UPDATE imal_sender SET boolean_to_send = 0');
 }
-?>
+*/?>
 
 <?php if ($this->config->item('oauth2_enabled') == TRUE) { ?>
 <script type="text/javascript" src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
