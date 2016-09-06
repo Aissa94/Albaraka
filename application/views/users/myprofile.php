@@ -28,13 +28,6 @@
     <div class="span3"><?php echo $manager_label;?></div>
     <div class="span6">&nbsp;</div>
 </div>
-<!--
-<div class="row-fluid">
-    <div class="span3"><strong><?php //echo lang('users_myprofile_field_supervisor');?></strong></div>
-    <div class="span3"><?php echo $supervisor_label;?></div>
-    <div class="span6">&nbsp;</div>
-</div>
--->
 <div class="row-fluid">
     <div class="span3"><strong><?php echo lang('users_myprofile_field_contract');?></strong></div>
     <div class="span3"><?php echo $contract_label;?>

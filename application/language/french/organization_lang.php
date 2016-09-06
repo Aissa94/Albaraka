@@ -18,11 +18,11 @@ $lang['organization_index_thead_email'] = 'E-mail';
 $lang['organization_index_button_add_employee'] = 'Attacher un employé';
 $lang['organization_index_button_remove_employee'] = 'Détacher un employé';
 $lang['organization_index_button_select_supervisor'] = 'Selectionner';
-$lang['organization_index_title_supervisor'] = 'Superviseur';
-$lang['organization_index_description_supervisor'] = 'Si vous choisissez un superviseur, il recevra toutes les demandes de congé des employés de cette entité.';
-$lang['organization_index_description_supervisor2'] = 'Les demandes de congé du superviseur sont envoyées au supérieur hiérarchique.';
+$lang['organization_index_title_supervisor'] = 'Responsable';
+$lang['organization_index_description_supervisor'] = 'Si vous choisissez un Responsable, il recevra toutes les demandes de congé des employés de cette entité.';
+$lang['organization_index_description_supervisor2'] = 'Les demandes de congé du Responsable sont envoyées au supérieur hiérarchique.';
 
-$lang['organization_index_popup_supervisor_title'] = 'Selectionner un Superviseur';
+$lang['organization_index_popup_supervisor_title'] = 'Selectionner un Responsable';
 $lang['organization_index_popup_supervisor_button_ok'] = 'OK';
 $lang['organization_index_popup_supervisor_button_cancel'] = 'Annuler';
 

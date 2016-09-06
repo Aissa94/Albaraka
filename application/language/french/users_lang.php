@@ -41,7 +41,6 @@ $lang['users_myprofile_html_title'] = 'Mes informations personelles';
 $lang['users_myprofile_field_firstname'] = 'Prénom';
 $lang['users_myprofile_field_lastname'] = 'Nom';
 $lang['users_myprofile_field_manager'] = 'Responsable';
-$lang['users_myprofile_field_supervisor'] = 'Superviseur';
 $lang['users_myprofile_field_contract'] = 'Contrat';
 $lang['users_myprofile_field_position'] = 'Poste';
 $lang['users_myprofile_field_entity'] = 'Entité';

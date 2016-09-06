@@ -18,11 +18,11 @@ $lang['organization_index_thead_email'] = 'E-mail';
 $lang['organization_index_button_add_employee'] = 'Attach an Employee';
 $lang['organization_index_button_remove_employee'] = 'Detach an Employee';
 $lang['organization_index_button_select_supervisor'] = 'Select';
-$lang['organization_index_title_supervisor'] = 'Supervisor';
-$lang['organization_index_description_supervisor'] = 'If you select a supervisor, he will receive the leave requests submitted by employees of this entity.';
-$lang['organization_index_description_supervisor2'] = 'Supervisor\'s leave requests are sent to the hierarchical superior.';
+$lang['organization_index_title_supervisor'] = 'Responsible';
+$lang['organization_index_description_supervisor'] = 'If you select a responsible, he will receive the leave requests submitted by employees of this entity.';
+$lang['organization_index_description_supervisor2'] = 'Responsaible\'s leave requests are sent to the hierarchical superior.';
 
-$lang['organization_index_popup_supervisor_title'] = 'Select a Supervisor';
+$lang['organization_index_popup_supervisor_title'] = 'Select a responsible';
 $lang['organization_index_popup_supervisor_button_ok'] = 'OK';
 $lang['organization_index_popup_supervisor_button_cancel'] = 'Cancel';
 
