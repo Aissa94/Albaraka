@@ -44,5 +44,5 @@ $lang['reports_export_leaves_title'] = 'Absence du mois';
 
 $lang['reports_leave_duration'] = 'Absence';
 $lang['reports_non_working_days'] = 'Jours non travaillés';
-$lang['reports_work_duration'] = 'Jours ouvrés';
+$lang['reports_work_duration'] = 'Présence';
 $lang['reports_total_days'] = 'Total';

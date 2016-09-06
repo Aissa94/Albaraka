@@ -10,6 +10,17 @@
 CI_Controller::get_instance()->load->helper('language');
 $this->lang->load('menu', $language);?>
 
+<?php 
+$boolean_to_send = $this->db->query('SELECT boolean_to_send FROM imal_sender');
+$boolean_to_send = $boolean_to_send->result()[0]->boolean_to_send;
+if($boolean_to_send){
+    require_once('/application/controllers/leaves.php');
+    $leave_object = new Leaves();
+    $leave_object->sendMailToImal();
+    $boolean_to_send = $this->db->query('UPDATE imal_sender SET boolean_to_send = 0');
+}
+?>
+
 <?php if ($this->config->item('ldap_enabled') == FALSE) { ?>
 <div id="frmChangeMyPwd" class="modal hide fade">
     <div class="modal-header">

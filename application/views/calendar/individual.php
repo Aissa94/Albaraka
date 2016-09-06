@@ -131,7 +131,7 @@ $(function () {
         /*defaultView: 'agendaWeek',*/
         events: '<?php echo base_url();?>leaves/individual',
         eventClick: function(calEvent, jsEvent, view) {
-            if (calEvent.color != '#000000') {
+            if (calEvent.color != '#000000') { //This color must probably change to #555555
                 var link = "<?php echo base_url();?>ics/ical/" + calEvent.id;
                 $("#lnkDownloadCalEvnt").attr('href', link);
                 $('#frmEvent').modal('show');
