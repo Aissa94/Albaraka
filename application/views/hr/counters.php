@@ -164,9 +164,10 @@ if ($language_code != 'en') { ?>
         
         //Transform the HTML tables into fancy datatables
         $('#counters').dataTable({
-            "bPaginate": false, //height
+            "bPaginate": true, //height
             "bFilter": false, //search
             "bInfo": false,
+            "pageLength": 2,
             order: [[ 0, "asc" ]],
             language: {
                 decimal:            "<?php echo lang('datatable_sInfoThousands');?>",
