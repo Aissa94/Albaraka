@@ -420,8 +420,12 @@ class Requests extends CI_Controller {
         $data['refDate'] = $refDate;
 
         $this->load->model('types_model');
-        $data['types'] = $this->types_model->getTypes();
-        
+        //$data['types'] = $this->types_model->getTypes();
+        $var = array();
+        array_push($var, $this->types_model->getTypes(1));
+        array_push($var, $this->types_model->getTypes(2));
+        $data['types'] = $var;
+
         $result = array();
         $this->load->model('users_model');
         $users = $this->users_model->getCollaboratorsOfManager($this->user_id);
@@ -436,7 +440,7 @@ class Requests extends CI_Controller {
                 $result[$user['id']][$type['name']] = '';
             }
             
-            $summary = $this->leaves_model->getLeaveBalanceForEmployee($user['id'], TRUE, $refDate);
+            $summary = $this->leaves_model->getLeaveBalanceForEmployee($user['id'], TRUE, $refDate, false);
             if (count($summary) > 0 ) {
                 foreach ($summary as $key => $value) {
                     $result[$user['id']][$key] = round($value[1] - $value[0], 3, PHP_ROUND_HALF_DOWN);

@@ -301,10 +301,11 @@ class Leaves_model extends CI_Model {
      * @param int $employee Employee identifier
      * @param int $contract contract identifier
      * @param string $refDate Date of execution
+     * @param bool $all weather all types or just the important (2)
      * @return array Array of entitled days associated to the key type id
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getSumEntitledDays($employee, $contract, $refDate) {
+    public function getSumEntitledDays($employee, $contract, $refDate, $all = true) {
         $this->db->select('types.id as type_id, types.name as type_name');
         $this->db->select('SUM(entitleddays.days) as entitled');
         $this->db->select('MIN(startdate) as min_date');
@@ -319,6 +320,10 @@ class Leaves_model extends CI_Model {
         $where = ' (entitleddays.contract=' . $contract . 
                        ' OR entitleddays.employee=' . $employee . ')';
         $this->db->where($where, NULL, FALSE);   //Not very safe, but can't do otherwise
+        
+        if(!$all) {
+            $this->db->where('types.id = 1 OR types.id = 2', NULL, FALSE);
+        }
         $results = $this->db->get()->result_array();
         //Create an associated array have the leave type as key
         $entitled_days = array();
@@ -336,7 +341,7 @@ class Leaves_model extends CI_Model {
      * @return array computed aggregated taken/entitled leaves
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getLeaveBalanceForEmployee($id, $sum_extra = FALSE, $refDate = NULL) {
+    public function getLeaveBalanceForEmployee($id, $sum_extra = FALSE, $refDate = NULL, $all = true) {
         //Determine if we use current date or another date
         if ($refDate == NULL) {
             $refDate = date("Y-m-d");
@@ -352,7 +357,7 @@ class Leaves_model extends CI_Model {
             $summary = $this->types_model->allTypes($compensate_name);
             //Get the sum of entitled days
             $user = $this->users_model->getUsers($id);
-            $entitlements = $this->getSumEntitledDays($id, $user['contract'], $refDate);
+            $entitlements = $this->getSumEntitledDays($id, $user['contract'], $refDate, $all);
             
             foreach ($entitlements as $entitlement) {
                 //Get the total of taken leaves grouped by type

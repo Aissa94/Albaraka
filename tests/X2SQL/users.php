@@ -17,7 +17,7 @@ function data_base_connect ()
 $i=0;
 $id=1;
 $password='$2a$08$KxK2isBmJtpWW4vEGLJU3.S0U6x80ptjI.ce6ISDqx5bplTZprWUS';
-$email='dnghouila@gmail.dz';
+$email='';
 $role=2;
 $manager=0;
 $country=213;
