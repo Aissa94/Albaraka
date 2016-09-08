@@ -23,10 +23,10 @@
         <p>{Firstname} {Lastname} veut soumettre une demande d'absence de type "{Type}" à son manager. Voici les <!--a href="{BaseUrl}leaves/requests/{LeaveId}">détails</a-->détails :</p>
         <table>
             <tr>
-                <td>Du &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
+                <td>Du &nbsp;</td><td>{StartDate}</td>
             </tr>
             <tr>
-                <td>Au &nbsp;</td><td>{EndDate}&nbsp;({EndDateType})</td>
+                <td>Au &nbsp;</td><td>{EndDate}</td>
             </tr>
             <tr>
                 <td>Type &nbsp;</td><td>{Type}</td>

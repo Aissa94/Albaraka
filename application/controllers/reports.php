@@ -328,8 +328,8 @@ class Reports extends CI_Controller {
                         $enddate = $date->format(lang('global_date_format'));
                         $tbody .= '<tr>';
                         $tbody .= '<td><a href="' . base_url() . 'leaves/view/'. $request['id']. '" target="_blank">'. $request['id']. '</a></td>';
-                        $tbody .= '<td>'. $startdate . ' (' . lang($request['startdatetype']). ')</td>';
-                        $tbody .= '<td>'. $enddate . ' (' . lang($request['enddatetype']). ')</td>';
+                        $tbody .= '<td>'. $startdate .'</td>';
+                        $tbody .= '<td>'. $enddate .'</td>';
                         $tbody .= '<td>'. $request['type'] . '</td>';
                         $tbody .= '<td>'. $request['duration'] . '</td>';
                         $tbody .= '</tr>';

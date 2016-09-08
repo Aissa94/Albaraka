@@ -126,8 +126,8 @@ foreach ($result as $user_id => $row) {
                 $startdate = $date->format(lang('global_date_format'));
                 $date = new DateTime($request['enddate']);
                 $enddate = $date->format(lang('global_date_format'));
-                $sheet->setCellValue('A' . $line, $startdate . ' (' . lang($request['startdatetype']). ')');
-                $sheet->setCellValue('B' . $line, $enddate . ' (' . lang($request['enddatetype']). ')');
+                $sheet->setCellValue('A' . $line, $startdate);
+                $sheet->setCellValue('B' . $line, $enddate);
                 $sheet->setCellValue('C' . $line, $request['type']);
                 $sheet->setCellValue('D' . $line, $request['duration']);
                 $line++;

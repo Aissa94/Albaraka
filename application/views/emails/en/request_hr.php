@@ -23,10 +23,10 @@
         {Firstname} {Lastname} wants to submit a time off request of {Type} type  for his manager. See the <!--a href="{BaseUrl}leaves/requests/{LeaveId}">details</a-->details below:<br />
         <table border="0">
             <tr>
-                <td>From &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
+                <td>From &nbsp;</td><td>{StartDate}</td>
             </tr>
             <tr>
-                <td>To &nbsp;</td><td>{EndDate}&nbsp;({EndDateType})</td>
+                <td>To &nbsp;</td><td>{EndDate}</td>
             </tr>
             <tr>
                 <td>Type &nbsp;</td><td>{Type}</td>

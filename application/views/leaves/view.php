@@ -15,13 +15,13 @@
 
     <label for="startdate"><?php echo lang('leaves_view_field_start');?></label>
     <input type="text" name="startdate" value="<?php $date = new DateTime($leave['startdate']); echo $date->format(lang('global_date_format'));?>" readonly />
-    <select name="startdatetype" readonly>
+    <select name="startdatetype" style="display : none" readonly>
         <option selected><?php echo lang($leave['startdatetype']); ?></option>
     </select><br />
     
     <label for="enddate"><?php echo lang('leaves_view_field_end');?></label>
     <input type="text" name="enddate"  value="<?php $date = new DateTime($leave['enddate']); echo $date->format(lang('global_date_format'));?>" readonly />
-    <select name="enddatetype" readonly>
+    <select name="enddatetype" style="display : none" readonly>
         <option selected><?php echo lang($leave['enddatetype']); ?></option>
     </select><br />
     

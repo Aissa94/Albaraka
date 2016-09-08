@@ -25,10 +25,10 @@
         La demande d'absence que vous avez soumise a été acceptée par votre responsable : {FirstnameManager} {LastnameManager}.<br />
         <table>
             <tr>
-                <td>Du &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
+                <td>Du &nbsp;</td><td>{StartDate}</td>
             </tr>
             <tr>
-                <td>Au &nbsp;</td><td>{EndDate}&nbsp;({EndDateType})</td>
+                <td>Au &nbsp;</td><td>{EndDate}</td>
             </tr>
             <tr>
                 <td>Type &nbsp;</td><td>{Type}</td>

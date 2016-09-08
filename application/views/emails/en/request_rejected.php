@@ -25,10 +25,10 @@
         Unfortunately, the time off you requested has been rejected. Please contact your responsible : {FirstnameManager} {LastnameManager} to discuss the matter. <br />
         <table border="0">
             <tr>
-                <td>From &nbsp;</td><td>{StartDate}&nbsp;({StartDateType})</td>
+                <td>From &nbsp;</td><td>{StartDate}</td>
             </tr>
             <tr>
-                <td>To &nbsp;</td><td>{EndDate}&nbsp;({EndDateType})</td>
+                <td>To &nbsp;</td><td>{EndDate}</td>
             </tr>
             <tr>
                 <td>Type &nbsp;</td><td>{Type}</td>
