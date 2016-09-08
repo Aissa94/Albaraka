@@ -672,11 +672,9 @@ class Leaves extends CI_Controller {
         }
         if (isset($id) && isset($type)) {
             if (isset($startdate) && $startdate !== "") {
-                if ($variable!=1 && $variable!=2) $leaveValidator->credit = '';
-                else $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type, $startdate);
+                $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type, $startdate);
             } else {
-                if ($variable!=1 && $variable!=2) $leaveValidator->credit = '';
-                else $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type, $startdate);
+                $leaveValidator->credit = $this->leaves_model->getLeavesTypeBalanceForEmployee($id, $type);
             }
         }
         if (isset($id) && isset($startdate) && isset($enddate)) {

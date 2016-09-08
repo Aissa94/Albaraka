@@ -29,7 +29,7 @@ echo form_open($form_action, $attributes) ?>
     foreach ($types as $types_item): ?>
         <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
     <?php endforeach ?>
-    </select>&nbsp;<span id="lblCredit"><?php echo '(' . $credit . ')'; ?></span><br />
+    </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
         
     <label for="viz_startdate" required><?php echo lang('hr_leaves_create_field_start');?></label>
     <input type="text" name="viz_startdate" id="viz_startdate" value="<?php echo set_value('startdate'); ?>" />
@@ -176,7 +176,21 @@ function validate_form() {
         bootbox.alert('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
         return false;
     }
-
+    switch (value_type)
+    {
+        case '5':
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+        case '6' :
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+        case '10' :
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+        case '13' :
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+    }
     var fieldname = "";
     
     //Call custom trigger defined into local/triggers/leave.js

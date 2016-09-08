@@ -27,12 +27,12 @@ echo form_open('leaves/create', $attributes) ?>
     foreach ($types as $types_item): ?>
         <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
     <?php endforeach ?>
-    </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) { ?>(<?php echo $credit; ?>)<?php } ?></span><br />
+    </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
         
     <label for="viz_startdate"><?php echo lang('leaves_create_field_start');?></label>
     <input type="text" name="viz_startdate" id="viz_startdate" value="<?php echo set_value('startdate'); ?>" autocomplete="off" />
     <input type="hidden" name="startdate" id="startdate" />
-    <select name="startdatetype" id="startdatetype">
+    <select name="startdatetype" id="startdatetype" style="display : none">
         <option value="Morning" selected><?php echo lang('Morning');?></option>
         <option value="Afternoon"><?php echo lang('Afternoon');?></option>
     </select><br />
@@ -40,7 +40,7 @@ echo form_open('leaves/create', $attributes) ?>
     <label for="viz_enddate"><?php echo lang('leaves_create_field_end');?></label>
     <input type="text" name="viz_enddate" id="viz_enddate" value="<?php echo set_value('enddate'); ?>" autocomplete="off" />
     <input type="hidden" name="enddate" id="enddate" />
-    <select name="enddatetype" id="enddatetype">
+    <select name="enddatetype" id="enddatetype" style="display : none">
         <option value="Morning"><?php echo lang('Morning');?></option>
         <option value="Afternoon" selected><?php echo lang('Afternoon');?></option>
     </select><br />
@@ -210,9 +210,24 @@ function validate_form() {
     }?>
     var value_type = document.getElementById('type').value;
     var value_status = document.getElementById('status').value;
-    if (( value_status == 2) && (value_type  == 2) && "<?php echo ($leaves_mod->getLeavesTypeBalanceForEmployee($user_id, $name_id) > 0) ?>") { 
+    if (( value_status == 2) && ( value_type  == 2) && "<?php echo ($leaves_mod->getLeavesTypeBalanceForEmployee($user_id, $name_id) > 0) ?>") { 
         bootbox.alert('Vous devez épuiser le crédit de congé annuel pour pouvoir effectuer une demande de ce type');
         return false;
+    }
+    switch (value_type)
+    {
+        case '5':
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+        case '6' :
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+        case '10' :
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
+        case '13' :
+        if ($('#duration').val() > 3) {bootbox.alert('La durée maximale pour une demande de type "'+$("#type option:selected").text()+'" est : 3 jours');return false;}
+        break;
     }
     var fieldname = "";
     

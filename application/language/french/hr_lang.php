@@ -103,7 +103,7 @@ $lang['hr_export_leaves_thead_substitute'] = 'Remplaçant';
 
 $lang['hr_leaves_create_title'] = 'Créer une nouvelle demande';
 $lang['hr_leaves_create_field_start'] = 'Date de début';
-$lang['hr_leaves_create_field_end'] = 'Date de fin';
+$lang['hr_leaves_create_field_end'] = 'Date de fin (inclusivement)';
 $lang['hr_leaves_create_field_type'] = 'Type de congé';
 $lang['hr_leaves_create_field_duration'] = 'Durée';
 $lang['hr_leaves_create_field_duration_message'] = 'Vous dépassez le nombre de jours permis';
