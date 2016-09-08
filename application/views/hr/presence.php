@@ -235,8 +235,8 @@
         <td data-order="<?php echo $leave['id']; ?>">
             <a href="<?php echo base_url();?>leaves/edit/<?php echo $leave['id']; ?>?source=hr%2Fpresence%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_presence_thead_tip_edit');?>"><?php echo $leave['id'] ?></a>
         </td>
-        <td data-order="<?php echo $tmpStartDate; ?>"><?php echo $startdate . ' (' . lang($leave['startdatetype']). ')'; ?></td>
-        <td data-order="<?php echo $tmpEndDate; ?>"><?php echo $enddate . ' (' . lang($leave['enddatetype']) . ')'; ?></td>
+        <td data-order="<?php echo $tmpStartDate; ?>"><?php echo $startdate; ?></td>
+        <td data-order="<?php echo $tmpEndDate; ?>"><?php echo $enddate; ?></td>
         <td><?php echo $leave['duration']; ?></td>
         <td><?php echo $leave['type']; ?></td>
     </tr>
@@ -245,39 +245,6 @@
 </table>
 
 <hr />
-
-<div class="row-fluid">
-    <div class="span12">
-        <h3><?php echo lang('hr_summary_title');?>&nbsp;<?php echo $employee_id; ?>&nbsp;<span class="muted"> (<?php echo $employee_name; ?>)</span>&nbsp;<?php echo $help;?></h3>
-
-        <p><?php echo lang('hr_summary_date_field');?>&nbsp;
-            <input type="text" value="<?php echo $refDate; ?>" readonly />
-        </p>
-        
-        <table id="counters" cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
-            <thead>
-                <tr>
-                  <th><?php echo lang('hr_summary_thead_type');?></th>
-                  <th><?php echo lang('hr_summary_thead_available');?></th>
-                  <th><?php echo lang('hr_summary_thead_taken');?></th>
-                  <th><?php echo lang('hr_summary_thead_entitled');?></th>
-                  <th><?php echo lang('hr_summary_thead_description');?></th>
-                </tr>
-              </thead>
-              <tbody>
-              <?php foreach ($summary as $key => $value) { ?>
-                <tr>
-                  <td><?php echo $key; ?></td>
-                  <td><?php echo round(((float) $value[1] - (float) $value[0]), 3, PHP_ROUND_HALF_DOWN); ?></td>
-                  <td><?php if ($value[2] == '') { echo ((float) $value[0]); } else { echo '-'; } ?></td>
-                  <td><?php if ($value[2] == '') { echo ((float) $value[1]); } else { echo '-'; } ?></td>
-                  <td><?php echo $value[2]; ?></td>
-                </tr>
-              <?php } ?>
-              </tbody>
-        </table>
-    </div>
-</div>
 
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
@@ -312,6 +279,9 @@ $(function () {
     
     //Transform the HTML tables into fancy datatables
     var oTable = $('#leaves').dataTable({
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false,
             order: [[ 1, "asc" ]],
             language: {
                 decimal:            "<?php echo lang('datatable_sInfoThousands');?>",
@@ -336,33 +306,6 @@ $(function () {
                     sortDescending: "<?php echo lang('datatable_sSortDescending');?>"
                 }
             },
-        });
-        
-        $('#counters').dataTable({
-            order: [[ 0, "desc" ]],
-            language: {
-                decimal:            "<?php echo lang('datatable_sInfoThousands');?>",
-                processing:       "<?php echo lang('datatable_sProcessing');?>",
-                search:              "<?php echo lang('datatable_sSearch');?>",
-                lengthMenu:     "<?php echo lang('datatable_sLengthMenu');?>",
-                info:                   "<?php echo lang('datatable_sInfo');?>",
-                infoEmpty:          "<?php echo lang('datatable_sInfoEmpty');?>",
-                infoFiltered:       "<?php echo lang('datatable_sInfoFiltered');?>",
-                infoPostFix:        "<?php echo lang('datatable_sInfoPostFix');?>",
-                loadingRecords: "<?php echo lang('datatable_sLoadingRecords');?>",
-                zeroRecords:    "<?php echo lang('datatable_sZeroRecords');?>",
-                emptyTable:     "<?php echo lang('datatable_sEmptyTable');?>",
-                paginate: {
-                    first:          "<?php echo lang('datatable_sFirst');?>",
-                    previous:   "<?php echo lang('datatable_sPrevious');?>",
-                    next:           "<?php echo lang('datatable_sNext');?>",
-                    last:           "<?php echo lang('datatable_sLast');?>"
-                },
-                aria: {
-                    sortAscending:  "<?php echo lang('datatable_sSortAscending');?>",
-                    sortDescending: "<?php echo lang('datatable_sSortDescending');?>"
-                }
-            }
         });
         
         //Load a tiny calendar

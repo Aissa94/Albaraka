@@ -73,3 +73,4 @@ $lang['organization_selection_thead_entry_date'] = 'Ajouter';
 $lang['entitleddays_counters_title_contract'] = 'Crédit d\'absence pour le contrat n°';
 $lang['entitleddays_counters_description_contract'] = 'Période annuelle des congés : ';
 $lang['entitleddays_counters_title_employee'] = 'Historique des soldes pour l\'employé(e)';
+$lang['entitleddays_counters_title_employee_description'] = 'Cliquer sur le lien pour modifier le solde.';

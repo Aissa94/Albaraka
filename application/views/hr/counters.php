@@ -84,7 +84,9 @@
 <div class="row-fluid">
     <div class="span12">
         <?php if ($source == 'employees') {?>
-        <h3><a href="<?php echo base_url();?>entitleddays/user/<?php echo $employee_id; ?>"><?php echo lang('entitleddays_counters_title_employee');?></a></h3>
+        <h3><a href="<?php echo base_url();?>entitleddays/user/<?php echo $employee_id; ?>">
+        <?php echo lang('entitleddays_counters_title_employee');?></a></h3>
+        <p><?php echo lang('entitleddays_counters_title_employee_description');?></p>
         <?php } else { ?>
         <h3><?php echo lang('entitleddays_counters_title_employee');?></h3>
         <?php } ?>
@@ -95,7 +97,6 @@
               <th><?php echo lang('entitleddays_user_index_thead_end');?></th>
               <th><?php echo lang('entitleddays_user_index_thead_days');?></th>
               <th><?php echo lang('entitleddays_user_index_thead_type');?></th>
-              <th><?php echo lang('entitleddays_user_index_thead_description');?></th>
             </tr>
           </thead>
           <tbody>
@@ -111,7 +112,6 @@
         ?></td>
               <td><?php echo $days['days']; ?></td>
               <td><?php echo $days['type_name']; ?></td>
-              <td><?php echo $days['description']; ?></td>
             </tr>
           <?php } ?>
           </tbody>
@@ -190,33 +190,6 @@ if ($language_code != 'en') { ?>
                 aria: {
                     sortAscending:  "<?php echo lang('datatable_sSortAscending');?>",
                     sortDescending: "<?php echo lang('datatable_sSortDescending');?>",
-                }
-            }
-        });
-        
-        $('#entitleddayscontract').dataTable({
-            order: [[ 0, "desc" ]],
-            language: {
-                decimal:            "<?php echo lang('datatable_sInfoThousands');?>",
-                processing:       "<?php echo lang('datatable_sProcessing');?>",
-                search:              "<?php echo lang('datatable_sSearch');?>",
-                lengthMenu:     "<?php echo lang('datatable_sLengthMenu');?>",
-                info:                   "<?php echo lang('datatable_sInfo');?>",
-                infoEmpty:          "<?php echo lang('datatable_sInfoEmpty');?>",
-                infoFiltered:       "<?php echo lang('datatable_sInfoFiltered');?>",
-                infoPostFix:        "<?php echo lang('datatable_sInfoPostFix');?>",
-                loadingRecords: "<?php echo lang('datatable_sLoadingRecords');?>",
-                zeroRecords:    "<?php echo lang('datatable_sZeroRecords');?>",
-                emptyTable:     "<?php echo lang('datatable_sEmptyTable');?>",
-                paginate: {
-                    first:          "<?php echo lang('datatable_sFirst');?>",
-                    previous:   "<?php echo lang('datatable_sPrevious');?>",
-                    next:           "<?php echo lang('datatable_sNext');?>",
-                    last:           "<?php echo lang('datatable_sLast');?>"
-                },
-                aria: {
-                    sortAscending:  "<?php echo lang('datatable_sSortAscending');?>",
-                    sortDescending: "<?php echo lang('datatable_sSortDescending');?>"
                 }
             }
         });

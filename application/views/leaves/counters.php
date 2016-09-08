@@ -21,8 +21,8 @@
 <thead>
     <tr>
       <th><?php echo lang('leaves_summary_thead_type');?></th>
-      <th><?php echo lang('leaves_summary_thead_available');?></th>
       <th><?php echo lang('leaves_summary_thead_taken');?></th>
+      <th><?php echo lang('leaves_summary_thead_available');?></th>
       <th><?php echo lang('leaves_summary_thead_entitled');?></th>
     </tr>
   </thead>
@@ -32,8 +32,8 @@
       if ($value[2] == '') {?>
     <tr>
       <td><?php echo $key; ?></td>
-      <td><?php echo round(((float) $value[1] - (float) $value[0]), 3, PHP_ROUND_HALF_DOWN); ?></td>
       <td><?php echo ((float) $value[0]); ?></td>
+      <td><?php echo round(((float) $value[1] - (float) $value[0]), 3, PHP_ROUND_HALF_DOWN); ?></td>
       <td><?php echo ((float) $value[1]); ?></td>
     </tr>
   <?php }

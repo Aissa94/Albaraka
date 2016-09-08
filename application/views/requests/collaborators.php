@@ -15,8 +15,9 @@
 <h2><?php echo lang('requests_collaborators_title');?>  &nbsp;<?php echo $help;?></h2>
 
 <?php echo $flash_partial_view;?>
+<p><?php echo lang('requests_collaborators_description');?>
+</br><?php echo lang('requests_collaborators_description2');?></p>
 
-<p><?php echo lang('requests_collaborators_description');?></p>
 
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="collaborators" width="100%">
     <thead>
@@ -31,7 +32,8 @@
     <tbody>
     <?php foreach ($collaborators as $collaborator): ?>
         <tr>
-            <td data-order="<?php echo $collaborator['id']; ?>">
+            <td data-order="<?php echo $collaborator['id']; ?>" 
+            <?php if ($this->users_model->isAbsent($collaborator['id'])){ ?>style="border-left: thick double #000;" <?php }?> >        
                 <?php echo $collaborator['id']; ?>
                 <div class="pull-right">
                     <?php if ($this->config->item('requests_by_manager') == TRUE) { ?>
@@ -95,7 +97,7 @@ $(document).ready(function() {
     //Transform the HTML table in a fancy datatable
     $('#collaborators').dataTable({
             stateSave: true,
-            "order": [[ 3, "asc" ], [ 2, "asc" ]],
+            "order": [[ 2, "asc" ], [ 1, "asc" ]],
             dom: 'Bfrtip',
             buttons: [
                             {

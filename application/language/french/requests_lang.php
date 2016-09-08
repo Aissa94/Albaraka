@@ -25,9 +25,9 @@ $lang['requests_index_thead_substitute'] = 'Remplaçant';
 
 $lang['requests_collaborators_title'] = 'Liste de mes collaborateurs';
 $lang['requests_collaborators_description'] = 'Cet écran liste vos collaborateurs. Si vous n\'êtes pas un responsable, cette liste sera vide.';
-$lang['requests_collaborators_description2'] = 'Les absences sont indiquées par un identificateur grisé.';
+$lang['requests_collaborators_description2'] = 'Les absences sont indiquées par un double trait.';
 $lang['requests_collaborators_thead_id'] = 'ID';
-$lang['requests_collaborators_thead_link_balance'] = 'Etat des congés';
+$lang['requests_collaborators_thead_link_balance'] = 'Solde des congés';
 $lang['requests_collaborators_thead_link_presence'] = 'Rapport sur la présence';
 $lang['requests_collaborators_thead_link_year'] = 'Calendrier annuel';
 $lang['requests_collaborators_thead_link_create_leave'] = 'Créer une demande de congé pour ce collaborateur';

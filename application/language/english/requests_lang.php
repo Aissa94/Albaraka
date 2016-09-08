@@ -25,7 +25,7 @@ $lang['requests_index_thead_substitute'] = 'Substitute';
 
 $lang['requests_collaborators_title'] = 'List of my subordinates';
 $lang['requests_collaborators_description'] = 'This screen lists your direct report subordinates. If you are not a manager, this list will always be empty.';
-$lang['requests_collaborators_description2'] = 'Absences are indicated by a gray identifier.';
+$lang['requests_collaborators_description2'] = 'Absences are indicated by a double line.';
 $lang['requests_collaborators_thead_id'] = 'ID';
 $lang['requests_collaborators_thead_link_balance'] = 'Leave Balance';
 $lang['requests_collaborators_thead_link_presence'] = 'Presence report';
