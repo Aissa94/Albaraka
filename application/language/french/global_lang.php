@@ -26,7 +26,7 @@ $lang['Requested'] = 'Demandé';
 $lang['Planned'] = 'Planifié';
 $lang['Accepted'] = 'Accepté';
 $lang['Rejected'] = 'Rejeté';
-$lang['Allowed'] = 'Permis';
+$lang['RequestedToHr'] = 'Demandé (RH)';
 
 $lang['global_link_doc_page_calendar_individual'] = 'http://fr.jorani.org/ecrans/page-mon-calendrier.html';
 $lang['global_link_doc_page_calendar_yearly'] = 'http://fr.jorani.org/ecrans/page-calendrier-annuel.html';

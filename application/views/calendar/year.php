@@ -20,6 +20,7 @@ $currentDay = (int)date('d');
         <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
         <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
         <div class="span3 btn btn-danger red conge"><?php echo lang('Rejected');?></div>
+        <!--<div class="span3 btn btn-warning conge"><?php //echo lang('RequestedToHr');?></div>-->
     </div>
     <div class="span4">
         <a href="<?php echo base_url();?>calendar/year/export/<?php echo $employee_id;?>/<?php echo ($year);?>" class="btn btn-primary"><i class="fa fa-file-excel-o"></i>&nbsp;<?php echo lang('calendar_year_button_export');?></a>
@@ -115,6 +116,7 @@ $currentDay = (int)date('d');
                   case 2: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Requested
                   case 3: echo ('<td title="' . $type . $substitute . $cause .'" class="allaccepted tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Accepted
                   case 4: echo ('<td title="' . $type . $substitute . $cause .'" class="allrejected tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Rejected
+                  case 5: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequestedToHr tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // RequestedToHr 
                 }
             }
         $pad_day++;
@@ -156,6 +158,9 @@ $(document).ready(function() {
                         break;
                     case "allaccepted tabColor":
                         tabGreen.push(i);
+                        break;
+                    case "allrequestedToHr tabColor":
+                        tabOrange.push(i);
                         break;
                 }
             }  

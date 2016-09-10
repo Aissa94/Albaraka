@@ -610,20 +610,6 @@ class Leaves_model extends CI_Model {
         $this->db->where('id', $id);
         $this->db->update('leaves', $data);
     }
-
-    /**
-     * Change the status for a leave request to requested
-     * @param int $id leave request identifier
-     * @return int number of affected rows
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function requestLeave($id) {
-        $data = array(
-            'status' => 2
-        );
-        $this->db->where('id', $id);
-        return $this->db->update('leaves', $data);
-    }
     
     /**
      * Accept a leave request
@@ -643,11 +629,11 @@ class Leaves_model extends CI_Model {
      * Accept a leave for request type 2 (by hr admin)
      * @param int $id leave request identifier
      * @return int number of affected rows
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
      */
     public function hrAcceptLeave($id) {
         $data = array(
-            'status' => 5
+            'status' => 2
         );
         $this->db->where('id', $id);
         return $this->db->update('leaves', $data);
@@ -729,7 +715,7 @@ class Leaves_model extends CI_Model {
                 $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
             }
             $cause = '';
-            if(isset($entry->cause))
+            if(isset($entry->cause)&&($entry->cause != ''))
             {
                 $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
             }
@@ -748,6 +734,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
+                case 5: $color = '#f89406'; break;  // Requestedto hr
             }
             $jsonevents[] = array(
                 'id' => $entry->id,
@@ -819,6 +806,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
+                case 5: $color = '#f89406'; break;  // Requestedto hr
             }
             
             $jsonevents[] = array(
@@ -884,7 +872,7 @@ class Leaves_model extends CI_Model {
                 $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
             }
             $cause = '';
-            if(isset($entry->cause))
+            if(isset($entry->cause) && ($entry->cause != ''))
             {
                 $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
             }
@@ -903,6 +891,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
+                //case 5: $color = '#f89406'; break;  // Requestedto hr
             }
             
             $jsonevents[] = array(
@@ -974,7 +963,7 @@ class Leaves_model extends CI_Model {
                 $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
             }
             $cause = '';
-            if(isset($entry->cause))
+            if(isset($entry->cause) && ($entry->cause != ''))
             {
                 $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
             }
@@ -993,6 +982,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
+                //case 5: $color = '#f89406'; break;  // Requestedto hr
             }
             
             $jsonevents[] = array(
@@ -1073,7 +1063,7 @@ class Leaves_model extends CI_Model {
                 $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
             }
             $cause = '';
-            if(isset($entry->cause))
+            if(isset($entry->cause) && ($entry->cause != ''))
             {
                 $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
             }
@@ -1092,6 +1082,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
+                case 5: $color = '#f89406'; break;  // Requestedto hr
             }
             
             $jsonevents[] = array(
@@ -1192,7 +1183,7 @@ class Leaves_model extends CI_Model {
         $this->db->where('leaves.type', 2);
 
         if ($all == FALSE) {
-            $this->db->where('leaves.status', 2);
+            $this->db->where('leaves.status', 5);
         }
         $this->db->order_by('leaves.startdate', 'desc');
         $query = $this->db->get('leaves');
@@ -1231,8 +1222,8 @@ class Leaves_model extends CI_Model {
     public function countLeavesRequestedToHr() {
         $this->db->select('count(*) as number', FALSE);
         $this->db->join('users', 'users.id = leaves.employee');
-        $this->db->where('leaves.status', 2);
-        $this->db->where('leaves.type', 2);
+        $this->db->where('leaves.status', 5);
+        //$this->db->where('leaves.type', 2);
 
         $result = $this->db->get('leaves');
         return $result->row()->number;
@@ -1307,7 +1298,7 @@ class Leaves_model extends CI_Model {
         $this->load->model('organization_model');
         $employees = $this->organization_model->allEmployees($entity, $children);
         foreach ($employees as $employee) {
-            $tabular[$employee->id] = $this->linear($employee->id, $month, $year, TRUE, TRUE, TRUE, FALSE);
+            $tabular[$employee->id] = $this->linear($employee->id, $month, $year, TRUE, TRUE, TRUE, FALSE, TRUE);
         }
         return $tabular;
     }
@@ -1371,7 +1362,7 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function linear($employee_id, $month, $year, 
-            $planned = FALSE, $requested = FALSE, $accepted = FALSE, $rejected = FALSE) {
+            $planned = FALSE, $requested = FALSE, $accepted = FALSE, $rejected = FALSE, $requestedToHr = FALSE) {
         $start = $year . '-' . $month . '-' .  '1';    //first date of selected month
         $lastDay = date("t", strtotime($start));    //last day of selected month
         $end = $year . '-' . $month . '-' . $lastDay;    //last date of selected month
@@ -1416,7 +1407,8 @@ class Leaves_model extends CI_Model {
         if (!$planned) $this->db->where('leaves.status != ', 1);
         if (!$requested) $this->db->where('leaves.status != ', 2);
         if (!$accepted) $this->db->where('leaves.status != ', 3);
-        if (!$rejected) $this->db->where('leaves.status != ', 4);        
+        if (!$rejected) $this->db->where('leaves.status != ', 4);
+        if (!$requestedToHr) $this->db->where('leaves.status != ', 5);        
         
         $this->db->where('leaves.employee = ', $employee_id);
         $this->db->order_by('startdate', 'asc');
@@ -1439,7 +1431,7 @@ class Leaves_model extends CI_Model {
                 $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
             }
             $cause = '';
-            if(isset($entry->cause))
+            if(isset($entry->cause) && ($entry->cause != ''))
             {
                 $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
             }

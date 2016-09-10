@@ -125,6 +125,16 @@ $lang['hr_leaves_validate_flash_msg_overlap_period'] = 'Vous ne pouvez pas crée
 
 $lang['hr_requests_index_title'] = 'Demandes d\'absence de type Droit au prochain exercice';
 $lang['hr_requests_index_description'] = 'Cet écran liste les demandes qui nécessitent votre accord avant d\'être envoyées au responsable concerné.';
+$lang['hr_requests_index_thead_id'] = 'N°';
+$lang['hr_requests_index_thead_fullname'] = 'Nom complet';
+$lang['hr_requests_index_thead_startdate'] = 'Date début';
+$lang['hr_requests_index_thead_enddate'] = 'Date fin';
+$lang['hr_requests_index_thead_duration'] = 'Durée';
+$lang['hr_requests_index_thead_type'] = 'Type';
+$lang['hr_requests_index_thead_status'] = 'Statut';
+$lang['hr_requests_index_thead_cause'] = 'Cause';
+$lang['hr_requests_index_thead_manager'] = 'Responsable';
+$lang['hr_requests_index_thead_substitute'] = 'Remplaçant';
 
 $lang['hr_overtime_title'] = 'Déclarations d\'heures supp.';
 $lang['hr_overtime_html_title'] = 'Déclarations d\'heures supp. de l\'employé n°';

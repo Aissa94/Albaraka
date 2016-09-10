@@ -27,7 +27,7 @@ $lang['Requested'] = 'Requested';
 $lang['Planned'] = 'Planned';
 $lang['Accepted'] = 'Accepted';
 $lang['Rejected'] = 'Rejected';
-$lang['Allowed'] = 'Allowed';
+$lang['RequestedToHr'] = 'Requested (HR)';
 
 $lang['global_link_doc_page_calendar_individual'] = '';
 $lang['global_link_doc_page_calendar_yearly'] = '';

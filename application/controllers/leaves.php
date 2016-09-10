@@ -194,6 +194,7 @@ class Leaves extends CI_Controller {
                         if (function_exists('triggerCreateLeaveRequest')) {
                             triggerCreateLeaveRequest($this);
                         }
+                        $_POST['status'] = "5";  //requested to the hr admin
                         $leave_id = $this->leaves_model->setLeaves($this->session->userdata('id'));
                         $this->session->set_flashdata('msg', lang('leaves_create_flash_msg_success'));
 
@@ -279,7 +280,7 @@ class Leaves extends CI_Controller {
                 $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
             }
             //If the status is requested, send an email
-            if ($this->input->post('status') == 2) {
+            if ($this->input->post('status') == 2){
                 
                 ///If the type is (2 : right to leave), send an email to the hr admin
                 if ($this->input->post('type') == 2) {
@@ -291,6 +292,7 @@ class Leaves extends CI_Controller {
                     } 
                     if ($this->leaves_model->getLeavesTypeBalanceForEmployee($this->user_id, $name_id) <= 0) 
                     {//choice an hr admin
+                        $_POST['status'] = "5";
                         $this->leaves_model->updateLeaves($id);       //We don't use the return value
                         $this->session->set_flashdata('msg', lang('leaves_edit_flash_msg_success'));
 

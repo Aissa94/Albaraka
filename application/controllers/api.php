@@ -345,7 +345,7 @@ class Api extends CI_Controller {
                 $lastDay = date("t", strtotime($start));    //last day of selected month
                 $end = sprintf('%d-%02d-%02d', $year, $month, $lastDay);
                 $result = new stdClass();
-                $linear = $this->leaves_model->linear($id, $month, $year, FALSE, FALSE, TRUE, FALSE);
+                $linear = $this->leaves_model->linear($id, $month, $year, FALSE, FALSE, TRUE, FALSE, FALSE);
                 $result->leaves = $this->leaves_model->monthlyLeavesDuration($linear);
                 $result->dayoffs = $this->dayoffs_model->lengthDaysOffBetweenDates($employee['contract'], $start, $end);
                 $result->total = cal_days_in_month(CAL_GREGORIAN, $month, $year);

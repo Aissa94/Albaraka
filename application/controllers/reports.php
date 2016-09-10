@@ -248,7 +248,7 @@ class Reports extends CI_Controller {
             if ($month == 0) {
                 $leave_duration = 0;
                 for ($ii = 1; $ii <13; $ii++) {
-                    $linear = $this->leaves_model->linear($user->id, $ii, $year, FALSE, FALSE, TRUE, FALSE);
+                    $linear = $this->leaves_model->linear($user->id, $ii, $year, FALSE, FALSE, TRUE, FALSE, FALSE);
                     $leave_duration += $this->leaves_model->monthlyLeavesDuration($linear);
                     $leaves_detail = $this->leaves_model->monthlyLeavesByType($linear);
                     //Init type columns
@@ -267,7 +267,7 @@ class Reports extends CI_Controller {
                 if ($requests) $leave_requests[$user->id] = $this->leaves_model->getAcceptedLeavesBetweenDates($user->id, $start, $end);
                 $work_duration = $opened_days - $leave_duration;
             } else {
-                $linear = $this->leaves_model->linear($user->id, $month, $year, FALSE, FALSE, TRUE, FALSE);
+                $linear = $this->leaves_model->linear($user->id, $month, $year, FALSE, FALSE, TRUE, FALSE, FALSE);
                 $leave_duration = $this->leaves_model->monthlyLeavesDuration($linear);
                 $work_duration = $opened_days - $leave_duration;
                 $leaves_detail = $this->leaves_model->monthlyLeavesByType($linear);

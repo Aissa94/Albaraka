@@ -145,8 +145,9 @@ foreach ($tabular as $employee) {
                 case 2: $sheet->getStyle($col . $line)->applyFromArray($styleBgRequested); break;  // Requested
                 case 3: $sheet->getStyle($col . $line)->applyFromArray($styleBgAccepted); break;  // Accepted
                 case 4: $sheet->getStyle($col . $line)->applyFromArray($styleBgRejected); break;  // Rejected
-                case '5': $sheet->getStyle($col . $line)->applyFromArray($styleBgDayOff); break;    //Day off
+                case 5: $sheet->getStyle($col . $line)->applyFromArray($styleBgRequested); break;    //RequestedToHr
                 case '6': $sheet->getStyle($col . $line)->applyFromArray($styleBgDayOff); break;    //Day off
+                case '7': $sheet->getStyle($col . $line)->applyFromArray($styleBgDayOff); break;    //Day off
               }
               switch (intval($statuses[0]))
               {
@@ -154,8 +155,10 @@ foreach ($tabular as $employee) {
                 case 2: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgRequested); break;  // Requested
                 case 3: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgAccepted); break;  // Accepted
                 case 4: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgRejected); break;  // Rejected
-                case '5': $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgDayOff); break;    //Day off
+                case 5: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgRequested); break;    //RequestedToHr
                 case '6': $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgDayOff); break;    //Day off
+                case '7': $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgDayOff); break;    //Day off
+              
               }//Two statuses in the cell
         } else {//Only one status in the cell
             switch ($day->display) {
@@ -172,6 +175,7 @@ foreach ($tabular as $employee) {
                             case 2: $sheet->getStyle($col . $line . ':' . $col . ($line + 1))->applyFromArray($styleBgRequested); break; // Requested
                             case 3: $sheet->getStyle($col . $line . ':' . $col . ($line + 1))->applyFromArray($styleBgAccepted); break;  // Accepted
                             case 4: $sheet->getStyle($col . $line . ':' . $col . ($line + 1))->applyFromArray($styleBgRejected); break;  // Rejected
+                            case 5: $sheet->getStyle($col . $line . ':' . $col . ($line + 1))->applyFromArray($styleBgRequested); break;  // RequestedToHr
                         }
                         break;
                 case '2':   //AM
@@ -182,6 +186,7 @@ foreach ($tabular as $employee) {
                           case 2: $sheet->getStyle($col . $line)->applyFromArray($styleBgRequested); break;  // Requested
                           case 3: $sheet->getStyle($col . $line)->applyFromArray($styleBgAccepted); break;  // Accepted
                           case 4: $sheet->getStyle($col . $line)->applyFromArray($styleBgRejected); break;  // Rejected
+                          case 5: $sheet->getStyle($col . $line)->applyFromArray($styleBgRequested); break;  // RequestedToHr
                       }
                     break;
                 case '3':   //PM
@@ -192,6 +197,7 @@ foreach ($tabular as $employee) {
                           case 2: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgRequested); break;  // Requested
                           case 3: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgAccepted); break;  // Accepted
                           case 4: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgRejected); break;  // Rejected
+                          case 5: $sheet->getStyle($col . ($line + 1))->applyFromArray($styleBgRequested); break;  // RequestedToHr
                       }
                     break;
                 case '4': //Full day off

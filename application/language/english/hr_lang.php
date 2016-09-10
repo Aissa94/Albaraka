@@ -125,6 +125,16 @@ $lang['hr_leaves_validate_flash_msg_overlap_period'] = 'You can\'t create a leav
 
 $lang['hr_requests_index_title'] = 'Leave Requests of Right to the next year';
 $lang['hr_requests_index_description'] = 'This screen lists the requests that require your acceptation before being sent to the relevant manager';
+$lang['hr_requests_index_thead_id'] = 'ID';
+$lang['hr_requests_index_thead_fullname'] = 'Fullname';
+$lang['hr_requests_index_thead_startdate'] = 'Start Date';
+$lang['hr_requests_index_thead_enddate'] = 'End Date';
+$lang['hr_requests_index_thead_duration'] = 'Duration';
+$lang['hr_requests_index_thead_type'] = 'Type';
+$lang['hr_requests_index_thead_status'] = 'Status';
+$lang['hr_requests_index_thead_cause'] = 'Cause';
+$lang['hr_requests_index_thead_manager'] = 'Manager';
+$lang['hr_requests_index_thead_substitute'] = 'Substitute';
 
 $lang['hr_overtime_title'] = 'List of overtime requests';
 $lang['hr_overtime_html_title'] = 'List of overtime requests for employee #';

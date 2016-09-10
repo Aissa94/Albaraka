@@ -20,14 +20,14 @@
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="leaves" width="100%">
     <thead>
         <tr>
-            <th><?php echo lang('requests_index_thead_id');?></th>
-            <th><?php echo lang('requests_index_thead_status');?></th>
-            <th><?php echo lang('requests_index_thead_fullname');?></th>
-            <th><?php echo lang('requests_index_thead_startdate');?></th>
-            <th><?php echo lang('requests_index_thead_enddate');?></th>            
-            <th><?php echo lang('requests_index_thead_duration');?></th>
-            <th><?php echo lang('requests_index_thead_cause');?></th>
-            <th><?php echo lang('requests_index_thead_manager');?></th>
+            <th><?php echo lang('hr_requests_index_thead_id');?></th>
+            <th><?php echo lang('hr_requests_index_thead_status');?></th>
+            <th><?php echo lang('hr_requests_index_thead_fullname');?></th>
+            <th><?php echo lang('hr_requests_index_thead_startdate');?></th>
+            <th><?php echo lang('hr_requests_index_thead_enddate');?></th>            
+            <th><?php echo lang('hr_requests_index_thead_duration');?></th>
+            <th><?php echo lang('hr_requests_index_thead_cause');?></th>
+            <th><?php echo lang('hr_requests_index_thead_manager');?></th>
         </tr>
     </thead>
     <tbody>
@@ -55,7 +55,7 @@
                     <a href="<?php echo base_url();?>requests/printa/<?php echo $requests_item['leave_id']; ?>?source=hr%2Fleaves%2F<?php echo $user_id; ?>" title="<?php echo lang('hr_leaves_thead_tip_print');?>"><i class="icon-print"></i></a>
                  <?php 
                 } ?>
-                <?php if (($requests_item['status']==2)||($requests_item['status']==4))
+                <?php if (($requests_item['status']==4)||($requests_item['status']==5))
                 {?>
                     &nbsp;
                     <a href="#" class="lnkAccept" data-id="<?php echo $requests_item['leave_id']; ?>" title="<?php echo lang('hr_leaves_thead_tip_accept');?>"><i class="icon-ok"></i></a>   

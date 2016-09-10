@@ -379,7 +379,7 @@ class Requests extends CI_Controller {
             //$admins = array_merge($admins, $this->users_model->getImalAdmins());
             array_push($cc_list, $hierarchical_manager['email']);
             foreach ($admins as $item) array_push($cc_list, $item['email']);
-        } else {    //rejected
+        } elseif ($leave['status'] == 4) {    //rejected
             $message = $this->parser->parse('emails/' . $employee['language'] . '/request_rejected', $data, TRUE);
             $subject = $lang_mail->line('email_leave_request_reject_subject');
         }

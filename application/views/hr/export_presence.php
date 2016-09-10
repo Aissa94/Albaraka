@@ -30,7 +30,7 @@ $opened_days = $total_days - $non_working_days;
 $month_name = lang(date('F', strtotime($start)));
 
 //tabular view of the leaves
-$linear = $this->leaves_model->linear($id, $month, $year, FALSE, FALSE, TRUE, FALSE);
+$linear = $this->leaves_model->linear($id, $month, $year, FALSE, FALSE, TRUE, FALSE, FALSE);
 $leave_duration = $this->leaves_model->monthlyLeavesDuration($linear);
 $work_duration = $opened_days - $leave_duration;
 $leaves_detail = $this->leaves_model->monthlyLeavesByType($linear);
