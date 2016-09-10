@@ -734,7 +734,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                case 5: $color = '#f89406'; break;  // Requestedto hr
+                case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             $jsonevents[] = array(
                 'id' => $entry->id,
@@ -806,7 +806,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                case 5: $color = '#f89406'; break;  // Requestedto hr
+                case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             
             $jsonevents[] = array(
@@ -842,6 +842,7 @@ class Leaves_model extends CI_Model {
         $this->db->join('users', 'users.id = leaves.employee');
         $this->db->join('users as users2', 'users2.id = leaves.substitute', 'LEFT');
         $this->db->join('types', 'types.id = leaves.type');
+        $this->db->where('leaves.status !=', 5);
         $this->db->where('users.manager', $user_id);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         $this->db->order_by('startdate', 'desc');
@@ -891,7 +892,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                //case 5: $color = '#f89406'; break;  // Requestedto hr
+                case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             
             $jsonevents[] = array(
@@ -934,6 +935,7 @@ class Leaves_model extends CI_Model {
         $this->db->join('organization', 'organization.id = users.organization');
         $this->db->where_in('users.organization', $children);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
+        $this->db->where('leaves.status !=', 5);
         $this->db->order_by('startdate', 'desc');
         $this->db->limit(1024);  //Security limit
         $events = $this->db->get('leaves')->result();
@@ -982,7 +984,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                //case 5: $color = '#f89406'; break;  // Requestedto hr
+                case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             
             $jsonevents[] = array(
@@ -1082,7 +1084,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                case 5: $color = '#f89406'; break;  // Requestedto hr
+                case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             
             $jsonevents[] = array(
