@@ -53,7 +53,7 @@ if (isset($_GET['source'])) {
     <input type="text" name="duration" id="duration" value="<?php echo $leave['duration']; ?>" />
     <?php } ?>
     
-    <div class="alert hide alert-error">
+    <div class="alert hide alert-error" id="lblCreditAlert">
         <?php echo lang('leaves_edit_field_duration_message');?>
     </div>
     
