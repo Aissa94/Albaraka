@@ -298,11 +298,6 @@
                         else affect = "none";
                         for (var i=0, c = tabGreen.length ; i < c ; i++) links[tabGreen[i]].style.display = affect;
                         break;
-                    case "<?php echo lang('RequestedToHr');?>": 
-                        if (tabOrange.length !=0 && links[tabOrange[0]].style.display == "none") affect = "block";
-                        else affect = "none";
-                        for (var i=0, c = tabOrange.length ; i < c ; i++) links[tabOrange[i]].style.display = affect;
-                        break;
                 }
                   });
             }

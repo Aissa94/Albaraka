@@ -116,7 +116,7 @@ $currentDay = (int)date('d');
                   case 2: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Requested
                   case 3: echo ('<td title="' . $type . $substitute . $cause .'" class="allaccepted tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Accepted
                   case 4: echo ('<td title="' . $type . $substitute . $cause .'" class="allrejected tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // Rejected
-                  case 5: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequestedToHr tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // RequestedToHr 
+                  case 5: echo ('<td title="' . $type . $substitute . $cause .'" class="allrequested tabColor'.($class?' '.$class:'').'">&nbsp;</td>'); break;  // RequestedToHr 
                 }
             }
         $pad_day++;
@@ -158,9 +158,6 @@ $(document).ready(function() {
                         break;
                     case "allaccepted tabColor":
                         tabGreen.push(i);
-                        break;
-                    case "allrequestedToHr tabColor":
-                        tabOrange.push(i);
                         break;
                 }
             }  

@@ -127,7 +127,7 @@
                               case 2: $class = "requested"; break;  // Requested
                               case 3: $class = "accepted"; break;  // Accepted
                               case 4: $class = "rejected"; break;  // Rejected
-                              case 5: $class = "requestedToHr"; break; //RequestedToHr
+                              case 5: $class = "requested"; break; //RequestedToHr
                               case 6: $class="dayoff"; break;
                               case 7: $class="dayoff"; break;
                           }
@@ -137,7 +137,7 @@
                               case 2: $class .= "requested"; break;  // Requested
                               case 3: $class .= "accepted"; break;  // Accepted
                               case 4: $class .= "rejected"; break;  // Rejected
-                              case 5: $class .= "requestedToHr"; break; //RequestedToHr
+                              case 5: $class .= "requested"; break; //RequestedToHr
                               case 6: $class .="dayoff"; break;
                               case 7: $class .="dayoff"; break;
                           }
@@ -149,7 +149,7 @@
                                   case 2: $class = "allrequested"; break;  // Requested
                                   case 3: $class = "allaccepted"; break;  // Accepted
                                   case 4: $class = "allrejected"; break;  // Rejected
-                                  case 5: $class = "allrequestedToHr"; break; //RequestedToHr
+                                  case 5: $class = "allrequested"; break; //RequestedToHr
                                   //The 2 cases below would be weird...
                                   case 6: $class ="dayoff"; break;
                                   case 7: $class ="dayoff"; break;
@@ -169,7 +169,7 @@
                                     case 2: $class = "allrequested"; break;  // Requested
                                     case 3: $class = "allaccepted"; break;  // Accepted
                                     case 4: $class = "allrejected"; break;  // Rejected
-                                    case 5: $class = "allrequestedToHr"; break; //RequestedToHr
+                                    case 5: $class = "allrequested"; break; //RequestedToHr
                                 }
                                 break;
                           case '2':
@@ -179,7 +179,7 @@
                                     case 2: $class = "amrequested"; break;  // Requested
                                     case 3: $class = "amaccepted"; break;  // Accepted
                                     case 4: $class = "amrejected"; break;  // Rejected
-                                    case 5: $class = "amrequestedToHr"; break; //RequestedToHr
+                                    case 5: $class = "amrequested"; break; //RequestedToHr
                                 }
                               break;
                           case '3':
@@ -189,7 +189,7 @@
                                     case 2: $class = "pmrequested"; break;  // Requested
                                     case 3: $class = "pmaccepted"; break;  // Accepted
                                     case 4: $class = "pmrejected"; break;  // Rejected
-                                    case 5: $class = "pmrequestedToHr"; break; //RequestedToHr
+                                    case 5: $class = "pmrequested"; break; //RequestedToHr
                                 }
                               break;
                       }
@@ -200,7 +200,6 @@
                               case "requestedrequested":
                               case "acceptedaccepted":
                               case "rejectedrejected":
-                              case "requestedToHrrequestedToHr":
                                   $overlapping = TRUE;
                         break;
                     }

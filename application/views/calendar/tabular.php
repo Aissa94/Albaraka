@@ -124,7 +124,7 @@
  */
   $repeater = 0;
 
-  
+
   foreach ($tabular as $employee) {
       $dayIterator = 0;
       ?>
@@ -142,7 +142,7 @@
                     case 2: $class = "requested"; break;  // Requested
                     case 3: $class = "accepted"; break;  // Accepted
                     case 4: $class = "rejected"; break;  // Rejected
-                    case 5: $class = "requestedToHr"; break;  // RequestedToHr
+                    case 5: $class = "requested"; break;  // RequestedToHr
                     case 6: $class="dayoff"; break;
                     case 7: $class="dayoff"; break;
                     
@@ -153,7 +153,7 @@
                     case 2: $class .= "requested"; break;  // Requested
                     case 3: $class .= "accepted"; break;  // Accepted
                     case 4: $class .= "rejected"; break;  // Rejected
-                    case 5: $class .= "requestedToHr"; break;  // RequestedToHr
+                    case 5: $class .= "requested"; break;  // RequestedToHr
                     case 6: $class .="dayoff"; break;
                     case 7: $class .="dayoff"; break;
                                     }
@@ -165,7 +165,7 @@
                         case 2: $class = "allrequested tabColor"; break;  // Requested
                         case 3: $class = "allaccepted tabColor"; break;  // Accepted
                         case 4: $class = "allrejected tabColor"; break;  // Rejected
-                        case 5: $class = "allrequestedToHr tabColor"; break;  // RequestedToHr
+                        case 5: $class = "allrequested tabColor"; break;  // RequestedToHr
                         //The 2 cases below would be weird...
                         case 6: $class ="dayoff"; break;
                         case 7: $class ="dayoff"; break;
@@ -185,7 +185,7 @@
                           case 2: $class = "allrequested tabColor"; break;  // Requested
                           case 3: $class = "allaccepted tabColor"; break;  // Accepted
                           case 4: $class = "allrejected tabColor"; break;  // Rejected
-                          case 5: $class = "allrequestedToHr tabColor"; break;  // RequestedToHr
+                          case 5: $class = "allrequested tabColor"; break;  // RequestedToHr
                       }
                       break;
                 case '2':
@@ -195,7 +195,7 @@
                           case 2: $class = "amrequested"; break;  // Requested
                           case 3: $class = "amaccepted"; break;  // Accepted
                           case 4: $class = "amrejected"; break;  // Rejected
-                          case 5: $class = "amrequestedToHr"; break;  // RequestedToHr                        
+                          case 5: $class = "amrequested"; break;  // RequestedToHr                        
                       }
                     break;
                 case '3':
@@ -205,7 +205,7 @@
                           case 2: $class = "pmrequested"; break;  // Requested
                           case 3: $class = "pmaccepted"; break;  // Accepted
                           case 4: $class = "pmrejected"; break;  // Rejected
-                          case 5: $class = "pmrequestedToHr"; break;  // RequestedToHr
+                          case 5: $class = "pmrequested"; break;  // RequestedToHr
                       }
                     break;
             }
@@ -218,7 +218,6 @@
                     case "requestedrequested":
                     case "acceptedaccepted":
                     case "rejectedrejected":
-                    case "requestedToHr":
                         $overlapping = TRUE;
               break;
           }
@@ -395,9 +394,6 @@ date_sub($datePrev, date_interval_create_from_date_string('1 month'));?>
                     case "allaccepted tabColor":
                         tabGreen.push(i);
                         break;
-                    case "allrequestedToHr tabColor":
-                        tabOrange.push(i);
-                        break;
                 }
             }  
             $('.conge').on('click', function() {
@@ -422,11 +418,6 @@ date_sub($datePrev, date_interval_create_from_date_string('1 month'));?>
                         if (tabGreen.length !=0 && links[tabGreen[0]].style.backgroundColor == "white") affect = "rgb(70, 136, 71)";
                         else affect = "white";
                         for (var i=0, c = tabGreen.length ; i < c ; i++) links[tabGreen[i]].style.backgroundColor = affect;
-                        break;
-                    case "<?php echo lang('RequestedToHr');?>": 
-                        if (tabOrange.length !=0 && links[tabOrange[0]].style.backgroundColor == "white") affect = "rgb(248, 148, 6)";
-                        else affect = "white";
-                        for (var i=0, c = tabOrange.length ; i < c ; i++) links[tabOrange[i]].style.backgroundColor = affect;
                         break;
                 }
         });
