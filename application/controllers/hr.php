@@ -428,6 +428,7 @@ class Hr extends CI_Controller {
         if ($source == 'employees') { $data['source'] = 'employees'; }
         $this->lang->load('datatable', $this->language);
         $this->lang->load('calendar', $this->language);
+        $this->lang->load('leaves', $this->language);
         $data['title'] = lang('hr_presence_title');
         $data['help'] = $this->help->create_help_link('global_link_doc_page_presence_report');
         

@@ -207,9 +207,9 @@
                           echo '<td><img src="'.  base_url() .'assets/images/date_error.png"></td>';
                       } else {
                           if ($overlapping) {
-                              echo '<td title="' . $day->type . '" class="' . $class . '"><img src="' . base_url() . 'assets/images/date_error.png"></td>';
+                              echo '<td title="' . $day->type .$day->substitute.$day->cause. '" class="' . $class . '"><img src="' . base_url() . 'assets/images/date_error.png"></td>';
                           } else {
-                              echo '<td title="' . $day->type . '" class="' . $class . '">&nbsp;</td>';
+                              echo '<td title="' . $day->type .$day->substitute.$day->cause. '" class="' . $class . '">&nbsp;</td>';
                           }
                       }
                } ?>
@@ -338,7 +338,8 @@ $(function () {
             },
             eventAfterRender: function(event, element, view) {
                 //Add tooltip to the element
-                $(element).attr('title', event.title);
+                if(event.substitute != undefined || event.cause != undefined) $(element).attr('title', event.title+event.substitute+event.cause);
+                else $(element).attr('title', event.title);
 
                 if (event.enddatetype == "Morning" || event.startdatetype == "Afternoon") {
                     var nb_days = event.end.diff(event.start, "days");
