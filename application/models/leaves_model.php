@@ -1026,13 +1026,22 @@ class Leaves_model extends CI_Model {
             $this->load->model('organization_model');
             $list = $this->organization_model->getChildren($entity_id);
             $ids = array();
-            if ($list[0]['id'] != '') {
-                $ids = explode(",", $list[0]['id']);
-                array_push($ids, $entity_id);
-                $this->db->where_in('organization.id', $ids);
-            } else {
-                $this->db->where('organization.id', $entity_id);
+            if (count($list) > 0) {
+                foreach ($list as $a_list) {
+                    array_push($ids, $a_list['id']);
+                }
+                foreach($ids as $id2){
+                    $list2 = $this->organization_model->getChildren($entity_id);
+                    if (count($list2) > 0) {
+                        foreach ($list2 as $a_list2) {
+                            array_push($ids, $a_list2['id']);
+                        }
+                    }
+                }
+
             }
+            array_push($ids, $entity_id);
+            $this->db->where_in('organization.id', $ids);
         } else {
             $this->db->where('organization.id', $entity_id);
         }
@@ -1123,7 +1132,18 @@ class Leaves_model extends CI_Model {
             $list = $this->organization_model->getChildren($entity_id);
             $ids = array();
             if (count($list) > 0) {
-                $ids = explode(",", $list[0]['id']);
+                foreach ($list as $a_list) {
+                    array_push($ids, $a_list['id']);
+                }
+                foreach($ids as $id2){
+                    $list2 = $this->organization_model->getChildren($entity_id);
+                    if (count($list2) > 0) {
+                        foreach ($list2 as $a_list2) {
+                            array_push($ids, $a_list2['id']);
+                        }
+                    }
+                }
+
             }
             array_push($ids, $entity_id);
             $this->db->where_in('organization.id', $ids);
