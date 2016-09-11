@@ -15,22 +15,38 @@
             "cwd": "${fileDirname}",
             "port": 9000
         },
-        {
+        /*{
             "name": "Launch index.html",
             "type": "chrome",
             "request": "launch",
             "file": "${workspaceRoot}/index.html",
             "sourceMaps": true,
-            "webRoot": "${workspaceRoot}"
-        },
+            "webRoot": "${workspaceRoot}",
+            "port": 9222
+        },*/
         {
             "name": "Launch localhost",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost/lms/leaves/create",
+            "url": "http://localhost/lms",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}",
+            "userDataDir": "${workspaceRoot}/.vscode/chrome",
             "port": 9222
         }
+        /*{
+            "name": "Attach with sourcemaps",
+            "type": "chrome",
+            "request": "attach",
+            "sourceMaps": true,
+            "port": 9222            
+        },
+        {
+            "name": "Attach to url with files served from ./out",
+            "type": "chrome",
+            "request": "attach",
+            "webRoot": "${workspaceRoot}/out",
+            "port": 9222
+        }*/
     ]
 }
