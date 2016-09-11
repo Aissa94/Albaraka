@@ -715,7 +715,7 @@ class Leaves_model extends CI_Model {
                 $substitute =  "\n".lang('leaves_view_field_substitute').'  : '.$entry->substitute_firstname.' '.$entry->substitute_lastname;
             }
             $cause = '';
-            if(isset($entry->cause)&&($entry->cause != ''))
+            if(isset($entry->cause) && ($entry->cause != ''))
             {
                 $cause =  "\n".lang('leaves_view_field_cause').'  : '.$entry->cause;
             }
@@ -1015,7 +1015,7 @@ class Leaves_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function department($entity_id, $start = "", $end = "", $children = FALSE) {
-        $this->db->select('users.firstname, users.lastname,  leaves.*, types.name as type, users1.firstname as substitute_firstname, users1.lastname as substitute_lastname');
+        $this->db->select('users.firstname, users.lastname,  leaves.*, organization.name as organization_name, types.name as type, users1.firstname as substitute_firstname, users1.lastname as substitute_lastname');
         $this->db->from('organization');
         $this->db->join('users', 'users.organization = organization.id');
         $this->db->join('leaves', 'leaves.employee  = users.id');
@@ -1068,6 +1068,7 @@ class Leaves_model extends CI_Model {
             $allDay = FALSE;
             $startdatetype =  $entry->startdatetype;
             $enddatetype = $entry->enddatetype;
+            $organization = lang('leaves_view_field_organization').'  : '.$entry->organization_name;
             $substitute = '';
             if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
             {
@@ -1099,7 +1100,7 @@ class Leaves_model extends CI_Model {
             $jsonevents[] = array(
                 'id' => $entry->id,
                 'title' => $entry->firstname .' ' . $entry->lastname,
-                'type' => $entry->type,
+                'type' => $organization."\n".$entry->type,
                 'substitute' => $substitute,
                 'cause' => $cause,
                 'imageurl' => $imageUrl,
