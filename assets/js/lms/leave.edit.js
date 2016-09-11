@@ -84,19 +84,24 @@ function getLeaveInfos(preventDefault) {
                     $("#lblCreditAlert").show();
                 } else {
                     $("#lblCreditAlert").hide();
-                    var day = $("#viz_enddate").datepicker('getDate').getUTCDay();
-                    if ((day == '3'|| day == '4')&&($("#type option:selected").val() == 1 || $("#type option:selected").val() == 2)) {
-                            if (day == '3') daysToAdd = 2;
-                            else if (day == '4') daysToAdd = 1;
-                            switch(credit - duration){
-                                case 0 : daysToAdd = 0; break;
-                                case 1 : daysToAdd = 1; break;
-                            }
-                            $("#duration").val(duration + daysToAdd);
+                    if (typeof leaveInfo.length !== 'undefined'){
+                        var day = $("#viz_enddate").datepicker('getDate').getUTCDay();
+                        if ( (day == '3'|| day == '4')&&
+                        ($("#type option:selected").val() == 1 || $("#type option:selected").val() == 2)) {
+                                if (day == '3') daysToAdd = 2;
+                                else if (day == '4') daysToAdd = 1;
+                                switch(credit - duration){
+                                    case 0 : daysToAdd = 0; break;
+                                    case 1 : daysToAdd = 1; break;
+                                }
+                                $("#duration").val(duration + daysToAdd);
+                        }
                     }
                 }
                 if (leaveInfo.credit != null) {
+                    if ($("#type option:selected").val() == 1 || $("#type option:selected").val() == 2)
                     $("#lblCredit").text('(' + leaveInfo.credit + ')');
+                    else $("#lblCredit").text('');
                 }
             }
             //Check if the current request overlaps with another one
