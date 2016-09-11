@@ -488,12 +488,19 @@ class Leaves extends CI_Controller {
         $query = $this->db->query("SELECT * FROM users WHERE role = 4 limit 1", false);
         $imal = $query->result()[0];
         if(isset ($imal)){
-            $query = $this->db->query("SELECT employee, startdate, enddate, 'Désactiver' as doing 
-                            FROM leaves WHERE (status = 3 and startdate = CURDATE() and startdate != enddate)", false); 
+            
+            $strquery = "SELECT employee, startdate, enddate, 'Désactiver' as doing FROM leaves WHERE (status = 3 and startdate = CURDATE() and startdate != enddate)";
+            if(date('w') == 0) //if sanday then inclure desactivates in week-end
+            $strquery = $strquery." UNION SELECT employee, startdate, enddate, 'Désactiver' as doing FROM leaves WHERE (status = 3 and (startdate = DATE_SUB(CURDATE(), INTERVAL 1 DAY) or startdate = DATE_SUB(CURDATE(), INTERVAL 2 DAY)) and enddate != CURDATE())";
+            $query = $this->db->query($strquery, false);
             $results_desactivate = $query->result();
-            $query = $this->db->query("SELECT employee, startdate, enddate, 'Activer'    as doing 
-                            FROM leaves WHERE (status = 3 and enddate   = CURDATE() and startdate != enddate)", false); 
+
+            $strquery = "SELECT employee, startdate, enddate, 'Activer'    as doing FROM leaves WHERE (status = 3 and enddate = CURDATE() and startdate != enddate)";
+            if(date('w') == 4)  //if thursday then inclure activates in week-end
+            $strquery = $strquery." UNION SELECT employee, startdate, enddate, 'Activer' as doing FROM leaves WHERE (status = 3 and (enddate = DATE_ADD(CURDATE(), INTERVAL 1 DAY) or enddate = DATE_ADD(CURDATE(), INTERVAL 2 DAY)) and startdate != CURDATE())";
+            $query = $this->db->query($strquery, false);
             $results_activate = $query->result();
+
             if ($results_activate || $results_desactivate){
             //Send an e-mail to the imal admin
             $this->load->library('email');
@@ -507,11 +514,9 @@ class Leaves extends CI_Controller {
 
             $this->load->library('parser');
             $data = array(
-                'Title' => '(Dés)Activation des comptes',
                 'Id' => $imal->id,
                 'Firstname' => $imal->firstname,
                 'Lastname' => $imal->lastname,
-                'Date' => date('d-m-Y'),
                 'Data_Activate' => $results_activate,
                 'Data_Desactivate' => $results_desactivate,
                 );

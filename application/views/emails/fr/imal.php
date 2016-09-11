@@ -19,9 +19,9 @@
         </style>
     </head>
     <body>
-        <h3>{Title}</h3>
+        <h3>Activation / Désactivation des comptes</h3>
         <p>Bonjour {Lastname} {Firstname},</p>
-        <p>Voici les comptes qui s'ouvrent aujourd'hui (le {Date}) :</p>
+        <p>Voici les comptes à activer pour aujourd'hui (le <?php echo date('d-m-Y'); ?>) :</p>
 <?php
 foreach ($Data_Activate as $item)
 {  ?>
@@ -29,9 +29,9 @@ foreach ($Data_Activate as $item)
             <tr>
                 <td>Employee</td><td><?php echo $item->employee ?></td>
             </tr>
-            <tr>
-                <td>Congé</td><td>du <?php echo $item->startdate ?> au <?php echo $item->enddate ?></td>
-            </tr>
+            <!--tr>
+                <td>Congé</td><td>du <?php //echo date('d-m-Y', strtotime($item->startdate)) ?> au <?php //echo date('d-m-Y', strtotime($item->enddate)) ?></td>
+            </tr-->
             <tr>
                 <td>Action</td><td><?php echo $item->doing ?></td>
             </tr>
@@ -39,7 +39,7 @@ foreach ($Data_Activate as $item)
 <?php
 } ?>
         <br/>
-        <p>Et voici les comptes qui se ferment :</p>
+        <p>Et voici les comptes à désactiver :</p>
 <?php
 foreach ($Data_Desactivate as $item)
 {  ?>
@@ -47,9 +47,9 @@ foreach ($Data_Desactivate as $item)
             <tr>
                 <td>Employee</td><td><?php echo $item->employee ?></td>
             </tr>
-            <tr>
-                <td>Congé</td><td>du <?php echo $item->startdate ?> au <?php echo $item->enddate ?></td>
-            </tr>
+            <!--tr>
+                <td>Congé</td><td>du <?php //echo date('d-m-Y', strtotime($item->startdate)) ?> au <?php //echo date('d-m-Y', strtotime($item->enddate)) ?></td>
+            </tr-->
             <tr>
                 <td>Action</td><td><?php echo $item->doing ?></td>
             </tr>
