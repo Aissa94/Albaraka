@@ -1398,6 +1398,9 @@ class Leaves_model extends CI_Model {
         $user->name = $employee['firstname'] . ' ' . $employee['lastname'];
         $user->days = array();
 
+        $query = $this->db->query("SELECT organization.name FROM organization WHERE organization.id =".$employee['organization'],false);
+        $organization_name = $query->result()[0]->name;
+
         //Init all day to working day
         for ($ii = 1; $ii <= $lastDay; $ii++) {
             $day = new stdClass;
@@ -1447,7 +1450,8 @@ class Leaves_model extends CI_Model {
             $iDate = clone $startDate;
             $endDate = DateTime::createFromFormat('Y-m-d H:i:s', $entry->enddate . ' 00:00:00');
             if ($endDate > $limitDate) $endDate = $limitDate;
-
+            
+            $organization = lang('leaves_view_field_organization').'  : '.$organization_name;
             $substitute = '';
             if(isset($entry->substitute_firstname)||isset($entry->substitute_lastname))
             {
@@ -1518,7 +1522,7 @@ class Leaves_model extends CI_Model {
                             //$user->days[$dayNum]->cause = '$cause2'. ';' . $user->days[$dayNum]->cause;
                         }
                     } else  {   //All day entry
-                        $user->days[$dayNum]->type = $entry->type;
+                        $user->days[$dayNum]->type = $organization."\n".$entry->type;
                         $user->days[$dayNum]->display = $display;
                         $user->days[$dayNum]->status = $entry->status;
                         $user->days[$dayNum]->substitute = $substitute;
