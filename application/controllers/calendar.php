@@ -127,9 +127,13 @@ class Calendar extends CI_Controller {
      */
     public function collaborators() {
         setUserContext($this);
+        $this->load->model('users_model');
         $this->lang->load('calendar', $this->language);
         $this->auth->checkIfOperationIsAllowed('collaborators_calendar');
         $data = getUserContext($this);
+        $data['organization_id'] = $this->users_model->getOrganization($data['user_id']);
+        $data['organization_name'] = $this->db->query("SELECT name FROM organization 
+        WHERE id =".$data['organization_id'],false)->result_array()[0]['name'];
         $data['title'] = lang('calendar_collaborators_title');
         $data['help'] = $this->help->create_help_link('global_link_doc_page_calendar_collaborators');
         $this->load->view('templates/header', $data);

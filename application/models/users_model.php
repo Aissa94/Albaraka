@@ -910,14 +910,14 @@ class Users_model extends CI_Model {
      * Get the id of organization of the given user
      * @param int $id identifier of the user
      * @return array record of users
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
      */
     public function getOrganization($id = 0) {
         $this->db->select('users.organization as org_id');
         $this->db->from('users');
         $this->db->where('users.id', $id);
         $query = $this->db->get();
-        return $query->result_array();
+        return $query->result_array()[0]['org_id'];
     }
     
     /**
@@ -930,7 +930,7 @@ class Users_model extends CI_Model {
         $organization = $this->getOrganization($id);
         $this->db->select('users.*');
         $this->db->from('users');
-        $this->db->where('organization', $organization[0]['org_id']);
+        $this->db->where('organization', $organization);
         $this->db->where('id != ', $id);
         $query = $this->db->get();
         return $query->result_array();

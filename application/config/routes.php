@@ -145,6 +145,7 @@ $route['discordance'] = 'discordance';
 //HR Organization
 $route['organization/select'] = 'organization/select';
 $route['organization/root'] = 'organization/root';
+$route['organization/minRoot/(:num)'] = 'organization/minRoot/$1';
 $route['organization/delete'] = 'organization/delete';
 $route['organization/create'] = 'organization/create';
 $route['organization/rename'] = 'organization/rename';

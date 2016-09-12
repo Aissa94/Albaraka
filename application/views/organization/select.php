@@ -37,9 +37,11 @@
               multiple : false,
               data : {
                 url : function (node) {
-                  return node.id === '#' ? 
-                    '<?php echo base_url(); ?>organization/root' : 
-                    '<?php echo base_url(); ?>organization/children';
+                    if (node.id === '#') {
+                        var pathArray = window.location.pathname.split( '/' );
+                        if (pathArray[pathArray.length - 1] == 'collaborators') return '<?php echo base_url().'organization/minRoot/'.array_shift(array_keys($_GET));  ?>';
+                        else return '<?php echo base_url(); ?>organization/root' ;
+                    } else return'<?php echo base_url(); ?>organization/children';
                 },
                 'data' : function (node) {
                   return { 'id' : node.id };

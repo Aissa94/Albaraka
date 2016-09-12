@@ -58,11 +58,13 @@ class Organization_model extends CI_Model {
     
     /**
      * List all entities of the organisation
+     * @return $organization_id if set then return just one level
      * @return array all entities of the organization sorted out by id and name
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getAllEntities() {
+    public function getAllEntities($organization_id = NULL) {
         $this->db->from('organization');
+        if(isset($organization_id)) $this->db->where('id ='.$organization_id.' or parent_id ='.$organization_id);
         $this->db->order_by("parent_id", "desc"); 
         $this->db->order_by("name", "asc");
         return $this->db->get();

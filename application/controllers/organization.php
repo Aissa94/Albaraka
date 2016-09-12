@@ -282,6 +282,42 @@ class Organization extends CI_Controller {
         $msg .= ']';
         echo $msg;
     }
+
+    /**
+     * Ajax endpoint: Returns a JSON string describing the structure of children.
+     * In a format expected by jsTree component.
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function minRoot($organization_id) {
+        header("Content-Type: application/json");
+        if (($this->config->item('public_calendar') == TRUE) && (!$this->session->userdata('logged_in'))) {
+            //nop
+        } else {
+            setUserContext($this);
+            $this->auth->checkIfOperationIsAllowed('organization_select');
+        }
+        
+        $id = $this->input->get('id', TRUE);
+        if ($id == "#") {
+            unset($id);
+        }
+        $this->load->model('organization_model');
+        $entities = $this->organization_model->getAllEntities($organization_id);
+        $msg = '[';
+        foreach ($entities->result() as $entity) {
+            $msg .= '{"id":"' . $entity->id . '",';
+            if ($entity->parent_id == $organization_id) {
+                $msg .= '"parent":"' . $entity->parent_id . '",';
+            } else {
+                $msg .= '"parent":"#",';
+            }
+            $msg .= '"text":"' . $entity->name . '"';
+            $msg .= '},';
+        }
+        $msg = rtrim($msg, ",");
+        $msg .= ']';
+        echo $msg;
+    }
     
     /**
      * Ajax endpoint:Returns the supervisor of an entity of the organization 
