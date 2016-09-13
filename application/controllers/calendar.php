@@ -126,20 +126,21 @@ class Calendar extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function collaborators() {
-        setUserContext($this);
-        $this->load->model('users_model');
-        $this->lang->load('calendar', $this->language);
-        $this->auth->checkIfOperationIsAllowed('collaborators_calendar');
-        $data = getUserContext($this);
-        $data['organization_id'] = $this->users_model->getOrganization($data['user_id']);
-        $data['organization_name'] = $this->db->query("SELECT name FROM organization 
-        WHERE id =".$data['organization_id'],false)->result_array()[0]['name'];
-        $data['title'] = lang('calendar_collaborators_title');
-        $data['help'] = $this->help->create_help_link('global_link_doc_page_calendar_collaborators');
-        $this->load->view('templates/header', $data);
-        $this->load->view('menu/index', $data);
-        $this->load->view('calendar/collaborators', $data);
-        $this->load->view('templates/footer');
+            setUserContext($this);
+            $this->lang->load('calendar', $this->language);
+            $this->auth->checkIfOperationIsAllowed('collaborators_calendar');
+            $this->load->model('users_model');
+            $data = getUserContext($this);
+            $data['logged_in'] = TRUE;
+            $data['organization_id'] = $this->users_model->getOrganization($data['user_id']);
+            $data['organization_name'] = $this->db->query("SELECT name FROM organization 
+            WHERE id =".$data['organization_id'],false)->result_array()[0]['name'];
+            $data['title'] = lang('calendar_collaborators_title');
+            $data['help'] = $this->help->create_help_link('global_link_doc_page_calendar_collaborators');
+            $this->load->view('templates/header', $data);
+            $this->load->view('menu/index', $data);
+            $this->load->view('calendar/collaborators', $data);
+            $this->load->view('templates/footer');
     }
     
     /**

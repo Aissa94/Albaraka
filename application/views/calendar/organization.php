@@ -51,6 +51,7 @@
     <div class="span3 btn conge"><?php echo lang('Planned');?></div>
     <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
     <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
+    <div class="span3 btn btn-danger red conge"><?php echo lang('Rejected');?></div>
     <div class="span3">&nbsp;</div>
 </div>
 

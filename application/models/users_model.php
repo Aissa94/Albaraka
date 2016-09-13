@@ -458,16 +458,16 @@ class Users_model extends CI_Model {
         }
 
         //Determine if the connected user is a manager or if he has any delegation
-        $isManager = FALSE;
+        $is_manager = FALSE;
         if (count($this->getCollaboratorsOfManager($row->id)) > 0) {
-            $isManager = TRUE;
+            $is_manager = TRUE;
         } else {
             $this->load->model('delegations_model');
             if ($this->delegations_model->hasDelegation($row->id)){
-                $isManager = TRUE;
+                $is_manager = TRUE;
             } else {
                 if ($this->delegations_model->hasSubstitution($row->id)){
-                    $isManager = TRUE;
+                    $is_manager = TRUE;
                 }
             }
         }
@@ -477,7 +477,7 @@ class Users_model extends CI_Model {
             'id' => $row->id,
             'firstname' => $row->firstname,
             'lastname' => $row->lastname,
-            'is_manager' => $isManager,
+            'is_manager' => $is_manager,
             'is_admin' => $is_admin,
             'is_hr' => $is_hr,
             'manager' => $row->manager,

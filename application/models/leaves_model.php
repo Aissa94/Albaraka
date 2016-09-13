@@ -892,7 +892,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                case 5: $color = '#f89406'; break;  // RequestedToHr
+                //case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             
             $jsonevents[] = array(
@@ -984,7 +984,7 @@ class Leaves_model extends CI_Model {
                 case 2: $color = '#f89406'; break;  // Requested
                 case 3: $color = '#468847'; break;  // Accepted
                 case 4: $color = '#ff0000'; break;  // Rejected
-                case 5: $color = '#f89406'; break;  // RequestedToHr
+                //case 5: $color = '#f89406'; break;  // RequestedToHr
             }
             
             $jsonevents[] = array(
@@ -1014,13 +1014,14 @@ class Leaves_model extends CI_Model {
      * @return string JSON encoded list of full calendar events
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function department($entity_id, $start = "", $end = "", $children = FALSE) {
+    public function department($entity_id, $start = "", $end = "", $children = FALSE, $hidestatus5 = FALSE) {
         $this->db->select('users.firstname, users.lastname,  leaves.*, organization.name as organization_name, types.name as type, users1.firstname as substitute_firstname, users1.lastname as substitute_lastname');
         $this->db->from('organization');
         $this->db->join('users', 'users.organization = organization.id');
         $this->db->join('leaves', 'leaves.employee  = users.id');
         $this->db->join('types', 'leaves.type = types.id');
         $this->db->join('users as users1', 'leaves.substitute = users1.id','LEFT');
+        if ($hidestatus5) $this->db->where('leaves.status != ', 5);       //Exclude RequestedToHr
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         if ($children === TRUE) {
             $this->load->model('organization_model');
@@ -1045,7 +1046,6 @@ class Leaves_model extends CI_Model {
         } else {
             $this->db->where('organization.id', $entity_id);
         }
-        $this->db->where('leaves.status != ', 4);       //Exclude rejected requests
         $this->db->order_by('startdate', 'desc');
         $this->db->limit(1024);  //Security limit
         $events = $this->db->get()->result();
