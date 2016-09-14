@@ -835,9 +835,9 @@ class Leaves_model extends CI_Model {
     public function collaborators($user_id, $start = "", $end = "") {
         $this->load->model('organization_model');
         // if the user is the first manager
-        if($user_id == $this->organization_model->getManager($user_id)){
-            return $this->collaboratorsOfFirstManager($start, $end);
-        }else{
+        /*if($user_id == $this->organization_model->getManager($user_id)){
+            return $this->collaboratorsOfFirstManager($user_id, $start, $end);
+        }else*/{
         $this->db->select('leaves.*, users.firstname, users.lastname, types.name as type, users2.firstname as substitute_firstname, users2.lastname as substitute_lastname');
         $this->db->join('users', 'users.id = leaves.employee');
         $this->db->join('users as users2', 'users2.id = leaves.substitute', 'LEFT');
@@ -923,7 +923,7 @@ class Leaves_model extends CI_Model {
      * @return string JSON encoded list of full calendar events
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function collaboratorsOfFirstManager($start = "", $end = "") {
+    public function collaboratorsOfFirstManager($user_id, $start = "", $end = "") {
         $this->load->model('organization_model');
         $children = array(); array_push($children, "0");
         foreach ($this->organization_model->getChildren(0) as $child){
@@ -936,6 +936,7 @@ class Leaves_model extends CI_Model {
         $this->db->join('organization', 'organization.id = users.organization');
         $this->db->where_in('users.organization', $children);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
+        $this->db->where('leaves.employee !=', $user_id);
         $this->db->where('leaves.status !=', 5);
         $this->db->order_by('startdate', 'desc');
         $this->db->limit(1024);  //Security limit
