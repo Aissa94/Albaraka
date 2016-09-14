@@ -245,19 +245,27 @@ class Organization_model extends CI_Model {
         $this->db->join('users', 'users.organization = organization.id');
         $this->db->join('positions', 'positions.id  = users.position', 'left');
         $this->db->join('contracts', 'contracts.id  = users.contract', 'left');
-        if ($children === TRUE) {
+
+         if ($children === TRUE) {
             $this->load->model('organization_model');
             $list = $this->organization_model->getChildren($id);
             $ids = array();
             if (count($list) > 0) {
-                if ($list[0]['id'] != '') {
-                    $ids = explode(",", $list[0]['id']);
-                    array_push($ids, $id);
-                    $this->db->where_in('organization.id', $ids);
-                } else {
-                    $this->db->where('organization.id', $id);
+                foreach ($list as $a_list) {
+                    array_push($ids, $a_list['id']);
                 }
+                foreach($ids as $id2){
+                    $list2 = $this->organization_model->getChildren($id2);
+                    if (count($list2) > 0) {
+                        foreach ($list2 as $a_list2) {
+                            array_push($ids, $a_list2['id']);
+                        }
+                    }
+                }
+
             }
+            array_push($ids, $id);
+            $this->db->where_in('organization.id', $ids);
         } else {
             $this->db->where('organization.id', $id);
         }
