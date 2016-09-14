@@ -7,7 +7,7 @@
  */
 
 .anchor {
-    color: #3097d1;
+    color: #f89406;
 }
 
 /*Sticky footer*/
@@ -34,26 +34,26 @@ html, body {
 
 /*Background color of the navbar*/
 .navbar-inner {
-  background-color: #3097d1;
+  background-color: #f89406;
   background-image: none;
   color: white;
 }
 
 .navbar-inverse .navbar-inner {
-  background-color: #3097d1;
+   background-color: #f89406;
   background-image: none;
   color: white;
-  border-color: #3097d1;
+  border-color: #f89406;
 }
 
 .navbar .nav > li > a {
-  background-color: #3097d1;
+  background-color: #f89406;
   color: white;
 }
 
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: #3097d1;
+  background-color: #f89406;
   color: white;
 }
 
@@ -67,12 +67,12 @@ html, body {
 .navbar-inverse .nav li.dropdown.open>.dropdown-toggle,
 .navbar-inverse .nav li.dropdown.active>.dropdown-toggle,
 .navbar-inverse .nav li.dropdown.open.active>.dropdown-toggle {
-  background-color: #3097d1;
+  background-color: #f89406;
   color: #dddada;
 }
 
 .navbar .brand {
-  background-color: #3097d1;
+  background-color: #f89406;
   color: white;
 }
 
@@ -87,17 +87,17 @@ html, body {
 }
 
 .btn-primary {
-    background: #3097d1;
-    border-color: #3097d1;
+    background: #f89406;
+    border-color: #f89406;
     color: white;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-    background: #3097d1;
+    background: #f89406;
 }
 
 .btn-primary:active, .btn-primary.active, .btn-group.open .btn-primary.dropdown-toggle {
-    background: #3097d1;
+    background: #f89406;
     box-shadow: none;
 }
 
@@ -132,11 +132,11 @@ html, body {
 }
 
 .badge-warning {
-    background: #f5811e;
+    background: #1e81f5;
 }
 
 .badge-info {
-    background: #3097d1;
+    background: #f89406;
 }
 
 /*Always put Jquery datepicker on the top layer */

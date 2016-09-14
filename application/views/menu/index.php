@@ -73,114 +73,197 @@ if($boolean_to_send){
 </script>
 <?php } ?>
 
-<div id="wrap">
-<div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-          <a href="<?php echo base_url();?>home" class="brand">&nbsp;<img src="<?php echo base_url();?>assets/images/brand.png" height="18" width="18" style="margin-top:-6px;">&nbsp;Jorani</a>
-            <div class="nav-responsive">
-                <ul class="nav">
-                    <li><a href="<?php echo base_url();?>leaves" title="<?php echo lang('menu_leaves_list_requests');?>"><i class="icon-list icon-white"></i></a></li>
+<style>
+     .dev-page{visibility: hidden;}            
+</style>
+<div class="dev-page">
 
-              <?php if ($is_hr == TRUE) { ?>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_admin_title');?> <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="<?php echo base_url();?>users"><?php echo lang('menu_admin_list_users');?></a></li>
-                    <li><a href="<?php echo base_url();?>users/create"><?php echo lang('menu_admin_add_user');?></a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header"><?php echo lang('menu_hr_leaves_type_divider');?></li>
-                    <li><a href="<?php echo base_url();?>leavetypes"><?php echo lang('menu_hr_list_leaves_type');?></a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header"><?php echo lang('menu_admin_settings_divider');?></li>
-                    <li><a href="<?php echo base_url();?>admin/settings"><?php echo lang('menu_admin_settings');?></a></li>
-                    <li><a href="<?php echo base_url();?>admin/diagnostic"><?php echo lang('menu_admin_diagnostic');?></a></li>
-                  </ul>
-                </li>
-              <?php } ?>
+             <!-- page header -->    
+            <div class="dev-page-header">
+                
+                <div class="dph-logo">
+                    <a href="<?php echo base_url();?>home">Albaraka</a>
+                    <a class="dev-page-sidebar-collapse">
+                        <div class="dev-page-sidebar-collapse-icon">
+                            <span class="line-one"></span>
+                            <span class="line-two"></span>
+                            <span class="line-three"></span>
+                        </div>
+                    </a>
+                </div>
 
-              <?php if ($is_hr == TRUE) { ?>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <?php echo lang('menu_hr_title');?>&nbsp;
+                <ul class="dph-buttons pull-right">                    
+                    <li class="dph-button-stuck">
+                        <a href="<?php echo base_url();?>users/myprofile" title="<?php echo lang('menu_banner_tip_myprofile');?>">
+                           <i class="icon-user"></i>
+                        </a>
+                    </li>
+                    <?php if ($this->config->item('enable_mobile') != FALSE) { ?>                   
+                    <li class="dph-button-stuck">
+                        <a href="#"  id="cmdGenerateQRCode" title="QR Code">
+                            <i class="fa fa-mobile"></i>
+                        </a>
+                    </li>
+                    <?php } ?>
+                    <?php if ($this->config->item('ldap_enabled') === FALSE && $this->config->item('saml_enabled') === FALSE) { ?>
+                    <li class="dph-button-stuck">
+                        <a href="#" id="cmdChangePassword" title="<?php echo lang('menu_banner_tip_reset');?>">
+                            <i class="icon-lock"></i>
+                        </a>
+                    </li>
+                    <?php }
+                    $urlLogout = 'session/logout';
+                    if ($this->config->item('saml_enabled') === TRUE){
+                        $urlLogout = 'api/slo';
+                    } ?>
+                    <li class="dph-button-stuck">
+                        <a  href="<?php echo base_url() . $urlLogout;?>" title="<?php echo lang('menu_banner_logout');?>">
+                           <i class="icon-off"></i>
+                        </a>
+                    </li>
+                </ul>                                                
+                
+            </div>
+            <!-- ./page header -->
+            
+            <!-- page container -->
+            <div class="dev-page-container">
+
+                <!-- page sidebar -->
+                <div class="dev-page-sidebar">
+                    <div class="profile profile-transparent">
+                        <div class="profile-image">
+                            <img src="<?php echo base_url();?>assets/images/user.png" class="mCS_img_loaded">
+                            <div class="profile-badges">
+                                <a href="#" id="cmdChangePassword" title="<?php echo lang('menu_banner_tip_reset');?>" class="profile-badges-left"><i class="fa fa fa-key"></i> </a>
+                                <a href="<?php echo base_url();?>users/myprofile" title="<?php echo lang('menu_banner_tip_myprofile');?>" class="profile-badges-right"><i class="fa fa-info"></i> </a>
+                            </div>
+                            <div class="profile-status online"></div>
+                        </div>
+                        <div class="profile-info">
+                            <h4><?php echo $fullname;?></h4>
+                        </div>                        
+                    </div>
+                    <ul class="dev-page-navigation">
+                        <li class="title">Navigation</li>
+                        <?php if ($is_hr == TRUE) { ?>
+                        <li>
+                            <a href="#"><i class="fa fa-user"></i> <span><?php echo lang('menu_admin_title');?></span></a>
+                            <ul>                              
+                                <li><a href="<?php echo base_url();?>users"><?php echo lang('menu_admin_list_users');?></a></li>                                
+                                <li><a href="<?php echo base_url();?>users/create"><?php echo lang('menu_admin_add_user');?></a></li>
+                                <li>
+                                    <a href="#"><?php echo lang('menu_hr_leaves_type_divider');?></a>
+                                    <ul>
+                                        <li><a href="<?php echo base_url();?>leavetypes"><?php echo lang('menu_hr_list_leaves_type');?></a></li>
+                                    </ul>
+                                </li> 
+                                <li>
+                                    <a href="#"><?php echo lang('menu_admin_settings_divider');?></a>
+                                    <ul>
+                                        <li><a href="<?php echo base_url();?>admin/settings"><?php echo lang('menu_admin_settings');?></a></li>
+                                        <li><a href="<?php echo base_url();?>admin/diagnostic"><?php echo lang('menu_admin_diagnostic');?></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li> 
+                        <?php } ?>
+
+                <?php if ($is_hr == TRUE) { ?>
+                <li>
+                  <a href="#"><i class="fa fa-file-text-o"></i> <span><?php echo lang('menu_hr_title');?>&nbsp;</span>
                       <?php if ($requests_count > 0) { ?>
                       <span class="badge badge-warning"><?php echo $requests_count;?></span>
                       <?php } ?>
-                      &nbsp;<b class="caret"></b>
                   </a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-header"><?php echo lang('menu_hr_employees_divider');?></li>
-                    <li><a href="<?php echo base_url();?>hr/employees"><?php echo lang('menu_hr_list_employees');?></a></li>
-                    <li><a href="<?php echo base_url();?>organization"><?php echo lang('menu_hr_list_organization');?></a></li>
-                    <li><a href="<?php echo base_url();?>hr/requests">
-                        <?php if ($requested_leaves_count > 0) { ?>
-                        <span class="badge badge-info"><?php echo $requested_leaves_count;?></span>
-                        <?php } ?>
-                        <?php echo lang('menu_hr_request_leave');?>
-                        </a>
+                  <ul>
+                    <li>
+                        <a href="#"><?php echo lang('menu_hr_employees_divider');?></a>
+                        <ul>
+                            <li><a href="<?php echo base_url();?>hr/employees"><?php echo lang('menu_hr_list_employees');?></a></li>
+                            <li><a href="<?php echo base_url();?>organization"><?php echo lang('menu_hr_list_organization');?></a></li>
+                            <li><a href="<?php echo base_url();?>hr/requests">
+                                <?php if ($requested_leaves_count > 0) { ?>
+                                <span class="badge badge-info"><?php echo $requested_leaves_count;?></span>
+                                <?php } ?>
+                                <?php echo lang('menu_hr_request_leave');?>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="divider"></li>
-                    <li class="nav-header"><?php echo lang('menu_hr_contracts_divider');?></li>
-                    <li><a href="<?php echo base_url();?>contracts"><?php echo lang('menu_hr_list_contracts');?></a></li>
-                    <li><a href="<?php echo base_url();?>positions"><?php echo lang('menu_hr_list_positions');?></a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header"><?php echo lang('menu_hr_reports_divider');?></li>
-                    <!--li><a href="<?php echo base_url();?>reports/balance"><?php //echo lang('menu_hr_report_leave_balance');?></a></li-->
-                    <li><a href="<?php echo base_url();?>reports/leaves"><?php echo lang('menu_hr_report_leaves');?></a></li>
-                    <li><a href="<?php echo base_url();?>reports"><?php echo lang('menu_hr_reports_divider');?></a></li>
-                  </ul>
-                </li>
+                    <li>
+                        <a href="#"><?php echo lang('menu_hr_contracts_divider');?></a>
+                        <ul>
+                            <li><a href="<?php echo base_url();?>contracts"><?php echo lang('menu_hr_list_contracts');?></a></li>
+                            <li><a href="<?php echo base_url();?>positions"><?php echo lang('menu_hr_list_positions');?></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                    <a href="#"><?php echo lang('menu_hr_reports_divider');?></a>
+                    <ul>
+                        <!--li><a href="<?php echo base_url();?>reports/balance"><?php //echo lang('menu_hr_report_leave_balance');?></a></li-->
+                        <li><a href="<?php echo base_url();?>reports/leaves"><?php echo lang('menu_hr_report_leaves');?></a></li>
+                        <li><a href="<?php echo base_url();?>reports"><?php echo lang('menu_hr_reports_divider');?></a></li>
+                    </ul>
+                    </li>
+                </ul>
+            </li>
               <?php } ?>
 
              <?php if ($is_manager == TRUE) { ?>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <?php echo lang('menu_validation_title');?>&nbsp;
+                <li>
+                  <a href="#"><i class="fa fa-check-square-o"></i> <span><?php echo lang('menu_validation_title');?>&nbsp;
                       <?php if ($requests_count > 0) { ?>
                       <span class="badge badge-warning"><?php echo $requests_count;?></span>
                       <?php } ?>
-                      &nbsp;<b class="caret"></b>
+                      &nbsp;</span>
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul>
                     <li><a href="<?php echo base_url();?>requests/delegations"><?php echo lang('menu_validation_delegations');?></a></li>
                     <li><a href="<?php echo base_url();?>requests/collaborators"><?php echo lang('menu_validation_collaborators');?></a></li>
                     <li><a href="<?php echo base_url();?>requests/balance"><?php echo lang('menu_hr_report_leave_balance');?></a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header"><?php echo lang('menu_validation_title');?></li>
-                    <li><a href="<?php echo base_url();?>requests">
-                      <?php if ($requested_leaves_count > 0) { ?>
-                      <span class="badge badge-info"><?php echo $requested_leaves_count;?></span>
-                      <?php } ?>
-                        <?php echo lang('menu_validation_leaves');?></a></li>
-                    <?php if ($this->config->item('disable_overtime') == FALSE) { ?>
-                    <li><a href="<?php echo base_url();?>overtime">
-                      <?php if ($requested_extra_count > 0) { ?>
-                      <span class="badge badge-info"><?php echo $requested_extra_count;?></span>
-                      <?php } ?>
-                        <?php echo lang('menu_validation_overtime');?></a></li>
-                    <?php } ?>
-                  </ul>
-                </li>
+                    <li>
+                                    <a href="#"><?php echo lang('menu_validation_title');?></a>
+                                    <ul>
+                                        <li><a href="<?php echo base_url();?>requests"><?php if ($requested_leaves_count > 0) { ?>
+                                            <span class="badge badge-info"><?php echo $requested_leaves_count;?></span>
+                                            <?php } ?><?php echo lang('menu_validation_leaves');?></a></li>
+                                            <?php if ($this->config->item('disable_overtime') == FALSE) { ?>
+                                        <li><a href="<?php echo base_url();?>overtime"><?php if ($requested_extra_count > 0) { ?>
+                                          <span class="badge badge-info"><?php echo $requested_extra_count;?></span>
+                                          <?php } ?><?php echo lang('menu_validation_overtime');?></a></li><?php } ?>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
               <?php } ?>
 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_requests_title');?> <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-header"><?php echo lang('menu_requests_leaves');?></li>
-                    <li><a href="<?php echo base_url();?>leaves/counters"><?php echo lang('menu_leaves_counters');?></a></li>
+                <li>
+                            <a href="#"><i class="fa fa-mail-reply-all"></i> <span><?php echo lang('menu_requests_title');?></span></a>
+                            <ul>                                
+                                <li>
+                                    <a href="#"><?php echo lang('menu_requests_leaves');?></a>
+                                    <ul>
+                                                        <li><a href="<?php echo base_url();?>leaves/counters"><?php echo lang('menu_leaves_counters');?></a></li>
                     <li><a href="<?php echo base_url();?>leaves"><?php echo lang('menu_leaves_list_requests');?></a></li>
                     <li><a href="<?php echo base_url();?>leaves/create"><?php echo lang('menu_leaves_create_request');?></a></li>
                     <?php if ($this->config->item('disable_overtime') == FALSE) { ?>
-                    <li class="divider"></li>
-                    <li class="nav-header"><?php echo lang('menu_requests_overtime');?></li>
-                    <li><a href="<?php echo base_url();?>extra"><?php echo lang('menu_requests_list_extras');?></a></li>
-                    <li><a href="<?php echo base_url();?>extra/create"><?php echo lang('menu_requests_request_extra');?></a></li>
-                    <?php } ?>
+                    <li>
+                                            <a href="#"><?php echo lang('menu_requests_overtime');?></a>
+                                            <ul>
+                                                <li><a href="<?php echo base_url();?>extra"><?php echo lang('menu_requests_list_extras');?></a></li>
+                                                <li><a href="<?php echo base_url();?>extra/create"><?php echo lang('menu_requests_request_extra');?></a></li>
+                                            </ul>
+                                        </li>
+                                        <?php } ?>
                   </ul>
                 </li>
 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_calendar_title');?> <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
+                </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-calendar"></i> <span><?php echo lang('menu_calendar_title');?></span></a>
+                            <ul>
                       <li><a href="<?php echo base_url();?>calendar/individual"><?php echo lang('menu_calendar_individual');?></a></li>
                       <li><a href="<?php echo base_url();?>calendar/year"><?php echo lang('menu_calendar_year');?></a></li>
                       <!--li><a href="<?php echo base_url();?>calendar/workmates"><?php //echo lang('menu_calendar_workmates');?></a></li-->
@@ -196,36 +279,18 @@ if($boolean_to_send){
                 </li>
 
               <?php if ($is_hr == TRUE) { ?>
-                  <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_discordance_title');?> <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="<?php echo base_url();?>discordance"><?php echo lang('menu_discordance_leave');?></a></li>
-                      <li><a href="<?php echo base_url();?>discordance/pay"><?php echo lang('menu_discordance_pay');?></a></li>
-                    </ul>
-                  </li>
+                  <li>
+                            <a href="#"><i class="fa fa-code-fork"></i> <span><?php echo lang('menu_discordance_title');?></span></a>
+                            <ul>
+                                <li><a href="#"><?php echo lang('menu_discordance_leave');?></a></li>
+                                <li><a href="#"><?php echo lang('menu_discordance_pay');?></a></li>
+                            </ul>
+                        </li>
               <?php } ?>
-              </ul>
-
-                <ul class="nav pull-right">
-                    <a href="<?php echo base_url();?>users/myprofile" class="brand"><?php echo $fullname;?></a>
-                    <li><a href="<?php echo base_url();?>users/myprofile" title="<?php echo lang('menu_banner_tip_myprofile');?>"><i class="icon-user icon-white"></i></a></li>
-                    <?php if ($this->config->item('enable_mobile') != FALSE) { ?>
-                    <li><a href="#" id="cmdGenerateQRCode" title="QR Code"><i class="fa fa-mobile"></i></a></li>
-                    <?php } ?>
-                    <?php if ($this->config->item('ldap_enabled') === FALSE && $this->config->item('saml_enabled') === FALSE) { ?>
-                    <li><a href="#" id="cmdChangePassword" title="<?php echo lang('menu_banner_tip_reset');?>"><i class="icon-lock icon-white"></i></a></li>
-                    <?php }
-                    $urlLogout = 'session/logout';
-                    if ($this->config->item('saml_enabled') === TRUE){
-                        $urlLogout = 'api/slo';
-                    } ?>
-                    <li><a href="<?php echo base_url() . $urlLogout;?>" title="<?php echo lang('menu_banner_logout');?>"><i class="icon-off icon-white"></i></a></li>
-                </ul>
-            </div>
-      </div>
+              </ul>            
     </div><!-- /.navbar -->
 
-    <div class="container-fluid">
-        <div class="row-fluid"><div class="span12">
-                <div class="row-fluid"><div class="span12">&nbsp;</div></div>
-                <div class="row-fluid"><div class="span12">&nbsp;</div></div>
+
+    <div class="dev-page-content">                    
+                    <!-- page content container -->
+                    <div class="container">

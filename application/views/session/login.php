@@ -8,7 +8,6 @@
  */
 ?>
 
-
 <?php if ($this->config->item('oauth2_enabled') == TRUE) { ?>
 <script type="text/javascript" src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
 <script type="text/javascript">
@@ -44,7 +43,10 @@
         background-color: #fff;
       }
 </style>
-
+ <div class="dev-page">
+ <div class="dev-page-content">                    
+                    <!-- page content container -->
+                    <div class="container">
     <div class="row vertical-center">
         <div class="span3">&nbsp;</div>
             <div class="span6 form-box">
@@ -65,42 +67,54 @@ $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
     <?php if (count($languages) == 1) { ?>
     <input type="hidden" name="language" value="<?php echo $language_code; ?>" />
     <?php } else { ?>
-    <label for="language"><?php echo lang('session_login_field_language');?></label>
-    <select class="input-medium" name="language" id="language">
-        <?php foreach ($languages as $lang_code => $lang_name) { ?>
+    <div class="form-group">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+        <select name="language" id="language">
+            <?php foreach ($languages as $lang_code => $lang_name) { ?>
         <option value="<?php echo $lang_code; ?>" <?php if ($language_code == $lang_code) echo 'selected'; ?>><?php echo $lang_name; ?></option>
         <?php }?>
-    </select>
+        </select>
+        </div>
+    </div>
     <?php } ?>
-    <label for="login"><?php echo lang('session_login_field_login');?></label>
-    <input type="text" class="input-medium" name="login" id="login" value="<?php echo set_value('login'); ?>" required />
-    <input type="hidden" name="CipheredValue" id="CipheredValue" />
+    <div class="form-group">
+      <div class="input-group">
+         <span class="input-group-addon"><i class="fa fa-user"></i></span>
+         <input type="text" class="form-control" name="login" id="login" value="<?php echo set_value('login'); ?>" placeholder="<?php echo lang('session_login_field_login');?>" required />
+         <input type="hidden" name="CipheredValue" id="CipheredValue" />
+      </div>
+    </div>
 </form>
-    <input type="hidden" name="salt" id="salt" value="<?php echo $salt; ?>" />
-    <label for="password"><?php echo lang('session_login_field_password');?></label>
-    <input class="input-medium" type="password" name="password" id="password" /><br />
-    <br />
-    <button id="send" class="btn btn-primary"><i class="icon-user icon-white"></i>&nbsp;<?php echo lang('session_login_button_login');?></button>
+    <div class="form-group">
+      <div class="input-group">
+         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+         <input type="hidden" name="salt" id="salt" value="<?php echo $salt; ?>" />
+         <input type="password" class="form-control" name="password" id="password" placeholder="<?php echo lang('session_login_field_password');?>" />
+      </div>
+    </div>
+         <br /><br />
+    <button id="send" class="btn btn-primary form-control"><i class="icon-user icon-white"></i>&nbsp;<?php echo lang('session_login_button_login');?></button>
     <?php if ($this->config->item('oauth2_enabled') == TRUE) { ?>
          <?php if ($this->config->item('oauth2_provider') == 'google') { ?>
-    <button id="cmdGoogleSignIn" class="btn btn-primary"><i class="fa fa-google"></i>&nbsp;<?php echo lang('session_login_button_login');?></button>
+    <button id="cmdGoogleSignIn" class="btn btn-primary form-control"><i class="fa fa-google"></i>&nbsp;<?php echo lang('session_login_button_login');?></button>
         <?php } ?>
     <?php } ?>
     <br /><br />
     <?php if ($this->config->item('ldap_enabled') == FALSE) { ?>
-    <button id="cmdForgetPassword" class="btn btn-info"><i class="icon-envelope icon-white"></i>&nbsp;<?php echo lang('session_login_button_forget_password');?></button>
+    <button id="cmdForgetPassword" class="btn btn-info form-control"><i class="icon-envelope icon-white"></i>&nbsp;<?php echo lang('session_login_button_forget_password');?></button>
     <?php } ?>
     
     <textarea id="pubkey" style="visibility:hidden;"><?php echo $public_key; ?></textarea>
                 </div>
                 <div class="span6" style="height:100%;">
-                    <div class="row-fluid">
+                    <div>
                         <div class="span12">
                             <img src="<?php echo base_url();?>assets/images/logo_simple.png">
                         </div>
                     </div>
-                    <div class="row-fluid"><div class="span12">&nbsp;</div></div>
-                    <div class="row-fluid">
+                    <div><div class="span12">&nbsp;</div></div>
+                    <div>
                         <div class="span12">
                             <span style="font-size: 250%; font-weight: bold; line-height: 100%;"><center><?php echo lang('Leave Management System');?></center></span>
                         </div>
@@ -234,3 +248,4 @@ $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
         
     });
 </script>
+<div>
