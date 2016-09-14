@@ -842,6 +842,7 @@ class Leaves_model extends CI_Model {
         $this->db->join('users', 'users.id = leaves.employee');
         $this->db->join('users as users2', 'users2.id = leaves.substitute', 'LEFT');
         $this->db->join('types', 'types.id = leaves.type');
+        $this->db->where('leaves.employee !=', $user_id);
         $this->db->where('leaves.status !=', 5);
         $this->db->where('users.manager', $user_id);
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
@@ -1014,14 +1015,17 @@ class Leaves_model extends CI_Model {
      * @return string JSON encoded list of full calendar events
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function department($entity_id, $start = "", $end = "", $children = FALSE, $hidestatus5 = FALSE) {
+    public function department($entity_id, $start = "", $end = "", $children = FALSE, $is_manager = FALSE, $user_id = NULL) {
         $this->db->select('users.firstname, users.lastname,  leaves.*, organization.name as organization_name, types.name as type, users1.firstname as substitute_firstname, users1.lastname as substitute_lastname');
         $this->db->from('organization');
         $this->db->join('users', 'users.organization = organization.id');
         $this->db->join('leaves', 'leaves.employee  = users.id');
         $this->db->join('types', 'leaves.type = types.id');
         $this->db->join('users as users1', 'leaves.substitute = users1.id','LEFT');
-        if ($hidestatus5) $this->db->where('leaves.status != ', 5);       //Exclude RequestedToHr
+        if ($is_manager) {
+            $this->db->where('leaves.employee != ', $user_id);       //Exclude manager's leaves
+            $this->db->where('leaves.status != ', 5);       //Exclude RequestedToHr
+        }
         $this->db->where('(leaves.startdate <= DATE(' . $this->db->escape($end) . ') AND leaves.enddate >= DATE(' . $this->db->escape($start) . '))');
         if ($children === TRUE) {
             $this->load->model('organization_model');

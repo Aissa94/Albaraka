@@ -635,7 +635,7 @@ class Leaves extends CI_Controller {
         $start = $this->input->get('start', TRUE);
         $end = $this->input->get('end', TRUE);
         $children = filter_var($this->input->get('children', TRUE), FILTER_VALIDATE_BOOLEAN);
-        echo $this->leaves_model->department($entity_id, $start, $end, $children, $this->is_manager);
+        echo $this->leaves_model->department($entity_id, $start, $end, $children, $this->is_manager, $this->user_id);
     }
 
     /**
