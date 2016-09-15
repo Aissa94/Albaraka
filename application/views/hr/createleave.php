@@ -26,8 +26,14 @@ echo form_open($form_action, $attributes) ?>
     <?php
     $default_type = $this->config->item('default_leave_type');
     $default_type = $default_type == FALSE ? 1 : $default_type;
-    foreach ($types as $types_item): ?>
-        <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
+    foreach ($types as $types_item):?>
+        <option value="<?php echo $types_item['id'] ?>" 
+        <?php switch ($types_item['id']) {
+            case 0 : echo "hidden"; break; 
+            case $default_type : echo "selected"; break;
+            case 2 : break;
+            default : echo "disabled";
+        }?>><?php echo $types_item['name'] ?></option>
     <?php endforeach ?>
     </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
         

@@ -26,8 +26,15 @@ if (isset($_GET['source'])) {
     <label for="type"><?php echo lang('leaves_edit_field_type');?></label>
     <select name="type" id="type">
     <?php foreach ($types as $types_item): ?>
-        <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $leave['type']) echo "selected" ?>><?php echo $types_item['name'] ?></option>
-    <?php endforeach ?>    
+        <option value="<?php echo $types_item['id'] ?>" 
+        <?php switch ($types_item['id']) {
+            case 0 : echo "hidden"; break; 
+            case $leave['type'] : echo "selected"; break;
+            case 1 : break;
+            case 2 : break;
+            default : echo "disabled";
+        }?>><?php echo $types_item['name'] ?></option>
+    <?php endforeach ?>  
     </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
         
     <label for="viz_startdate"><?php echo lang('leaves_edit_field_start');?></label>
