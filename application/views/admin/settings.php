@@ -7,12 +7,16 @@
  * @since         0.4.3
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_admin_title").addClass('active');
+    $("#menu_admin_settings_divider").addClass('active');
+    $("#menu_admin_settings").addClass('active');
+</script>
 <div class="row-fluid">
+    <div class="page-title">   
+        <h1><?php echo "Paramètres";?></h1>
+        </div>
     <div class="span12">
-
-        <h2><?php echo $title;?><?php echo $help;?></h2>
-
         <table class="table table-bordered table-hover table-condensed">
           <tbody>
             <tr><td>from_mail</td><td><?php echo $this->config->item('from_mail'); ?></td></tr>

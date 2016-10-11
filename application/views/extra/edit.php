@@ -8,8 +8,9 @@
  */
 ?>
 
-<h2><?php echo lang('extra_edit_title');?><?php echo $extra['id']; ?>&nbsp;<span class="muted">(<?php echo $name ?>)</span>&nbsp;<?php echo $help;?></h2>
-
+<div class="page-title">   
+<h1><?php echo lang('extra_edit_title');?><?php echo $extra['id']; ?>&nbsp;<span class="muted">(<?php echo $name ?>)</span></h1>
+</div>
 <?php echo validation_errors(); ?>
 
 <?php

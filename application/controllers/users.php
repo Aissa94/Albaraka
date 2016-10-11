@@ -113,7 +113,7 @@ class Users extends CI_Controller {
         */
         $data['contract_id'] = intval($data['user']['contract']);
         $data['contract_label'] = $this->contracts_model->getName($data['user']['contract']);
-        $data['position_label'] = $this->positions_model->getName($data['user']['position']);
+        $data['position_label'] = $this->positions_model->getDescription($data['user']['position']);
         $data['organization_label'] = $this->organization_model->getName($data['user']['organization']);
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);

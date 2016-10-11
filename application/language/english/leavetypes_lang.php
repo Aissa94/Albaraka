@@ -8,7 +8,7 @@
  */
 
 $lang['leavetypes_type_title'] = 'Leave types';
-$lang['leavetypes_type_description'] = 'Leave type #0 is a system type reserved for overtime management. You should not use it for other requests.';
+$lang['leavetypes_type_description'] = 'Leave types #0, #1 and #2 are a system types reserved for leaves management. You should not use them for other requests.';
 $lang['leavetypes_type_confirm_rename'] = 'Leave type #0 is a system type reserved for overtime management. Are you sure that you want to rename it?';
 $lang['leavetypes_type_thead_id'] = 'ID';
 $lang['leavetypes_type_thead_name'] = 'Name';

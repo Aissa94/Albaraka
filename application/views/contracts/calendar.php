@@ -10,7 +10,11 @@
 $dDaysOnPage = 37;
 $dDay = 1;
 ?>
-
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_contracts_divider").addClass('active');
+    $("#menu_hr_list_contracts").addClass('active');
+</script>
 <style type="text/css" media="all">
 .currentDay {
 background:#FFC;
@@ -40,12 +44,11 @@ padding-left:10px;
     vertical-align: middle;
 }
 </style>
-
-<h2><?php echo lang('contract_calendar_title');?> <span class="muted"><?php echo $contract_name; ?></span>&nbsp;<?php echo $help;?></h2>
-
-<?php echo $flash_partial_view;?>
-
-<div class="row-fluid">
+<div class="page-title">
+<h1><?php echo lang('contract_calendar_title');?> <span class="muted"><?php echo $contract_name; ?></span></h1>
+</div>
+<div class="row-fluid" style="padding-top:200px;">
+    
     <div class="span3">
         <a href="<?php echo base_url() . 'contracts/' . $contract_id . '/calendar/' . (intval($year) - 1);?>" class="btn btn-primary" id="cmdPrevious"><i class="icon-arrow-left icon-white"></i>&nbsp; <?php echo intval($year) - 1;?></a>
         &nbsp;
@@ -54,19 +57,20 @@ padding-left:10px;
         <a href="<?php echo base_url() . 'contracts/' . $contract_id . '/calendar/' . (intval($year) + 1);?>" class="btn btn-primary" id="cmdNext"><?php echo intval($year) + 1;?>&nbsp; <i class="icon-arrow-right icon-white"></i></a>
     </div>
     <div class="span2">
-        <a href="<?php echo base_url() . 'contracts';?>" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp; <?php echo lang('contract_calendar_button_back');?></a>
-    </div>
-    <div class="span4">
-        <button id="cmdImportCalendar" class="btn btn-primary"><i class="icon-calendar icon-white"></i>&nbsp; <?php echo lang('contract_calendar_button_import');?></button>&nbsp;
         <a href="#frmSetRangeDayOff" class="btn btn-primary" data-toggle="modal"><i class="icon-retweet icon-white"></i>&nbsp; <?php echo lang('contract_calendar_button_series');?></a>
+    </div>
+    <div class="span2">
+        <button id="cmdImportCalendar" class="btn btn-primary"><i class="icon-calendar icon-white"></i>&nbsp; <?php echo lang('contract_calendar_button_import');?></button>&nbsp;
     </div>
     <div class="span3">
         <?php if (!empty($contracts)) { ?>
-        <select name="contract" id="contract" class="selectized input-large">
+        <select name="contract" id="contract" class="selectpicker" data-live-search="true">
         <?php foreach ($contracts as $contract): ?>
             <option value="<?php echo $contract['id'] ?>"><?php echo $contract['name']; ?></option>
         <?php endforeach ?>
         </select>
+    </div>
+    <div class="span2">
         <button id="cmdContractCopy" class="btn btn-primary"><i class="fa fa-copy"></i>&nbsp; <?php echo lang('contract_calendar_button_copy');?></button>
         <?php } ?>
     </div>
@@ -82,20 +86,9 @@ padding-left:10px;
     </div>
 </div>
 
-<div class="row-fluid">
-    <div class="span6">
-        <u><?php echo lang('contract_calendar_legend_title');?></u> <img src='<?php echo base_url();?>assets/images/day.png' /> <?php echo lang('contract_calendar_legend_allday');?>, <img src='<?php echo base_url();?>assets/images/morning.png' /> <?php echo lang('contract_calendar_legend_morning');?>, <img src='<?php echo base_url();?>assets/images/afternoon.png' /> <?php echo lang('contract_calendar_legend_afternoon');?>
-    </div>
-    <div class="span6">
-        <?php if ($this->config->item('ics_enabled') == FALSE) {?>
-        &nbsp;
-        <?php } else {?>
-        <span class="pull-right"><a id="lnkICS" href="#"><i class="icon-globe"></i> ICS</a></span>
-        <?php }?>
-    </div>
-</div>
 
-<table width="100%" border="1" cellspacing="0" cellpadding="0" id="fullyear">
+<div class="table-responsive">
+<table width="100%" border="1" cellspacing="0" cellpadding="0" id="fullyear" class="table table-bordered">
     <tr>
         <th><?php echo $year; ?></th>
         <th><?php echo lang('calendar_monday_short');?></th>
@@ -178,7 +171,7 @@ for ($mC = 1; $mC <= 12; $mC++) {
 }
 ?>
 </table>
-
+</div>
 <div class="row-fluid"><div class="span12"></div></div>
 
 <div id="frmAddDayOff" class="modal hide fade">
@@ -204,14 +197,15 @@ for ($mC = 1; $mC <= 12; $mC++) {
     </div>
 </div>
 
-<div id="frmSetRangeDayOff" class="modal hide fade">
+<div id="frmSetRangeDayOff" class="modal fade">
     <div class="modal-header">
         <a href="#" onclick="$('#frmSetRangeDayOff').modal('hide');" class="close">&times;</a>
          <h3><?php echo lang('contract_calendar_popup_series_title');?></h3>
     </div>
     <div class="modal-body">
-        <label for="cboDayOffSeriesDay"><?php echo lang('contract_calendar_popup_series_field_occurences');?></label>
-        <select name="cboDayOffSeriesDay" id="cboDayOffSeriesDay">
+        <div class="form-group">
+        <label class="col-md-3" for="cboDayOffSeriesDay"><?php echo lang('contract_calendar_popup_series_field_occurences');?></label>
+        <select name="cboDayOffSeriesDay" id="cboDayOffSeriesDay" class="selectpicker">
             <option value="saturday" selected><?php echo lang('Saturday');?></option>
             <option value="sunday"><?php echo lang('Sunday');?></option>
             <option value="monday"><?php echo lang('Monday');?></option>
@@ -221,25 +215,34 @@ for ($mC = 1; $mC <= 12; $mC++) {
             <option value="friday"><?php echo lang('Friday');?></option>
             <option value="all"><?php echo lang('All days');?></option>
         </select>
-        <label for="txtStartDate"><?php echo lang('contract_calendar_popup_series_field_from');?></label>
+        </div>
+        <div class="form-group">
+        <label class="col-md-3" for="txtStartDate"><?php echo lang('contract_calendar_popup_series_field_from');?></label>
         <div class="input-append">
                 <input type="text" id="viz_startdate" name="viz_startdate" required />
-                <button class="btn" onclick="set_current_period();"><?php echo lang('contract_calendar_popup_series_button_current');?></button>
+                <button class="btn btn-primary" onclick="set_current_period();"><?php echo lang('contract_calendar_popup_series_button_current');?></button>
             </div><br />
         <input type="hidden" name="txtStartDate" id="txtStartDate" /><br />
-        <label for="txtEndDate"><?php echo lang('contract_calendar_popup_series_field_to');?></label>
+        </div>
+        <div class="form-group">
+        <label class="col-md-3" for="txtEndDate"><?php echo lang('contract_calendar_popup_series_field_to');?></label>
         <input type="text" id="viz_enddate" name="viz_enddate" required /><br />
         <input type="hidden" name="txtEndDate" id="txtEndDate" /><br />
-        <label for="cboDayOffSeriesType"><?php echo lang('contract_calendar_popup_series_field_as');?></label>
-        <select id="cboDayOffSeriesType" name="cboDayOffType">
+        </div>
+        <div class="form-group">
+        <label class="col-md-3" for="cboDayOffSeriesType"><?php echo lang('contract_calendar_popup_series_field_as');?></label>
+        <select id="cboDayOffSeriesType" name="cboDayOffType" class="selectpicker">
             <option value="0" selected><?php echo lang('contract_calendar_popup_series_field_as_working');?></option>
             <option value="1" selected><?php echo lang('contract_calendar_popup_series_field_as_off');?></option>
             <option value="2"><?php echo lang('contract_calendar_popup_series_field_as_morning');?></option>
             <option value="3"><?php echo lang('contract_calendar_popup_series_field_as_afternnon');?></option>
         </select>
+        </div>
         <br />
-        <label for="cboDayOffSeriesTitle"><?php echo lang('contract_calendar_popup_series_field_title');?></label>
+        <div class="form-group">
+        <label class="col-md-3" for="cboDayOffSeriesTitle"><?php echo lang('contract_calendar_popup_series_field_title');?></label>
         <input type="text" id="cboDayOffSeriesTitle" name="cboDayOffSeriesTitle" />
+        </div>
     </div>
     <div class="modal-footer">
         <a href="#" onclick="edit_series();" class="btn"><?php echo lang('contract_calendar_popup_series_button_ok');?></a>
@@ -374,9 +377,8 @@ $(function() {
         }
     });
 <?php }?>
-    $("#frmAddDayOff").alert();
-    $("#frmSetRangeDayOff").alert();
-    $('#contract').selectize();
+    $("#frmAddDayOff").appendTo('body').show();
+    $("#frmSetRangeDayOff").appendTo('body').show();
     
         $("#viz_startdate").datepicker({
         changeMonth: true,
@@ -413,13 +415,13 @@ $(function() {
             case 1:
             case 2:
             case 3:
-                $("#cmdDeleteDayOff").show();
+                $("#cmdDeleteDayOff").appendTo('body').show();
                 $('#cboDayOffType option[value="' + $('#' + timestamp).data("type") + '"]').prop('selected', true);
                 $("#txtDayOffTitle").val($('#' + timestamp).attr("title"));
                 break;
         }
         if (timestamp != 0) {
-            $('#frmAddDayOff').modal('show');
+            $('#frmAddDayOff').appendTo("body").modal('show');
         }
     });
     
@@ -483,7 +485,7 @@ $(function() {
     //Copy/Paste ICS Feed
     var client = new ZeroClipboard($("#cmdCopy"));
     $('#lnkICS').click(function () {
-        $("#frmLinkICS").modal('show');
+        $("#frmLinkICS").appendTo("body").modal('show');
     });
     client.on( "aftercopy", function( event ) {
         $('#tipCopied').tooltip('show');

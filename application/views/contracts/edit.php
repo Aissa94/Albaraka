@@ -7,22 +7,24 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('contract_edit_description');?> <?php echo $contract['id']; ?></h2>
-
+<div class="row-fluid">
+<div class="page-title">   
+<h1><?php echo lang('contract_edit_description');?> <?php echo $contract['id']; ?></h1>
+</div>
 <?php echo validation_errors(); ?>
 
 <?php
 $attributes = array('id' => 'target');
 echo form_open('contracts/edit/' . $contract['id'], $attributes); ?>
-
-    <input type="hidden" name="id" value="<?php echo $contract['id']; ?>" required />
     
-    <label for="name"><?php echo lang('contract_edit_field_name');?></label>
+    <input type="hidden" name="id" value="<?php echo $contract['id']; ?>" required />
+    <div class="form-group">
+    <label class="col-md-3" for="name"><?php echo lang('contract_edit_field_name');?></label>
     <input type="text" name="name" value="<?php echo $contract['name']; ?>" autofocus required /><br />
-  
-    <label for="startentdatemonth"><?php echo lang('contract_edit_field_start_month');?></label>
-    <select name="startentdatemonth" required>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="startentdatemonth"><?php echo lang('contract_edit_field_start_month');?></label>
+    <select class="selectpicker"  data-live-search="true"  name="startentdatemonth" required>
         <option value="1" <?php if (substr($contract['startentdate'], 0, 2) == '1') { echo "selected"; } ?>><?php echo lang('January');?></option>
         <option value="2" <?php if (substr($contract['startentdate'], 0, 2) == '2') { echo "selected"; } ?>><?php echo lang('February');?></option>
         <option value="3" <?php if (substr($contract['startentdate'], 0, 2) == '3') { echo "selected"; } ?>><?php echo lang('March');?></option>
@@ -36,9 +38,10 @@ echo form_open('contracts/edit/' . $contract['id'], $attributes); ?>
         <option value="11" <?php if (substr($contract['startentdate'], 0, 2) == '11') { echo "selected"; } ?>><?php echo lang('November');?></option>
         <option value="12" <?php if (substr($contract['startentdate'], 0, 2) == '12') { echo "selected"; } ?>><?php echo lang('December');?></option>
     </select>
-    
-    <label for="startentdateday"><?php echo lang('contract_edit_field_start_day');?></label>
-    <select name="startentdateday" required>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="startentdateday"><?php echo lang('contract_edit_field_start_day');?></label>
+    <select class="selectpicker"  data-live-search="true"  name="startentdateday" required>
         <option value='1' <?php if (substr($contract['startentdate'], 3, 2) == '1') { echo "selected"; } ?>>1</option>
         <option value='2' <?php if (substr($contract['startentdate'], 3, 2) == '2') { echo "selected"; } ?>>2</option>
         <option value='3' <?php if (substr($contract['startentdate'], 3, 2) == '3') { echo "selected"; } ?>>3</option>
@@ -71,11 +74,11 @@ echo form_open('contracts/edit/' . $contract['id'], $attributes); ?>
         <option value='30' <?php if (substr($contract['startentdate'], 3, 2) == '30') { echo "selected"; } ?>>30</option>
         <option value='31' <?php if (substr($contract['startentdate'], 3, 2) == '31') { echo "selected"; } ?>>31</option>
     </select>
-    
+    </div>
     <br /><br />
-    
-    <label for="endentdatemonth"><?php echo lang('contract_edit_field_end_month');?></label>
-    <select name="endentdatemonth" required>
+    <div class="form-group">
+    <label class="col-md-3" for="endentdatemonth"><?php echo lang('contract_edit_field_end_month');?></label>
+    <select class="selectpicker"  data-live-search="true"  name="endentdatemonth" required>
         <option value="1" <?php if (substr($contract['endentdate'], 0, 2) == '1') { echo "selected"; } ?>><?php echo lang('January');?></option>
         <option value="2" <?php if (substr($contract['endentdate'], 0, 2) == '2') { echo "selected"; } ?>><?php echo lang('February');?></option>
         <option value="3" <?php if (substr($contract['endentdate'], 0, 2) == '3') { echo "selected"; } ?>><?php echo lang('March');?></option>
@@ -89,9 +92,10 @@ echo form_open('contracts/edit/' . $contract['id'], $attributes); ?>
         <option value="11" <?php if (substr($contract['endentdate'], 0, 2) == '11') { echo "selected"; } ?>><?php echo lang('November');?></option>
         <option value="12" <?php if (substr($contract['endentdate'], 0, 2) == '12') { echo "selected"; } ?>><?php echo lang('December');?></option>
     </select>
-    
-    <label for="endentdateday"><?php echo lang('contract_edit_field_end_day');?></label>
-    <select name="endentdateday" required>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="endentdateday"><?php echo lang('contract_edit_field_end_day');?></label>
+    <select class="selectpicker"  data-live-search="true"  name="endentdateday" required>
         <option value='1' <?php if (substr($contract['endentdate'], 3, 2) == '1') { echo "selected"; } ?>>1</option>
         <option value='2' <?php if (substr($contract['endentdate'], 3, 2) == '2') { echo "selected"; } ?>>2</option>
         <option value='3' <?php if (substr($contract['endentdate'], 3, 2) == '3') { echo "selected"; } ?>>3</option>
@@ -124,9 +128,10 @@ echo form_open('contracts/edit/' . $contract['id'], $attributes); ?>
         <option value='30' <?php if (substr($contract['endentdate'], 3, 2) == '30') { echo "selected"; } ?>>30</option>
         <option value='31' <?php if (substr($contract['endentdate'], 3, 2) == 31) { echo "selected"; } ?>>31</option>
     </select>
-
+    </div>
     <br /><br />
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('contract_edit_button_update');?></button>
     &nbsp;
     <a href="<?php echo base_url();?>contracts" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('contract_edit_button_cancel');?></a>
 </form>
+</div>

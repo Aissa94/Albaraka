@@ -14,6 +14,8 @@ $lang['menu_banner_tip_myprofile'] = 'View my personal information';
 $lang['menu_banner_tip_reset'] = 'reset password';
 $lang['menu_password_popup_title'] = 'Change password';
 $lang['menu_password_popup_button_cancel'] = 'Cancel';
+$lang['menu_password_popup_button_modify'] = 'Modify';
+$lang['menu_banner_copyright'] = 'All rights reserved.';
 
 $lang['menu_admin_title'] = 'Admin';
 $lang['menu_admin_list_users'] = 'List of users';
@@ -31,7 +33,7 @@ $lang['menu_hr_contracts_divider'] = 'Contracts';
 $lang['menu_hr_list_contracts'] = 'List of contracts';
 $lang['menu_hr_list_positions'] = 'List of positions';
 $lang['menu_hr_leaves_type_divider'] = 'Leaves';
-$lang['menu_hr_list_leaves_type'] = 'List of types';
+$lang['menu_hr_list_leaves_type'] = 'Leave types';
 $lang['menu_hr_reports_divider'] = 'Reports';
 $lang['menu_hr_report_leave_balance'] = 'Leave balance';
 $lang['menu_hr_report_leaves'] = 'Monthly absence';
@@ -41,9 +43,10 @@ $lang['menu_discordance_leave'] = 'Leaves';
 $lang['menu_discordance_pay'] = 'Balances';
 
 $lang['menu_validation_title'] = 'Approval';
+$lang['menu_validation_leaves'] = 'Validate a request';
+$lang['menu_validation_devider'] = 'Manage subordinates';
+$lang['menu_validation_collaborators'] = 'Subordinates';
 $lang['menu_validation_delegations'] = 'Delegations';
-$lang['menu_validation_collaborators'] = 'My subordinates';
-$lang['menu_validation_leaves'] = 'Leaves';
 $lang['menu_validation_overtime'] = 'Overtime';
 
 $lang['menu_requests_title'] = 'Requests';

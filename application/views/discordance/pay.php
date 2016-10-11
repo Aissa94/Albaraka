@@ -8,9 +8,16 @@
  */
 ?>
 
-<div class="row-fluid">
-    <div class="span12">
+<script type="application/javascript">
+    $("#menu_discordance_title").addClass('active');
+    $("#menu_discordance_pay").addClass('active');
+</script>
 
+<div class="row-fluid">
+    <div class="page-title">
+<h1 id="title"><?php echo lang('discordance_pay_title');?> &nbsp;<?php echo $help;?></h1>
+</div>
+    <div class="span12">
 <?php if($this->session->flashdata('msg')){ ?>
 <div class="alert fade in" id="flashbox">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -20,28 +27,28 @@
 <script type="text/javascript">
 //Flash message
 $(document).ready(function() {
-    $("#flashbox").alert();
+    $("#flashbox").show();
 });
 </script>
 <?php } ?>
-
-<h2 id="title"><?php echo lang('discordance_pay_title');?> &nbsp;<?php echo $help;?></h2>
 <script type="text/javascript">
 //Flash message
 $(document).ready(function() {
     $("#title a").on('click',  function(){
-        $('#help').modal('show');
+        $('#help').appendTo("body").modal('show');
         return false;
     });
 });
 </script>
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="contracts" width="100%">
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" id="contracts" width="100%">
     <thead>
         <tr>
             
             <th><?php echo lang('discordance_index_thead_id');?></th>
             <th><?php echo lang('discordance_index_thead_lastname');?></th>
             <th><?php echo lang('discordance_index_thead_firstname');?></th>
+            <th><?php echo lang('discordance_index_thead_structure');?></th>
             <th><?php echo lang('discordance_index_thead_service');?></th>
             <th><?php echo lang('discordance_index_thead_our_balance');?></th> 
             <th><?php echo lang('discordance_index_thead_your_balance');?></th>
@@ -55,7 +62,8 @@ $(document).ready(function() {
         <?php echo $contracts_item['employee'] ?></td>
         <td><?php echo $contracts_item['firstname']; ?></td>
         <td><?php echo $contracts_item['lastname']; ?></td>
-        <td><?php echo $contracts_item['name']; ?></td>
+        <td><?php echo $contracts_item['structure']; ?></td>
+        <td><?php echo $contracts_item['service']; ?></td>
         <td><?php echo intval($contracts_item['disponible']); ?></td>
         <td><?php echo intval($contracts_item['available']); ?></td>
         <td>
@@ -67,6 +75,7 @@ $(document).ready(function() {
 <?php endforeach ?>
     </tbody>
 </table>
+            </div>
     </div>
 </div>
 
@@ -151,8 +160,8 @@ $(document).ready(function() {
             }
         }
     });
-    $("#frmChangePwd").alert();
-    $("#frmEntitledDays").alert();
+    $("#frmChangePwd").appendTo('body').show();
+    $("#frmEntitledDays").appendTo('body').show();
     
     //On showing the confirmation pop-up, add the contract id at the end of the delete url action
     $('#frmDeleteContract').on('show', function() {

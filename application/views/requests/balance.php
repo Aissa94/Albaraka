@@ -7,17 +7,21 @@
  * @since         0.4.5
  */
 ?>
-
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_validation_title").addClass('active');
+    $("#menu_validation_divider").addClass('active');
+    $("#menu_hr_report_leave_balance").addClass('active');
+</script>
+<div class="row-fluid" style="padding-bottom:30px;">
+        <div class="page-title">
+            <h1><?php echo lang('requests_balance_title');?></h1>
+            <p><?php echo lang('requests_balance_description');?></p>
+        </div>
     <div class="span12">
-
-        <h2><?php echo lang('requests_balance_title');?>  &nbsp;<?php echo $help;?></h2>
-        
-        <p><?php echo lang('requests_balance_description');?></p>
 
         <p><?php echo lang('requests_balance_date_field');?>&nbsp;<input type="text" id="refdate" /></p>
 
-        <table cellpadding="0" cellspacing="0" border="0" class="cell-border" id="balance" width="100%">
+        <table cellpadding="0" cellspacing="0" border="0" class="cell-border table table-bordered " id="balance" width="100%">
             <thead>
                 <tr>
                     <th><?php echo lang('identifier');?></th>

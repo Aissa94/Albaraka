@@ -7,15 +7,19 @@
  * @since         0.1.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_requests_title").addClass('active');
+    $("#menu_leaves_list_requests").addClass('active');
+</script>
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('leaves_index_title');?></h1>
+</div>
     <div class="span12">
 
-<h2><?php echo lang('leaves_index_title');?> &nbsp;<?php echo $help;?></h2>
-
 <?php echo $flash_partial_view;?>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="leaves" width="100%">
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="leaves" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('leaves_index_thead_id');?></th>
@@ -70,7 +74,7 @@
     </tr>
 <?php endforeach ?>
     </tbody>
-</table>
+</table></div>
     </div>
 </div>
 
@@ -130,7 +134,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#frmDeleteLeaveRequest').alert();
+    $('#frmDeleteLeaveRequest').appendTo('body').show();
     
     //Transform the HTML table in a fancy datatable
     $('#leaves').dataTable({
@@ -182,7 +186,7 @@ $(document).ready(function() {
     //Copy/Paste ICS Feed
     var client = new ZeroClipboard($("#cmdCopy"));
     $('#lnkICS').click(function () {
-        $("#frmLinkICS").modal('show');
+        $("#frmLinkICS").appendTo("body").modal('show');
     });
     client.on( "aftercopy", function( event ) {
         $('#tipCopied').tooltip('show');

@@ -39,6 +39,12 @@ class Users_model extends CI_Model {
         $query = $this->db->get_where('users', array('users.id' => $id));
         return $query->row_array();
     }
+
+    public function getManagerFromDB($id) {
+        $query = $this->db->query('SELECT users.manager FROM users WHERE users.id = '.$id, FALSE)->result_array();
+        return $query[0]['manager'];
+    }
+
     /**
      * Get the list of hr admin or one hr admin
      * @return array record of users

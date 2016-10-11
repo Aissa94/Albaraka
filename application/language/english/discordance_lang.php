@@ -9,10 +9,11 @@
 
 $lang['discordance_index_title'] = 'Leave list';
 $lang['discordance_pay_title'] = 'Balance list';
-$lang['discordance_index_thead_id'] = 'Number';
+$lang['discordance_index_thead_id'] = 'Registration N°';
 $lang['discordance_index_thead_employee'] = 'Employee number';
 $lang['discordance_index_thead_lastname'] = 'Name';
 $lang['discordance_index_thead_firstname'] = 'Forename';
+$lang['discordance_index_thead_structure'] = 'Structure';
 $lang['discordance_index_thead_service'] = 'Service';
 $lang['discordance_index_thead_start'] = 'Start date';
 $lang['discordance_index_thead_end'] = 'end date';
@@ -35,7 +36,7 @@ $lang['discordance_index_popup_title_rem2'] = 'Please check that there are no ne
 $lang['discordance_index_popup_delete_title'] = 'Delete contract';
 $lang['discordance_index_popup_delete_description'] = 'You are about to delete a contract, this procedure is irreversible.';
 $lang['discordance_index_popup_delete_confirm'] = 'Do you want to continue ?';
-$lang['discordance_index_popup_delete_button_yes'] = 'Yes';
+$lang['discordance_index_popup_delete_button_yes'] = 'Okay';
 $lang['discordance_index_popup_delete_button_no'] = 'No';
 $lang['discordance_index_popup_entitled_title'] = 'Leaves credit';
 $lang['discordance_index_popup_entitled_button_cancel'] = 'Cancel';

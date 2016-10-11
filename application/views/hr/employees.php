@@ -7,13 +7,22 @@
  * @since         0.1.0
  */
 ?>
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_employees_divider").addClass('active');
+    $("#menu_hr_list_employees").addClass('active');
+</script>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('hr_employees_title');?></h1>
+<p><?php echo lang('hr_employees_description');?></p>
+</div>
     <div class="span12">
-        
-<h2><?php echo lang('hr_employees_title');?>&nbsp;<?php echo $help;?></h2>
+
 
 <?php echo $flash_partial_view;?>
+
 
         <div class="row-fluid">
             <div class="span6">
@@ -39,8 +48,7 @@
                   <button id="cmdInactive" type="button" class="btn"><?php echo lang('hr_employees_button_inactive');?></button>
                 </div>
                 &nbsp;
-                <?php echo lang('hr_employees_thead_datehired');?>
-                <div class="input-prepend input-append">
+                <div class="input-prepend input-append dateinterval">
                     <div class="btn-group">
                         <div class="btn-group" data-toggle="buttons-radio">
                             <button id="cmdGreater1" type="button" class="btn active"><i class="fa fa-chevron-right"></i></button>
@@ -50,8 +58,7 @@
                         <button id="cmdResetDate1" type="button" class="btn"><i class="fa fa-times"></i></button>
                     </div>                            
                 </div>
-                &nbsp;&mdash;&nbsp;
-                <div class="input-prepend input-append">
+                <div class="input-prepend input-append dateinterval" >
                     <div class="btn-group">
                         <div class="btn-group" data-toggle="buttons-radio">
                             <button id="cmdGreater2" type="button" class="btn"><i class="fa fa-chevron-right"></i></button>
@@ -67,7 +74,6 @@
         </div>
         <div class="row-fluid">
             <div class="span6">
-              <?php echo lang('hr_employees_description');?>
             </div>
             <div class="span6">
                 <div class="pull-right">
@@ -95,8 +101,8 @@
         <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
         <div class="row-fluid">
-            <div class="span12">
-                <table cellpadding="0" cellspacing="0" border="0" class="display" id="users" width="100%">
+            <div class="table-responsive">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" id="users" width="100%">
                     <thead>
                         <tr>
                             <th><?php echo lang('hr_employees_thead_id');?></th>
@@ -156,7 +162,7 @@
          <h3><?php echo lang('hr_employees_popup_contract_title');?></h3>
     </div>
     <div class="modal-body">
-        <select id="cboContract" class="selectized input-xlarge">
+        <select id="cboContract" class="input-xlarge">
         <?php $index = 0;
              foreach ($contracts as $contract) { ?>
             <option value="<?php echo $contract['id'] ?>" <?php if ($index == 0) echo "selected"; ?>><?php echo $contract['name']; ?></option>
@@ -177,23 +183,33 @@
             <h3 id="frmAddEntitledDaysTitle"><?php echo lang('entitleddays_contract_popup_title');?></h3>
         </div>
         <div class="modal-body">
-            <label for="viz_startentdate"><?php echo lang('entitleddays_user_index_field_start');?></label>
+            <div class="form-group">
+            <label class="col-md-3" for="viz_startentdate"><?php echo lang('entitleddays_user_index_field_start');?></label>
             <input type="text" id="viz_startentdate" name="viz_startentdate" required />
             <br />
             <input type="hidden" name="startentdate" id="startentdate" />
-            <label for="viz_endentdate"><?php echo lang('entitleddays_user_index_field_end');?></label>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="viz_endentdate"><?php echo lang('entitleddays_user_index_field_end');?></label>
             <input type="text" id="viz_endentdate" name="viz_endentdate" required /><br />
             <input type="hidden" name="endentdate" id="endentdate" />
-            <label for="typeEnt"><?php echo lang('entitleddays_user_index_field_type');?></label>
-            <select name="typeEnt" id="typeEnt" required>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="typeEnt"><?php echo lang('entitleddays_user_index_field_type');?></label>
+            <select name="typeEnt" id="typeEnt" required class="selectpicker" data-live-search="true">
             <?php foreach ($types as $types_item): ?>
                 <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == 1) echo "selected" ?>><?php echo $types_item['name'] ?></option>
             <?php endforeach ?> 
-            </select>    
-            <label for="daysEnt" required><?php echo lang('entitleddays_user_index_field_days');?></label>
+            </select>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="daysEnt" required><?php echo lang('entitleddays_user_index_field_days');?></label>
             <input type="text" class="input-mini" name="daysEnt" id="daysEnt" />
-            <label for="descriptionEnt"><?php echo lang('entitleddays_user_index_field_description');?></label>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="descriptionEnt"><?php echo lang('entitleddays_user_index_field_description');?></label>
             <input type="text" class="input-xlarge" name="descriptionEnt" id="descriptionEnt" />
+            </div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" onclick="add_entitleddays();" ><?php echo lang('OK');?></button>
@@ -277,17 +293,20 @@
 
 <div class="modal hide fade" id="frmContextMenu">
     <div class="modal-body">
-        <a class="context-mobile" href="<?php echo base_url();?>hr/leaves/create/{id}"><i class="icon-plus"></i>&nbsp;<?php echo lang('hr_employees_thead_link_create_leave');?></a><br />
-        <a class="context-mobile" href="<?php echo base_url();?>users/edit/{id}?source=hr%2Femployees"><i class="icon-pencil"></i>&nbsp;<?php echo lang('hr_employees_thead_tip_edit');?></a><br />
-        <a class="context-mobile" href="<?php echo base_url();?>entitleddays/user/{id}"><i class="icon-edit"></i>&nbsp;<?php echo lang('hr_employees_thead_tip_entitlment');?></a><br />
-        <a class="context-mobile" href="<?php echo base_url();?>hr/leaves/{id}"><i class="icon-list-alt"></i>&nbsp;<?php echo lang('hr_employees_thead_link_leaves');?></a><br />
+        <a href="#" onclick="$('#frmContextMenu').modal('hide');" class="close">&times;</a><br />
+        <ul>
+        <li><a class="context-mobile" href="<?php echo base_url();?>hr/leaves/create/{id}"><i class="icon-plus"></i>&nbsp;<?php echo lang('hr_employees_thead_link_create_leave');?></a><br /></li>
+        <li><a class="context-mobile" href="<?php echo base_url();?>users/edit/{id}?source=hr%2Femployees"><i class="icon-pencil"></i>&nbsp;<?php echo lang('hr_employees_thead_tip_edit');?></a><br /></li>
+        <li><a class="context-mobile" href="<?php echo base_url();?>entitleddays/user/{id}"><i class="icon-edit"></i>&nbsp;<?php echo lang('hr_employees_thead_tip_entitlment');?></a><br /></li>
+        <li><a class="context-mobile" href="<?php echo base_url();?>hr/leaves/{id}"><i class="icon-list-alt"></i>&nbsp;<?php echo lang('hr_employees_thead_link_leaves');?></a><br /></li>
         <?php if ($this->config->item('disable_overtime') == FALSE) { ?>
-        <a class="context-mobile" href="<?php echo base_url();?>hr/overtime/{id}"><i class="icon-list-alt"></i>&nbsp;<?php echo lang('hr_employees_thead_link_extra');?></a><br />
+        <li><a class="context-mobile" href="<?php echo base_url();?>hr/overtime/{id}"><i class="icon-list-alt"></i>&nbsp;<?php echo lang('hr_employees_thead_link_extra');?></a><br /></li>
         <?php } ?>
-        <a class="context-mobile" href="<?php echo base_url();?>hr/counters/employees/{id}"><i class="icon-info-sign"></i>&nbsp;<?php echo lang('hr_employees_thead_link_balance');?></a><br />
-        <a class="context-mobile" href="<?php echo base_url();?>hr/presence/employees/{id}"><i class="fa fa-pie-chart" style="color:black;"></i>&nbsp;<?php echo lang('hr_employees_thead_link_presence');?></a><br />
-        <a class="context-mobile" href="<?php echo base_url();?>calendar/year/{id}"><i class="icon-calendar"></i>&nbsp;<?php echo lang('hr_employees_thead_link_calendar');?></a><br />
-        <a class="context-mobile" href="<?php echo base_url();?>requests/delegations/{id}"><i class="icon-share-alt"></i>&nbsp;<?php echo lang('hr_employees_thead_link_delegation');?></a>
+        <li><a class="context-mobile" href="<?php echo base_url();?>hr/counters/employees/{id}"><i class="icon-info-sign"></i>&nbsp;<?php echo lang('hr_employees_thead_link_balance');?></a><br /></li>
+        <li><a class="context-mobile" href="<?php echo base_url();?>hr/presence/employees/{id}"><i class="fa fa-pie-chart" style="color:black;"></i>&nbsp;<?php echo lang('hr_employees_thead_link_presence');?></a><br /></li>
+        <li><a class="context-mobile" href="<?php echo base_url();?>calendar/year/{id}"><i class="icon-calendar"></i>&nbsp;<?php echo lang('hr_employees_thead_link_calendar');?></a><br /></li>
+        <li><a class="context-mobile" href="<?php echo base_url();?>requests/delegations/{id}"><i class="icon-share-alt"></i>&nbsp;<?php echo lang('hr_employees_thead_link_delegation');?></a></li>
+        </ul>
   </div>
 </div>
 
@@ -351,7 +370,7 @@ function select_entity() {
         //"change": Move selected employees to another entity
         var employeeIds = getSelectedEmployees();
         //Call a web service that changes the entity of a list of employees
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         $.ajax({
             url: "<?php echo base_url();?>hr/employees/edit/entity",
             type: "POST",
@@ -371,7 +390,7 @@ function refreshDataTable() {
     date1 = $("#datehired1").val()!=""?$("#datehired1").val():"empty";
     date2 = $("#datehired2").val()!=""?$("#datehired2").val():"empty";
     filterDate = state1 + "/" + date1 + "/" + state2 + "/" + date2;
-    $('#frmModalAjaxWait').modal('show');
+    $('#frmModalAjaxWait').appendTo("body").modal('show');
     oTable.ajax.url('<?php echo base_url();?>hr/employees/entity/' + entity + '/' + includeChildren + '/' + filterActive + '/' + filterDate)
         .load(function() {
             $("#frmModalAjaxWait").modal('hide');
@@ -416,7 +435,7 @@ function createLeaveRequest() {
 
     //Call a web service to batch insert all the leave requests
     var employeeIds = getSelectedEmployees();
-    $('#frmModalAjaxWait').modal('show');
+    $('#frmModalAjaxWait').appendTo("body").modal('show');
     $.ajax({
         url: "<?php echo base_url();?>hr/employees/create/leave",
         type: "POST",
@@ -444,7 +463,7 @@ function select_manager() {
         var manager_id = employees.rows({selected: true}).data()[0][0];
         var employeeIds = getSelectedEmployees();
         //Call a web service that changes the manager of a list of employees
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         $.ajax({
             url: "<?php echo base_url();?>hr/employees/edit/manager",
             type: "POST",
@@ -466,7 +485,7 @@ function select_contract() {
     var contract_id = $('#cboContract').val();
     var employeeIds = getSelectedEmployees();
     //Call a web service that changes the contract of a list of employees
-    $('#frmModalAjaxWait').modal('show');
+    $('#frmModalAjaxWait').appendTo("body").modal('show');
     $.ajax({
         url: "<?php echo base_url();?>hr/employees/edit/contract",
         type: "POST",
@@ -497,7 +516,7 @@ function add_entitleddays() {
     }
     
     //Call a web service that changes the entitlements of a list of employees
-    $('#frmModalAjaxWait').modal('show');
+    $('#frmModalAjaxWait').appendTo("body").modal('show');
     $.ajax({
         url: "<?php echo base_url();?>hr/employees/edit/entitlements",
         type: "POST",
@@ -576,7 +595,7 @@ $(function () {
     //Taphold on mobile, display contextual menu as a popup
     $(document).on('taphold', '.context', function(e){
         id = $(e.target).closest("tr").find('td:eq(0)').text();
-        $("#frmContextMenu").modal('show');
+        $("#frmContextMenu").appendTo("body").modal('show');
         $('.context-mobile').each(function() {
             action =  $(this).attr( 'href');
             var url = action.replace("{id}", id.trim());
@@ -588,7 +607,7 @@ $(function () {
     $(document).on('dblclick', '.context', function (e) {
         clearSelection();
         id = $(e.target).closest("tr").find('td:eq(0)').text();
-        $("#frmContextMenu").modal('show');
+        $("#frmContextMenu").appendTo("body").modal('show');
         $('.context-mobile').each(function() {
             action =  $(this).attr( 'href');
             var url = action.replace("{id}", id.trim());
@@ -712,7 +731,7 @@ $(function () {
     //Popup select entity
     $("#cmdSelectEntity").click(function() {
         contextSelectEntity = "select";
-        $("#frmSelectEntity").modal('show');
+        $("#frmSelectEntity").appendTo("body").modal('show');
         $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
     });
     
@@ -749,7 +768,7 @@ $(function () {
     //Change the manager of a group of employees
     $("#cmdSelectManager").click(function() {
         if (oTable.rows({selected: true}).any()) {
-            $("#frmSelectManager").modal('show');
+            $("#frmSelectManager").appendTo("body").modal('show');
             $("#frmSelectManagerBody").load('<?php echo base_url(); ?>users/employees');
         }
         else {
@@ -760,7 +779,7 @@ $(function () {
     //Add entitled days to a group of employees
     $("#cmdAddEntitlments").click(function() {
         if (oTable.rows({selected: true}).any()) {
-            $("#frmAddEntitledDays").modal('show');
+            $("#frmAddEntitledDays").appendTo("body").modal('show');
         }
         else {
             bootbox.alert("<?php echo lang('hr_employees_multiple_edit_selection_msg');?>");
@@ -770,7 +789,7 @@ $(function () {
     //Change the contract of a group of employees
     $("#cmdSelectContract").click(function() {
         if (oTable.rows({selected: true}).any()) {
-            $("#frmSelectContract").modal('show');
+            $("#frmSelectContract").appendTo("body").modal('show');
         }
         else {
             bootbox.alert("<?php echo lang('hr_employees_multiple_edit_selection_msg');?>");
@@ -781,7 +800,7 @@ $(function () {
     $("#cmdChangeEntity").click(function() {
         if (oTable.rows({selected: true}).any()) {
             contextSelectEntity = "change";
-            $("#frmSelectEntity").modal('show');
+            $("#frmSelectEntity").appendTo("body").modal('show');
             $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
         }
         else {
@@ -792,7 +811,7 @@ $(function () {
     //Create a leave request for a group of employees
     $("#cmdCreateRequest").click(function() {
         if (oTable.rows({selected: true}).any()) {
-            $("#frmCreateLeaveRequest").modal('show');
+            $("#frmCreateLeaveRequest").appendTo("body").modal('show');
             //Init the start and end date picker and link them (end>=date)
             $("#viz_leaveStartdate").datepicker({
                 changeMonth: true,
@@ -833,7 +852,7 @@ $(function () {
     //If we opt-in the include children box, we'll recursively include the children of the selected entity
     //and the attached employees
     $("#chkIncludeChildren").on('change', function() {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         includeChildren = $('#chkIncludeChildren').is(':checked');
         $.cookie('includeChildren', includeChildren);
         //Refresh datatable
@@ -845,7 +864,7 @@ $(function () {
     
     //Manage radio buttons for the filtre active/inactive
     $("#cmdAll").click(function() {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         filterActive = "all";
         $.cookie('filterActive', filterActive);
         oTable.ajax.url('<?php echo base_url();?>hr/employees/entity/' + entity + '/' + includeChildren + '/' + filterActive + '/' + filterDate)
@@ -854,7 +873,7 @@ $(function () {
             }, true);
     });
     $("#cmdActive").click(function() {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         filterActive = "active";
         $.cookie('filterActive', filterActive);
         oTable.ajax.url('<?php echo base_url();?>hr/employees/entity/' + entity + '/' + includeChildren + '/' + filterActive + '/' + filterDate)
@@ -863,7 +882,7 @@ $(function () {
             }, true); 
     });
     $("#cmdInactive").click(function() {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         filterActive = "inactive";
         $.cookie('filterActive', filterActive);
         oTable.ajax.url('<?php echo base_url();?>hr/employees/entity/' + entity + '/' + includeChildren + '/' + filterActive + '/' + filterDate)

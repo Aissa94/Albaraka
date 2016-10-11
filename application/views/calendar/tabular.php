@@ -8,18 +8,26 @@
  */
 ?>
 
-<h2><?php echo lang('calendar_tabular_title');?> &nbsp;<?php echo $help;?></h2>
+<script type="application/javascript">
+    $("#menu_calendar_title").addClass('active');
+    $("#menu_calendar_tabular").addClass('active');
+</script>
 
-<div class="row-fluid">
-    <div class="span4">
-        <label for="txtEntity"><?php echo lang('calendar_organization_field_select_entity');?></label>
+<div class="page-title">   
+<h1><?php echo lang('calendar_tabular_title');?></h1>
+</div>
+<div class="row-fluid" style="padding-top:20px;">
+    <div class="span6" id="spantab" style="margin-bottom:20px;margin-top:40px;">
+        <div>
+        <label class="col-md-3" for="txtEntity"><?php echo lang('calendar_organization_field_select_entity');?></label>
         <div class="input-append">
             <input type="text" id="txtEntity" name="txtEntity" value="<?php echo $department;?>" readonly />
             <button id="cmdSelectEntity" class="btn btn-primary"><?php echo lang('calendar_tabular_button_select_entity');?></button>
         </div>
-        
-        <label for="cboMonth"><?php echo lang('calendar_tabular_field_month');?></label>
-        <select name="cboMonth" id="cboMonth">
+        </div>
+        <div>
+        <label class="col-md-3" for="cboMonth"><?php echo lang('calendar_tabular_field_month');?></label>
+        <select name="cboMonth" id="cboMonth" class="selectpicker">
             <?php for ($ii=1; $ii<13;$ii++) {
                 if ($ii == $month) {
                     echo "<option val='" . $ii ."' selected>" . $ii ."</option>";
@@ -28,9 +36,10 @@
                 }
             }?>
         </select>
-        
-        <label for="cboYear"><?php echo lang('calendar_tabular_field_year');?></label>
-        <select name="cboYear" id="cboYear">
+        </div>
+        <div>
+        <label class="col-md-3" for="cboYear"><?php echo lang('calendar_tabular_field_year');?></label>
+        <select name="cboYear" id="cboYear" class="selectpicker">
             <?php 
             $len = date('Y', strtotime('+2 year'));
             for ($ii=date('Y', strtotime('-6 year')); $ii<$len;$ii++) {
@@ -41,14 +50,14 @@
                 }
             }?>
         </select>
-        
+        </div>
     </div>
-    <div class="span3">
+    <div class="span3" style="margin-bottom:20px;margin-top:40px;">
         <label for="chkIncludeChildren">
             <input type="checkbox" value="" id="chkIncludeChildren" name="chkIncludeChildren"> <?php echo lang('calendar_tabular_check_include_subdept');?>
         </label>
     </div>
-    <div class="span5">
+    <div class="span3" style="margin-top:40px;">
         <div class="row-fluid">
             <div class="span12">
                 <button id="cmdPrevious" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i></button>
@@ -58,8 +67,10 @@
         </div>
         <div class="row-fluid"><div class="span12">&nbsp;</div></div>
         <div class="row-fluid">
-            <div class="span12">
+            <div class="span11">
+            <center>
                 <button id="cmdExport" class="btn btn-primary"><i class="fa fa-file-excel-o"></i>&nbsp;<?php echo lang('calendar_tabular_button_export');?></button>
+            </center>
             </div>
         </div>
 
@@ -67,14 +78,15 @@
 </div>
 
 <div class="row-fluid">
-    <div class="span3 btn conge"><?php echo lang('Planned');?></div>
+    <div class="span3 btn conge" style="margin-right:13%"><?php echo lang('Planned');?></div>
     <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
-    <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
+    <div class="span3 btn btn-warning conge pull-right"><?php echo lang('Requested');?></div>
     <div class="span3">&nbsp;</div>
 </div>
 
 <?php if (count($tabular) > 0) {?>
-<table class="table table-bordered">
+    <div class="table-responsive row-fluid" style="overflow-x:scroll">
+<table class="table table-bordered table-condensed">
     <thead>
         <tr>
             <td>&nbsp;</td>
@@ -269,8 +281,8 @@
     }?>
   </tbody>
 </table>
+</div>
 <?php } ?>
-
 <div id="frmSelectEntity" class="modal hide fade">
     <div class="modal-header">
         <a href="#" onclick="$('#frmSelectEntity').modal('hide');" class="close">&times;</a>
@@ -329,7 +341,7 @@
         
         //Popup select entity
         $("#cmdSelectEntity").click(function() {
-            $("#frmSelectEntity").modal('show');
+             $("#frmSelectEntity").appendTo("body").modal('show');
             $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
         });
 
@@ -370,7 +382,7 @@ date_sub($datePrev, date_interval_create_from_date_string('1 month'));?>
         });
         
         //Load alert forms
-        $("#frmSelectEntity").alert();
+        $("#frmSelectEntity").appendTo('body').show();
         //Prevent to load always the same content (refreshed each time)
         $('#frmSelectEntity').on('hidden', function() {
             $(this).removeData('modal');

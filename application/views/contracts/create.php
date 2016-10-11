@@ -7,20 +7,28 @@
  * @since         0.1.0
  */
 ?>
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_contracts_divider").addClass('active');
+    $("#menu_hr_list_contracts").addClass('active');
+</script>
 
-<h2><?php echo lang('contract_create_title');?></h2>
-
+<div class="row-fluid">
+<div class="page-title">   
+<h1><?php echo lang('contract_create_title');?></h1>
+</div>
 <?php echo validation_errors(); ?>
 
 <?php
 $attributes = array('id' => 'target');
 echo form_open('contracts/create', $attributes); ?>
-
-    <label for="name"><?php echo lang('contract_create_field_name');?></label>
+    <div class="form-group">
+    <label class="col-md-3" for="name"><?php echo lang('contract_create_field_name');?></label>
     <input type="text" name="name" id="name" autofocus required /><br />
-
-    <label for="startentdatemonth"><?php echo lang('contract_create_field_start_month');?></label>
-    <select name="startentdatemonth" id="startentdatemonth" required>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="startentdatemonth"><?php echo lang('contract_create_field_start_month');?></label>
+    <select class="selectpicker" data-live-search="true" name="startentdatemonth" id="startentdatemonth" required>
         <option value="1" selected><?php echo lang('January');?></option>
         <option value="2"><?php echo lang('February');?></option>
         <option value="3"><?php echo lang('March');?></option>
@@ -34,9 +42,10 @@ echo form_open('contracts/create', $attributes); ?>
         <option value="11"><?php echo lang('November');?></option>
         <option value="12"><?php echo lang('December');?></option>
     </select>
-    
-    <label for="startentdateday"><?php echo lang('contract_create_field_start_day');?></label>
-    <select name="startentdateday" id="startentdateday" required>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="startentdateday"><?php echo lang('contract_create_field_start_day');?></label>
+    <select class="selectpicker" data-live-search="true" name="startentdateday" id="startentdateday" required>
         <option value='1' selected>1</option>
         <option value='2'>2</option>
         <option value='3'>3</option>
@@ -69,11 +78,11 @@ echo form_open('contracts/create', $attributes); ?>
         <option value='30'>30</option>
         <option value='31'>31</option>
     </select>
-    
+    </div>
     <br /><br />
-    
-    <label for="endentdatemonth"><?php echo lang('contract_create_field_end_month');?></label>
-    <select name="endentdatemonth" id="endentdatemonth" required>
+    <div class="form-group">
+    <label class="col-md-3" for="endentdatemonth"><?php echo lang('contract_create_field_end_month');?></label>
+    <select class="selectpicker" data-live-search="true" name="endentdatemonth" id="endentdatemonth" required>
         <option value="1"><?php echo lang('January');?></option>
         <option value="2"><?php echo lang('February');?></option>
         <option value="3"><?php echo lang('March');?></option>
@@ -87,9 +96,10 @@ echo form_open('contracts/create', $attributes); ?>
         <option value="11"><?php echo lang('November');?></option>
         <option value="12" selected><?php echo lang('December');?></option>
     </select>
-    
-    <label for="endentdateday"><?php echo lang('contract_create_field_end_day');?></label>
-    <select name="endentdateday" id="endentdateday" required>
+    </div>
+    <div class="form-group">    
+    <label class="col-md-3" for="endentdateday"><?php echo lang('contract_create_field_end_day');?></label>
+    <select class="selectpicker" data-live-search="true" name="endentdateday" id="endentdateday" required>
         <option value='1'>1</option>
         <option value='2'>2</option>
         <option value='3'>3</option>
@@ -122,13 +132,13 @@ echo form_open('contracts/create', $attributes); ?>
         <option value='30'>30</option>
         <option value='31' selected>31</option>
     </select>
-
+    </div>
     <br /><br />
     <button id="send" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('contract_create_button_create');?></button>
     &nbsp;
     <a href="<?php echo base_url(); ?>contracts" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('contract_create_button_cancel');?></a>
 </form>
-
+</div>
 <script type="text/javascript">
     $(function () {
         //TODO on form validation before sending to server

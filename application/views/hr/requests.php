@@ -7,17 +7,21 @@
  * @since         0.1.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_employees_divider").addClass('active');
+    $("#menu_hr_request_leave").addClass('active');
+</script>
 <div class="row-fluid">
     <div class="span12">
-
-<h2><?php echo lang('hr_requests_index_title');?><?php echo $help;?></h2>
-
+<div class="page-title">   
+<h1><?php echo lang('hr_requests_index_title');?></h1>
+<p><?php echo lang('hr_requests_index_description');?></p>
+</div>
 <?php echo $flash_partial_view;?>
 
-<p><?php echo lang('hr_requests_index_description');?></p>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="leaves" width="100%">
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="leaves" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('hr_requests_index_thead_id');?></th>
@@ -74,7 +78,7 @@
     </tr>
 <?php endforeach ?>
 	</tbody>
-</table>
+</table></div>
     </div>
 </div>
 
@@ -168,7 +172,7 @@ $(document).ready(function() {
     //Copy/Paste ICS Feed
     var client = new ZeroClipboard($("#cmdCopy"));
     $('#lnkICS').click(function () {
-        $("#frmLinkICS").modal('show');
+        $("#frmLinkICS").appendTo("body").modal('show');
     });
     client.on( "aftercopy", function( event ) {
         $('#tipCopied').tooltip('show');

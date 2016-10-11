@@ -8,14 +8,19 @@
  */
 ?>
 
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_contracts_divider").addClass('active');
+    $("#menu_hr_list_positions").addClass('active');
+</script>
 <div class="row-fluid">
+<div class="page-title">   
+<h1><?php echo lang('positions_index_title');?></h1>
+</div>
     <div class="span12">
-      
-<h2><?php echo lang('positions_index_title');?> &nbsp;<?php echo $help;?></h2>
-
 <?php echo $flash_partial_view;?>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="positions" width="100%">
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" id="positions" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('positions_index_thead_id');?></th>
@@ -38,7 +43,7 @@
     </tr>
 <?php endforeach ?>
 	</tbody>
-</table>
+</table></div>
 	</div>
 </div>
 
@@ -101,7 +106,7 @@ $(function () {
             }
     });
     
-    $("#frmDeletePosition").alert();
+    $("#frmDeletePosition").appendTo('body').show();
     
     //On showing the confirmation pop-up, add the contract id at the end of the delete url action
     $('#frmDeletePosition').on('show', function() {

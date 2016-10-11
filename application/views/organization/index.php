@@ -7,22 +7,31 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('organization_index_title');?> &nbsp;<?php echo $help;?></h2>
-
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_employees_divider").addClass('active');
+    $("#menu_hr_list_organization").addClass('active');
+</script>
+<div class="row-fluid" id="containers">
+    <div class="page-title">
+    <h1><?php echo lang('organization_index_title');?></h1>
+    </div>
+<div class="span12">
+</div>
+<div class="row-fluid"  style="padding-top: 20px">
     <div class="span4">
         <div class="input-append">
             <input type="text" class="input-medium" placeholder="<?php echo lang('organization_index_field_search_placeholder');?>" id="txtSearch" />
+            <button id="cmdSearch" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
             <button id="cmdClearSearch" class="btn btn-primary"><i class="icon-remove icon-white"></i></button>
             <button id="cmdReloadManagers" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
-            <button id="cmdSearch" class="btn btn-primary"><i class="icon-search icon-white"></i>&nbsp;<?php echo lang('organization_index_button_search');?></button>
         </div>
         <div style="text-align: left;" id="organization"></div>
     </div>
     <div class="span8">
         <h3><?php echo lang('organization_index_title_employees');?></h3>
-        <table cellpadding="0" cellspacing="0" border="0" class="display" id="collaborators" width="100%">
+        <div class="table-responsive">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="collaborators" width="100%">
             <thead>
                 <tr>
                     <th><?php echo lang('organization_index_thead_id');?></th>
@@ -34,6 +43,7 @@
             <tbody>
             </tbody>
         </table>
+        </div>
         <br />
         <button id="cmdAddEmployee" class="btn btn-primary"><?php echo lang('organization_index_button_add_employee');?></button>
         <button id="cmdRemoveEmployee" class="btn btn-primary"><?php echo lang('organization_index_button_remove_employee');?></button>
@@ -111,7 +121,7 @@
             <img src="<?php echo base_url();?>assets/images/loading.gif"  align="middle">
         </div>
  </div>
-
+</div>
 <link href="<?php echo base_url();?>assets/datatable/DataTables-1.10.11/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="<?php echo base_url();?>assets/datatable/Select-1.1.2/css/select.dataTables.min.css" rel="stylesheet">
 <link rel="stylesheet" href='<?php echo base_url(); ?>assets/jsTree/themes/default/style.css' type="text/css" media="screen, projection" />
@@ -137,7 +147,7 @@
           })
           .done(function(msg) {
             //Update table of users
-            $('#frmModalAjaxWait').modal('show');
+            $('#frmModalAjaxWait').appendTo("body").modal('show');
             oTable.ajax.url("<?php echo base_url(); ?>organization/employees?id=" + entity)
             .load(function() {
                     $("#frmModalAjaxWait").modal('hide');
@@ -148,7 +158,7 @@
     
     function select_supervisor() {
         $("#frmSelectSupervisor").modal('hide');
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         var employees = $('#employees').DataTable();
         var id = employees.rows({selected: true}).data()[0][0];
         var text = employees.rows({selected: true}).data()[0][1] + ' ' + employees.rows({selected: true}).data()[0][2];
@@ -166,7 +176,7 @@
     }
     
     function delete_supervisor() {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         var entity = $('#organization').jstree('get_selected')[0];
         $.ajax({
             type: "GET",
@@ -198,22 +208,22 @@
         //Attach an employee to an entity
         $("#cmdAddEmployee").click(function() {
             if ($("#organization").jstree('get_selected').length == 1) {
-                $("#frmAddEmployee").modal('show');
+                $("#frmAddEmployee").appendTo("body").modal('show');
                 $("#frmAddEmployeeBody").load('<?php echo base_url(); ?>users/employees');
             } else {
                 $("#lblError").text("<?php echo lang('organization_index_error_msg_select_entity');?>");
-                $("#frmError").modal('show');
+                $("#frmError").appendTo("body").modal('show');
             }
         });
 
         //Select the supervisor of the entity
         $("#cmdSelectSupervisor").click(function() {
             if ($("#organization").jstree('get_selected').length == 1) {
-                $("#frmSelectSupervisor").modal('show');
+                $("#frmSelectSupervisor").appendTo("body").modal('show');
                 $("#frmSelectSupervisorBody").load('<?php echo base_url(); ?>users/employees');
             } else {
                 $("#lblError").text("<?php echo lang('organization_index_error_msg_select_entity');?>");
-                $("#frmError").modal('show');
+                $("#frmError").appendTo("body").modal('show');
             }
         });
         
@@ -223,7 +233,7 @@
                 delete_supervisor();
             } else {
                 $("#lblError").text("<?php echo lang('organization_index_error_msg_select_entity');?>");
-                $("#frmError").modal('show');
+                $("#frmError").appendTo("body").modal('show');
             }
         });
 
@@ -240,7 +250,7 @@
                       })
                       .done(function( msg ) {
                         //Update table of users
-                        $('#frmModalAjaxWait').modal('show');
+                        $('#frmModalAjaxWait').appendTo("body").modal('show');
                         oTable.ajax.url("<?php echo base_url(); ?>organization/employees?id=" + entity)
                         .load(function() {
                                 $("#frmModalAjaxWait").modal('hide');
@@ -248,17 +258,17 @@
                     });
                 } else {
                     $("#lblError").text("<?php echo lang('organization_index_error_msg_select_entity');?>");
-                    $("#frmError").modal('show');
+                    $("#frmError").appendTo("body").modal('show');
                 }
             } else {
                 $("#lblError").text("<?php echo lang('organization_index_error_msg_select_employee');?>");
-                $("#frmError").modal('show');
-                $("#frmErrorEmployee").modal('show');
+                $("#frmError").appendTo("body").modal('show');
+                $("#frmErrorEmployee").appendTo("body").modal('show');
             }
         });
 
         //Load alert forms
-        $("#frmAddEmployee").alert();
+        $("#frmAddEmployee").appendTo('body').show();
         //Prevent to load always the same content (refreshed each time)
         $('#frmAddEmployee').on('hidden', function() {
             $( "#employees" ).remove();
@@ -355,13 +365,13 @@
               },
               check_callback : true
             },
-            plugins: [/*"contextmenu",*/ "dnd", "search", "state", "sort", "unique"]
+             plugins: [/*"contextmenu", "dnd",*/ "search", "state", "sort", "unique"]
         })
         .on('delete_node.jstree', function (e, data) {
             var id = data.node.id;
             if (id == 0) {
                 $("#lblError").text("<?php echo lang('organization_index_error_msg_delete_root');?>");
-                $("#frmError").modal('show');
+                $("#frmError").appendTo("body").modal('show');
                 $("#organization").jstree("refresh");
             } else {
                 $('#frmConfirmDelete').data('id', id).modal('show');
@@ -411,7 +421,7 @@
         })
         .on('changed.jstree', function(e, data) {
             if (data && data.selected && data.selected.length) {
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
                 var isTableLoaded = false;
                 oTable.ajax.url("<?php echo base_url(); ?>organization/employees?id=" + data.selected.join(':'))
                     .load(function() {

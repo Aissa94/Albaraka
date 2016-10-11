@@ -7,10 +7,10 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('leaves_edit_title');?><?php echo $leave['id']; ?> <?php echo $help;?>&nbsp;<span class="muted">(<?php echo $name ?>)</span></h2>
-
-<div class="row-fluid">
+<div class="page-title">   
+<h1><?php echo lang('leaves_edit_title');?><?php echo $leave['id']; ?> <span class="muted">(<?php echo $name ?>)</span></h1>
+</div>
+<div class="row-fluid" style="padding-top:20px;">
     <div class="span8">
 
 <?php echo validation_errors(); ?>
@@ -22,31 +22,41 @@ if (isset($_GET['source'])) {
 } else {
     echo form_open('leaves/edit/' . $id, $attributes);
 } ?>
-
-    <label for="type"><?php echo lang('leaves_edit_field_type');?></label>
-    <select name="type" id="type">
+    <div class="form-group">
+    <label class="col-md-3" for="type"><?php echo lang('leaves_edit_field_type');?></label>
+    <select name="type" id="type" class="selectpicker" data-live-search="true">
     <?php foreach ($types as $types_item): ?>
-        <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $leave['type']) echo "selected" ?>><?php echo $types_item['name'] ?></option>
+         <option value="<?php echo $types_item['id'] ?>" 
+        <?php switch ($types_item['id']) {
+            case 0 : echo "hidden"; break; 
+            case $leave['type'] : echo "selected"; break;
+            case 1 : break;
+            case 2 : break;
+            default : echo "disabled";
+        }?>><?php echo $types_item['name'] ?></option>
     <?php endforeach ?>    
-    </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
-        
-    <label for="viz_startdate"><?php echo lang('leaves_edit_field_start');?></label>
+   </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)&& $leave['type'] =="1") echo '('.$credit.')'; ?></span><br />
+      </div>
+     <div class="form-group">   
+    <label class="col-md-3" for="viz_startdate"><?php echo lang('leaves_edit_field_start');?></label>
     <input type="text" name="viz_startdate" id="viz_startdate" value="<?php $date = new DateTime($leave['startdate']); echo $date->format(lang('global_date_format'));?>" autocomplete="off" />
     <input type="hidden" name="startdate" id="startdate" value="<?php echo $leave['startdate'];?>" />
     <select name="startdatetype" id="startdatetype" style="display : none">
         <option value="Morning" <?php if ($leave['startdatetype'] == "Morning") {echo "selected";}?>><?php echo lang('Morning');?></option>
         <option value="Afternoon" <?php if ($leave['startdatetype'] == "Afternoon") {echo "selected";}?>><?php echo lang('Afternoon');?></option>
     </select><br />
-    
-    <label for="viz_enddate"><?php echo lang('leaves_edit_field_end');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="viz_enddate"><?php echo lang('leaves_edit_field_end');?></label>
     <input type="text" name="viz_enddate" id="viz_enddate" value="<?php $date = new DateTime($leave['enddate']); echo $date->format(lang('global_date_format'));?>" autocomplete="off" />
     <input type="hidden" name="enddate" id="enddate" value="<?php echo $leave['enddate'];?>" />
     <select name="enddatetype" id="enddatetype" style="display : none">
         <option value="Morning" <?php if ($leave['enddatetype'] == "Morning") {echo "selected";}?>><?php echo lang('Morning');?></option>
         <option value="Afternoon" <?php if ($leave['enddatetype'] == "Afternoon") {echo "selected";}?>><?php echo lang('Afternoon');?></option>
     </select><br />
-
-    <label for="duration"><?php echo lang('leaves_edit_field_duration');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="duration"><?php echo lang('leaves_edit_field_duration');?></label>
     <?php if ($this->config->item('disable_edit_leave_duration') == TRUE) { ?>
     <input type="text" name="duration" id="duration" value="<?php echo $leave['duration']; ?>" readonly />
     <?php } else { ?>
@@ -64,20 +74,23 @@ if (isset($_GET['source'])) {
     <div class="alert hide alert-error" id="lblOverlappingDayOffAlert">
         <?php echo lang('leaves_flash_msg_overlap_dayoff');?>
     </div>
-    
-    <label for="substitute"><?php echo lang('leaves_edit_field_substitute');?></label>
-    <select name="substitute" id="substitute">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="substitute"><?php echo lang('leaves_edit_field_substitute');?></label>
+    <select name="substitute" id="substitute" class="selectpicker" data-live-search="true">
         <option value="<?php echo NULL ?>">aucun remplaçant</option>
     <?php foreach ($substitute as $substitute_item): ?>
         <option value="<?php echo $substitute_item['id'] ?>" <?php if ($substitute_item['id'] == $leave['substitute']) echo "selected" ?> ><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
-    <?php endforeach ?>
+        <?php endforeach ?>
     </select>
-
-    <label for="cause"><?php echo lang('leaves_edit_field_cause');?></label>
-    <textarea name="cause"><?php echo $leave['cause']; ?></textarea>
-    
-    <label for="status"><?php echo lang('leaves_edit_field_status');?></label>
-    <select name="status" id="status">
+</div>
+ <div class="form-group">
+    <label class="col-md-3" for="cause"><?php echo lang('leaves_edit_field_cause');?></label>
+    <textarea name="cause" id="causeleave"><?php echo $leave['cause']; ?></textarea>
+     </div>
+    <div class="form-group">
+    <label class="col-md-3" for="status"><?php echo lang('leaves_edit_field_status');?></label>
+    <select name="status" id="status" class="selectpicker">
         <option value="1" <?php if ($leave['status'] == 1) echo 'selected'; ?>><?php echo lang('Planned');?></option>
         <option value="2" <?php if (($leave['status'] == 2) || $this->config->item('leave_status_requested')) echo 'selected'; ?>><?php echo lang('Requested');?></option>
         <?php /*if (($is_hr) && ($leave['type'] == 2)) {?>
@@ -85,7 +98,7 @@ if (isset($_GET['source'])) {
         <option value="4" <?php if ($leave['status'] == 4) echo 'selected'; ?>><?php echo lang('Rejected');?></option>        
         <?php } */?>
     </select><br />
-
+</div>
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('leaves_edit_button_update');?></button>
     &nbsp;
     <?php if (isset($_GET['source'])) {?>

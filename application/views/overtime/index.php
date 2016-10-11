@@ -9,15 +9,14 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">
+<h1><?php echo lang('overtime_index_title');?></h1>
+<p><?php echo lang('overtime_index_description');?></p>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('overtime_index_title');?><?php echo $help;?></h2>
-
 <?php echo $flash_partial_view;?>
 
-<p><?php echo lang('overtime_index_description');?></p>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="overtime" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="overtime" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('overtime_index_thead_id');?></th>

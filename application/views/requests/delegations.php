@@ -8,15 +8,21 @@
  * @since         0.4.0
  */
 ?>
+<script type="application/javascript">
+    $("#menu_validation_title").addClass('active');
+    $("#menu_validation_divider").addClass('active');
+    $("#menu_validation_delegations").addClass('active');
+</script>
 
 <div class="row-fluid">
+    <div class="page-title">  
+<h1><?php echo lang('requests_delegations_title');?> <span class="muted">(<?php echo $name; ?>)</span></h1>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('requests_delegations_title');?> <span class="muted">(<?php echo $name; ?>)</span>  &nbsp;<?php echo $help;?></h2>
 
 <div class="row-fluid"><div class="span12"><?php echo lang('requests_delegations_description');?></div></div>
 
-<table id="delegations">
+<table id="delegations" cellpadding="0" cellspacing="0" border="0" class="table table-bordered " width="100%">
 <thead>
     <tr>
       <th>&nbsp;</th>
@@ -34,7 +40,7 @@
 </table>
     
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
-<button id="cmdAddDelegate" class="btn btn-primary" onclick="$('#frmSelectDelegate').modal('show');"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('requests_delegations_button_add');?></button>
+<button id="cmdAddDelegate" class="btn btn-primary" onclick="$('#frmSelectDelegate').appendTo('body').modal('show');"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('requests_delegations_button_add');?></button>
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
     </div>
@@ -75,7 +81,7 @@
             "<?php echo lang('requests_delegations_confirm_delete_cancel');?>",
             "<?php echo lang('requests_delegations_confirm_delete_yes');?>", function(result) {
             if (result) {
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
                 $.ajax({
                     url: "<?php echo base_url();?>requests/ajax/delegations/delete",
                     type: "POST",
@@ -97,7 +103,7 @@
             name = employees.rows({selected: true}).data()[0][1] + ' ' + employees.rows({selected: true}).data()[0][2];
             $('#frmSelectDelegate').modal('hide');
             if (parseInt(employee) != parseInt('<?php echo $id; ?>')) {
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
                 $.ajax({
                     url: "<?php echo base_url();?>requests/ajax/delegations/add",
                     type: "POST",
@@ -160,7 +166,7 @@
             
         //Popup select delegate
         $("#cmdAddDelegate").click(function() {
-            $("#frmSelectDelegate").modal('show');
+            $("#frmSelectDelegate").appendTo("body").modal('show');
             $("#frmSelectDelegateBody").load('<?php echo base_url(); ?>users/employees');
         });
     });

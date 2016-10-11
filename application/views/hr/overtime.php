@@ -9,13 +9,14 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('hr_overtime_html_title');?><?php echo $user_id; ?>&nbsp;<span class="muted">(<?php echo $name ?>)</span></h1>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('hr_overtime_html_title');?><?php echo $user_id; ?>&nbsp;<span class="muted">(<?php echo $name ?>)</span></h2>
 
 <?php echo $flash_partial_view;?>
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="extras" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="extras" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('hr_overtime_thead_id');?></th>

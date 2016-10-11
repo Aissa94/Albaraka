@@ -36,8 +36,9 @@
             <div class="span6 form-box">
                 <div class="row-fluid">
                     <div class="span6">
-<h2><?php echo lang('session_login_title');?><?php echo $help;?></h2>
-
+                    <div class="page-title"> 
+<h1><?php echo lang('session_login_title');?></h1>
+</div>
     <?php $languages = $this->polyglot->nativelanguages($this->config->item('languages'));?>
     <input type="hidden" name="last_page" value="session/failure" />
     <?php if (count($languages) == 1) { ?>

@@ -7,9 +7,16 @@
  * @since         0.1.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_contracts_divider").addClass('active');
+    $("#menu_hr_list_contracts").addClass('active');
+</script>
 <div class="row-fluid">
-    <div class="span12">
+<div class="page-title">   
+    <h1><?php echo lang('contract_index_title');?></h1>
+</div>
+    <div>
 
 <?php if($this->session->flashdata('msg')){ ?>
 <div class="alert fade in" id="flashbox">
@@ -20,14 +27,12 @@
 <script type="text/javascript">
 //Flash message
 $(document).ready(function() {
-    $("#flashbox").alert();
+    $("#flashbox").show();
 });
 </script>
 <?php } ?>
-
-<h2><?php echo lang('contract_index_title');?> &nbsp;<?php echo $help;?></h2>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="contracts" width="100%">
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="contracts" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('contract_index_thead_id');?></th>
@@ -67,7 +72,7 @@ $(document).ready(function() {
     </tr>
 <?php endforeach ?>
 	</tbody>
-</table>
+</table></div>
 	</div>
 </div>
 
@@ -143,8 +148,8 @@ $(document).ready(function() {
             }
         }
     });
-    $("#frmChangePwd").alert();
-    $("#frmEntitledDays").alert();
+    $("#frmChangePwd").appendTo('body').show();
+    $("#frmEntitledDays").appendTo('body').show();
 	
     //On showing the confirmation pop-up, add the contract id at the end of the delete url action
     $('#frmDeleteContract').on('show', function() {
@@ -157,7 +162,7 @@ $(document).ready(function() {
     //a simplier selector doesn't work when the delete is on page >1 
     $("#contracts tbody").on('click', '.confirm-delete',  function(){
         var id = $(this).data('id');
-        $('#frmDeleteContract').data('id', id).modal('show');
+        $('#frmDeleteContract').data('id', id).appendTo('body').modal('show');
     });
     
     $('#frmEntitledDays').on('hidden', function() {

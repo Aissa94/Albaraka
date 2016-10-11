@@ -7,9 +7,10 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('users_edit_title');?><?php echo $users_item['id']; ?><?php echo $help;?></h2>
-
+<div class="row-fluid">
+<div class="page-title"> 
+<h1><?php echo lang('users_edit_title');?><?php echo $users_item['id']; ?></h1>
+</div>
 <?php echo validation_errors(); ?>
 
 <?php if (isset($_GET['source'])) {
@@ -17,75 +18,84 @@
 } else {
     echo form_open('users/edit/' . $users_item['id']);
 } ?>
-
+    <div class="form-group">
     <input type="hidden" name="id" value="<?php echo $users_item['id']; ?>" required /><br />
 
-    <label for="firstname"><?php echo lang('users_edit_field_firstname');?></label>
+    <label class="col-md-3" for="firstname"><?php echo lang('users_edit_field_firstname');?></label>
     <input type="text" name="firstname" value="<?php echo $users_item['firstname']; ?>" required /><br />
-
-    <label for="lastname"><?php echo lang('users_edit_field_lastname');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="lastname"><?php echo lang('users_edit_field_lastname');?></label>
     <input type="text" name="lastname" value="<?php echo $users_item['lastname']; ?>" required /><br />
-
-    <label for="login"><?php echo lang('users_edit_field_login');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="login"><?php echo lang('users_edit_field_login');?></label>
     <input type="text" name="login" value="<?php echo $users_item['login']; ?>" required /><br />
-	
-    <label for="email"><?php echo lang('users_edit_field_email');?></label>
+	</div>
+    <div class="form-group">
+    <label class="col-md-3" for="email"><?php echo lang('users_edit_field_email');?></label>
     <input type="email" id="email" name="email" value="<?php echo $users_item['email']; ?>" required /><br />
-		
-    <label for="role[]"><?php echo lang('users_edit_field_role');?></label>
-    <select name="role[]" multiple="multiple" size="2">
+	</div>
+    <div class="form-group">	
+    <label class="col-md-3" for="role[]"><?php echo lang('users_edit_field_role');?></label>
+    <select class="selectpicker" name="role[]">
     <?php foreach ($roles as $roles_item): ?>
         <option value="<?php echo $roles_item['id'] ?>" <?php if ((((int)$roles_item['id']) & ((int) $users_item['role']))) echo "selected" ?>><?php echo $roles_item['name'] ?></option>
     <?php endforeach ?>
     </select>
-
-    <br />
+    </div>
     <input type="hidden" name="manager" id="manager" value="<?php echo $users_item['manager']; ?>" /><br />
 
-
-    <label for="contract"><?php echo lang('users_edit_field_contract');?></label>
-    <select name="contract" id="contract" class="selectized input-xlarge">
+    <div class="form-group">
+    <label class="col-md-3" for="contract"><?php echo lang('users_edit_field_contract');?></label>
+    <select class="selectpicker" name="contract" id="contract" data-live-search="true">
     <?php foreach ($contracts as $contract): ?>
         <option value="<?php echo $contract['id'] ?>" <?php if ($contract['id'] == $users_item['contract']) echo "selected"; ?>><?php echo $contract['name']; ?></option>
     <?php endforeach ?>
         <option value="0" <?php if ($users_item['contract'] == 0 || is_null($users_item['contract'])) echo "selected"; ?>>&nbsp;</option>
     </select>
-    
+    </div>
+    <div class="form-group">
     <input type="hidden" name="entity" id="entity" value="<?php echo $users_item['organization']; ?>" /><br />
-    <label for="txtEntity"><?php echo lang('users_edit_field_entity');?></label>
+    <label class="col-md-3" for="txtEntity"><?php echo lang('users_edit_field_entity');?></label>
     <div class="input-append">
         <input type="text" id="txtEntity" name="txtEntity" value="<?php echo $organization_label; ?>" required readonly />
         <a id="cmdSelectEntity" class="btn btn-primary"><?php echo lang('users_edit_button_select');?></a>
     </div>
     <br />
-    
+    </div>
+    <div class="form-group">
     <input type="hidden" name="position" id="position" value="<?php echo $users_item['position']; ?>" /><br />
-    <label for="txtPosition"><?php echo lang('users_create_field_position');?></label>
+    <label class="col-md-3" for="txtPosition"><?php echo lang('users_create_field_position');?></label>
     <div class="input-append">
         <input type="text" id="txtPosition" name="txtPosition" value="<?php echo $position_label; ?>" required readonly />
         <a id="cmdSelectPosition" class="btn btn-primary"><?php echo lang('users_edit_button_select');?></a>
     </div>    
     <br />
-    
-    <label for="viz_datehired"><?php echo lang('users_edit_field_hired');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="viz_datehired"><?php echo lang('users_edit_field_hired');?></label>
     <input type="text" id="viz_datehired" name="viz_datehired" value="<?php 
 $date = new DateTime($users_item['datehired']);
 echo $date->format(lang('global_date_format'));
 ?>" /><br />
     <input type="hidden" name="datehired" id="datehired" /><br />
-    
-    <label for="identifier"><?php echo lang('users_edit_field_identifier');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="identifier"><?php echo lang('users_edit_field_identifier');?></label>
     <input type="text" name="identifier" value="<?php echo $users_item['identifier']; ?>" /><br />
-    
-    <label for="language"><?php echo lang('users_edit_field_language');?></label>
-    <select name="language">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="language"><?php echo lang('users_edit_field_language');?></label>
+    <select class="selectpicker" name="language">
          <?php 
          $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
          foreach ($languages as $code => $language): ?>
         <option value="<?php echo $code; ?>" <?php if ($code == $users_item['language']) echo "selected"; ?>><?php echo $language; ?></option>
         <?php endforeach ?>
     </select>
-    
+    </div>
+    <div class="form-group">
     <?php 
         if (!is_null($users_item['timezone'])) {
             $tzdef = $users_item['timezone'];
@@ -94,17 +104,19 @@ echo $date->format(lang('global_date_format'));
             if ($tzdef == FALSE) $tzdef = 'Europe/Paris';
         }
     $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);?>
-    <label for="timezone"><?php echo lang('users_edit_field_timezone');?></label>
-    <select id="timezone" name="timezone" class="selectized input-xlarge">
+    <label class="col-md-3" for="timezone"><?php echo lang('users_edit_field_timezone');?></label>
+    <select class="selectpicker" id="timezone" name="timezone" data-live-search="true">
     <?php foreach ($tzlist as $tz) { ?>
         <option value="<?php echo $tz ?>" <?php if ($tz == $tzdef) echo "selected"; ?>><?php echo $tz; ?></option>
     <?php } ?>
     </select>
-    
+    </div>
+    <div class="form-group">
     <?php if ($this->config->item('ldap_basedn_db')) {?>
-    <label for="ldap_path"><?php echo lang('users_edit_field_ldap_path');?></label>
+    <label class="col-md-3" for="ldap_path"><?php echo lang('users_edit_field_ldap_path');?></label>
     <input type="text" class="input-xxlarge" name="ldap_path" value="<?php echo $users_item['ldap_path']; ?>" />
     <?php }?>
+    </div>
     <br />
     <br />
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('users_edit_button_update');?></button>
@@ -115,7 +127,7 @@ echo $date->format(lang('global_date_format'));
         <a href="<?php echo base_url();?>users" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('users_edit_button_cancel');?></a>
     <?php } ?>
 </form>
-
+</div>
 
 <div id="frmSelectEntity" class="modal hide fade">
     <div class="modal-header">
@@ -188,25 +200,23 @@ if ($language_code != 'en') { ?>
         }, $.datepicker.regional['<?php echo $language_code;?>']);
         $("#viz_datehired").datepicker( "setDate", "<?php echo $date->format(lang('global_date_format'));?>");
         
-        $('#timezone').selectize();
-        $('#contract').selectize();
         
         
         
         //Popup select position
         $("#cmdSelectPosition").click(function() {
-            $("#frmSelectPosition").modal('show');
+            $("#frmSelectPosition").appendTo("body").modal('show');
             $("#frmSelectPositionBody").load('<?php echo base_url(); ?>positions/select');
         });
         
         //Popup select entity
         $("#cmdSelectEntity").click(function() {
-            $("#frmSelectEntity").modal('show');
+            $("#frmSelectEntity").appendTo("body").modal('show');
             $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
         });
 
         //Load alert forms
-        $("#frmSelectEntity").alert();
+        $("#frmSelectEntity").appendTo('body').show();
         //Prevent to load always the same content (refreshed each time)
         $('#frmSelectEntity').on('hidden', function() {
             $(this).removeData('modal');

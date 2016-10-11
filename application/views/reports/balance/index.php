@@ -7,9 +7,9 @@
  * @since         0.2.0
  */
 ?>
-        
-<h2><?php echo lang('reports_balance_title');?> &nbsp;<?php echo $help;?></h2>
-
+  <div class="page-title">        
+<h1><?php echo lang('reports_balance_title');?></h1>
+</div>
 <div class="row-fluid">
     <div class="span4">
         <label for="refdate"><?php echo lang('reports_balance_date_field');?></label>
@@ -87,10 +87,10 @@ $(document).ready(function() {
     $("#refdate").val(moment().format('L'));
     $('#refdate').datepicker();    
     
-    $("#frmSelectEntity").alert();
+    $("#frmSelectEntity").appendTo('body').show();
     
     $("#cmdSelectEntity").click(function() {
-        $("#frmSelectEntity").modal('show');
+        $("#frmSelectEntity").appendTo("body").modal('show');
         $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
     });
     

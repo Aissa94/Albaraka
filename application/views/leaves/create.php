@@ -7,10 +7,14 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('leaves_create_title');?> &nbsp;<?php echo $help;?></h2>
-
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_requests_title").addClass('active');
+    $("#menu_leaves_create_request").addClass('active');
+</script>
+<div class="page-title">   
+<h1><?php echo lang('leaves_create_title');?></h1>
+</div>
+<div class="row-fluid" style="padding-top:20px;">
     <div class="span8">
 
 <?php echo validation_errors(); ?>
@@ -18,34 +22,43 @@
 <?php 
 $attributes = array('id' => 'frmLeaveForm');
 echo form_open('leaves/create', $attributes) ?>
-
-    <label for="type"><?php echo lang('leaves_create_field_type');?></label>
-    <select name="type" id="type">
+    <div class="form-group">
+    <label class="col-md-3" for="type"><?php echo lang('leaves_create_field_type');?></label>
+    <select name="type" id="type" class="selectpicker" data-live-search="true">
     <?php
     $default_type = $this->config->item('default_leave_type');
     $default_type = $default_type == FALSE ? 1 : $default_type;
-    foreach ($types as $types_item): ?>
-        <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
+    foreach ($types as $types_item):?>
+        <option value="<?php echo $types_item['id'] ?>" 
+        <?php switch ($types_item['id']) {
+            case 0 : echo "hidden"; break; 
+            case $default_type : echo "selected"; break;
+            case 2 : break;
+            default : echo "disabled";
+        }?>><?php echo $types_item['name'] ?></option>
     <?php endforeach ?>
     </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
-        
-    <label for="viz_startdate"><?php echo lang('leaves_create_field_start');?></label>
-    <input type="text" name="viz_startdate" id="viz_startdate" value="<?php echo set_value('startdate'); ?>" autocomplete="off" />
+     </div>
+     <div class="form-group">   
+    <label class="col-md-3" for="viz_startdate"><?php echo lang('leaves_create_field_start');?></label>
+    <input type="text" name="viz_startdate" id="viz_startdate" value="<?php echo set_value('startdate'); ?>" autocomplete="off"/>
     <input type="hidden" name="startdate" id="startdate" />
     <select name="startdatetype" id="startdatetype" style="display : none">
         <option value="Morning" selected><?php echo lang('Morning');?></option>
         <option value="Afternoon"><?php echo lang('Afternoon');?></option>
     </select><br />
-    
-    <label for="viz_enddate"><?php echo lang('leaves_create_field_end');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="viz_enddate"><?php echo lang('leaves_create_field_end');?></label>
     <input type="text" name="viz_enddate" id="viz_enddate" value="<?php echo set_value('enddate'); ?>" autocomplete="off" />
     <input type="hidden" name="enddate" id="enddate" />
     <select name="enddatetype" id="enddatetype" style="display : none">
         <option value="Morning"><?php echo lang('Morning');?></option>
         <option value="Afternoon" selected><?php echo lang('Afternoon');?></option>
     </select><br />
-
-    <label for="duration"><?php echo lang('leaves_create_field_duration');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="duration"><?php echo lang('leaves_create_field_duration');?></label>
     <?php if ($this->config->item('disable_edit_leave_duration') == TRUE) { ?>
     <input type="text" name="duration" id="duration" value="<?php echo set_value('duration'); ?>" readonly />
     <?php } else { ?>
@@ -63,19 +76,21 @@ echo form_open('leaves/create', $attributes) ?>
     <div class="alert hide alert-error" id="lblOverlappingDayOffAlert">
         <?php echo lang('leaves_flash_msg_overlap_dayoff');?>
     </div>
-    
-    <label for="substitute"><?php echo lang('leaves_create_field_substitute');?></label>
-    <select name="substitute" id="substitute">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="substitute"><?php echo lang('leaves_create_field_substitute');?></label>
+    <select name="substitute" id="substitute" class="selectpicker" data-live-search="true">
     <option value="<?php echo null ?>">aucun remplaçant</option>
     <?php
     foreach ($substitute as $substitute_item): ?>
         <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
     <?php endforeach ?>
     </select>
+    </div>
 <?php /*
 <!-- C'est un test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
     <input type="hidden" name="substitute" id="substitute" /><br />
-    <label for="txtSubstistute"><?php echo lang('users_create_field_manager');?></label>
+    <label class="col-md-3" for="txtSubstistute"><?php echo lang('users_create_field_manager');?></label>
     <div class="input-append">
         <input type="text" id="txtSubstitute" name="txtSubstitute" required readonly />
         <a id="cmdSelfSubstitute" class="btn btn-primary"><?php echo lang('users_create_button_self');?></a>
@@ -85,16 +100,17 @@ echo form_open('leaves/create', $attributes) ?>
     <br /><br />
  <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
   */?>
-    
-    <label for="cause"><?php echo lang('leaves_create_field_cause');?></label>
-    <textarea name="cause"><?php echo set_value('cause'); ?></textarea>
-  
-    <label for="status"><?php echo lang('leaves_create_field_status');?></label>
-    <select name="status" id="status">
+    <div class="form-group">
+    <label class="col-md-3" for="cause"><?php echo lang('leaves_create_field_cause');?></label>
+    <textarea name="cause" id="causeleave"><?php echo set_value('cause'); ?></textarea>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="status"><?php echo lang('leaves_create_field_status');?></label>
+    <select name="status" id="status" class="selectpicker">
         <option value="1" <?php if ($this->config->item('leave_status_requested') == FALSE) echo 'selected'; ?>><?php echo lang('Planned');?></option>
         <option value="2" <?php if ($this->config->item('leave_status_requested') == TRUE) echo 'selected'; ?>><?php echo lang('Requested');?></option>
     </select><br />
-
+    </div>
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp; <?php echo lang('leaves_create_button_create');?></button>
     &nbsp;
     <a href="<?php echo base_url(); ?>leaves" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp; <?php echo lang('leaves_create_button_cancel');?></a>
@@ -257,7 +273,7 @@ $(function () {
        
        //Popup select substitute
         /*$("#cmdSelectSubstitute").click(function() {
-            $("#frmSelectSubstitute").modal('show');
+            $("#frmSelectSubstitute").appendTo("body").modal('show');
             $("#frmSelectSubstituteBody").load('<?php echo base_url(); ?>users/employees');
         });
         

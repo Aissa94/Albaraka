@@ -343,7 +343,7 @@ class Reports extends CI_Controller {
             }
             $line++;
         }
-        $table = '<table class="table table-bordered table-hover">' .
+        $table = '<table class="table table-bordered table-hover ">' .
                     '<thead>' .
                         '<tr>' .
                             $thead .

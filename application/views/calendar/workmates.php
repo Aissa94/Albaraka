@@ -8,12 +8,16 @@
  */
 ?>
 
+<script type="application/javascript">
+    $("#menu_calendar_title").addClass('active');
+</script>
+
 <div class="row-fluid">
-    <div class="span12">
-
-<h2><?php echo lang('calendar_workmates_title');?> &nbsp;<?php echo $help;?></h2>
-
+    <div class="page-title">   
+<h1><?php echo lang('calendar_workmates_title');?></h1>
 <p><?php echo lang('calendar_workmates_description');?></p>
+</div>
+    <div class="span12">
 
 <div class="row-fluid" data-toggle="buttons">
     <div class="span3 btn conge"><?php echo lang('Planned');?></div>
@@ -70,7 +74,7 @@ $(document).ready(function() {
         events: '<?php echo base_url();?>leaves/workmates',
         loading: function(isLoading) {
             if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
             } else {
                 $('#frmModalAjaxWait').modal('hide');
             }    

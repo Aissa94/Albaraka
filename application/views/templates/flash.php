@@ -16,7 +16,7 @@
 <script type="text/javascript">
 //Flash message
 $(document).ready(function() {
-    $("#flashbox").alert();
+    $("#flashbox").show();
 });
 </script>
 <?php } ?>

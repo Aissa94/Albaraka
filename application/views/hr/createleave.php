@@ -7,47 +7,55 @@
  * @since         0.2.0
  */
 ?>
-
-<h2><?php echo lang('hr_leaves_create_title');?> &nbsp;
-<a href="<?php echo lang('global_link_doc_page_request_leave');?>" title="<?php echo lang('global_link_tooltip_documentation');?>" target="_blank" rel="nofollow"><i class="icon-question-sign"></i></a>
+<div class="page-title">   
+<h1><?php echo lang('hr_leaves_create_title');?>
 &nbsp;<span class="muted">(<?php echo $name ?>)</span>
-</h2>
-
-<div class="row-fluid">
+</h1>
+</div>
+<div class="row-fluid" style="padding-top:20px;">
     <div class="span8">
 
 <?php echo validation_errors(); ?>
 
 <?php $attributes = array('id' => 'frmLeaveForm');
 echo form_open($form_action, $attributes) ?>
-
-    <label for="type" required><?php echo lang('hr_leaves_create_field_type');?></label>
-    <select name="type" id="type">
+    <div class="form-group">
+    <label class="col-md-3" for="type" required><?php echo lang('hr_leaves_create_field_type');?></label>
+    <select name="type" id="type" class="selectpicker">
     <?php
     $default_type = $this->config->item('default_leave_type');
     $default_type = $default_type == FALSE ? 1 : $default_type;
-    foreach ($types as $types_item): ?>
-        <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == $default_type) echo "selected" ?>><?php echo $types_item['name'] ?></option>
-    <?php endforeach ?>
+    foreach ($types as $types_item):?>
+        <option value="<?php echo $types_item['id'] ?>" 
+        <?php switch ($types_item['id']) {
+            case 0 : echo "hidden"; break; 
+            case $default_type : echo "selected"; break;
+            case 2 : break;
+            default : echo "disabled";
+        }?>><?php echo $types_item['name'] ?></option>
+            <?php endforeach ?>
     </select>&nbsp;<span id="lblCredit"><?php if (!is_null($credit)) echo '('.$credit.')'; ?></span><br />
-        
-    <label for="viz_startdate" required><?php echo lang('hr_leaves_create_field_start');?></label>
+       </div>
+     <div class="form-group"> 
+    <label class="col-md-3" for="viz_startdate" required><?php echo lang('hr_leaves_create_field_start');?></label>
     <input type="text" name="viz_startdate" id="viz_startdate" value="<?php echo set_value('startdate'); ?>" />
     <input type="hidden" name="startdate" id="startdate" />
     <select name="startdatetype" id="startdatetype" style="display : none">
         <option value="Morning" selected><?php echo lang('Morning');?></option>
         <option value="Afternoon"><?php echo lang('Afternoon');?></option>
     </select><br />
-    
-    <label for="viz_enddate" required><?php echo lang('hr_leaves_create_field_end');?></label>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="viz_enddate" required><?php echo lang('hr_leaves_create_field_end');?></label>
     <input type="text" name="viz_enddate" id="viz_enddate" value="<?php echo set_value('enddate'); ?>" />
     <input type="hidden" name="enddate" id="enddate" />
     <select name="enddatetype" id="enddatetype" style="display : none">
         <option value="Morning"><?php echo lang('Morning');?></option>
         <option value="Afternoon" selected><?php echo lang('Afternoon');?></option>
     </select><br />
-        
-    <label for="duration" required><?php echo lang('hr_leaves_create_field_duration');?></label>
+</div>
+    <div class="form-group">        
+    <label class="col-md-3" for="duration" required><?php echo lang('hr_leaves_create_field_duration');?></label>
     <input type="text" name="duration" id="duration" value="<?php echo set_value('duration'); ?>" />
     
     <div class="alert hide alert-error" id="lblCreditAlert">
@@ -61,21 +69,23 @@ echo form_open($form_action, $attributes) ?>
     <div class="alert hide alert-error" id="lblOverlappingDayOffAlert">
         <?php echo lang('hr_leaves_flash_msg_overlap_dayoff');?>
     </div>
-    
-    <label for="substitute" required><?php echo lang('hr_leaves_create_field_substitute');?></label>
-    <select name="substitute" id="substitute">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="substitute" required><?php echo lang('hr_leaves_create_field_substitute');?></label>
+    <select name="substitute" id="substitute" class="selectpicker" data-live-search="true">
     <option value="<?php echo null ?>">aucun remplaçant</option>
-    <?php
-    foreach ($substitute as $substitute_item): ?>
+    <?php foreach ($substitute as $substitute_item): ?>
         <option value="<?php echo $substitute_item['id'] ?>"><?php echo $substitute_item['id'].' '.$substitute_item['firstname'].' '.$substitute_item['lastname'] ?></option>
     <?php endforeach ?>
     </select>
-
-    <label for="cause"><?php echo lang('hr_leaves_create_field_cause');?></label>
-    <textarea name="cause"><?php echo set_value('cause'); ?></textarea>
-    
-    <label for="status" required><?php echo lang('hr_leaves_create_field_status');?></label>
-    <select name="status" id="status">
+</div>
+ <div class="form-group">
+    <label class="col-md-3" for="cause"><?php echo lang('hr_leaves_create_field_cause');?></label>
+    <textarea name="cause" id="causeleave"><?php echo set_value('cause'); ?></textarea>
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="status" required><?php echo lang('hr_leaves_create_field_status');?></label>
+    <select name="status" id="status" class="selectpicker">
         <option value="1" <?php if ($this->config->item('leave_status_requested') == FALSE) echo 'selected'; ?>><?php echo lang('Planned');?></option>
         <option value="2" <?php if ($this->config->item('leave_status_requested') == TRUE) echo 'selected'; ?>><?php echo lang('Requested');?></option>
         <?php /*if (($is_hr) && ($leave['type'] == 2)) {?>
@@ -83,12 +93,12 @@ echo form_open($form_action, $attributes) ?>
         <option value="4"><?php echo lang('Rejected');?></option>
         <?php } */?>    
     </select><br />
-
+</div>
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp; <?php echo lang('hr_leaves_create_button_create');?></button>
     &nbsp;
     <a href="<?php echo base_url() . $source; ?>" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp; <?php echo lang('hr_leaves_create_button_cancel');?></a>
 </form>
-
+ </div>
     </div>
     <div class="span4">
         <div class="row-fluid">
@@ -102,7 +112,6 @@ echo form_open($form_action, $attributes) ?>
             </div>
         </div>
     </div>
-</div>
 
 <div class="modal hide" id="frmModalAjaxWait" data-backdrop="static" data-keyboard="false">
         <div class="modal-header">

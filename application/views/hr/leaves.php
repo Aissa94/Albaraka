@@ -9,13 +9,13 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('hr_leaves_html_title');?><?php echo $user_id; ?>&nbsp;<span class="muted">(<?php echo $name ?>)</span></h1>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('hr_leaves_html_title');?><?php echo $user_id; ?>&nbsp;<span class="muted">(<?php echo $name ?>)</span></h2>
-
 <?php echo $flash_partial_view;?>
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="leaves" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="leaves" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('hr_leaves_thead_id');?></th>
@@ -160,7 +160,7 @@ $(function () {
     //a simplier selector doesn't work when the delete is on page >1 
     $("#leaves tbody").on('click', '.confirm-delete',  function(){
         var id = $(this).data('id');
-        $('#frmDeleteLeaveRequest').data('id', id).modal('show');
+        $('#frmDeleteLeaveRequest').data('id', id).appendTo('body').modal('show');
     });
     
     $('#frmDeleteLeaveRequest').on('hidden', function() {

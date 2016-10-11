@@ -9,11 +9,11 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">
+        <h1><?php echo lang('reports_index_title');?></h1>
+    </div>
     <div class="span12">
-        
-        <h2><?php echo lang('reports_index_title');?></h2>
-
-        <table cellpadding="0" cellspacing="0" border="0" class="display" id="reports" width="100%">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="reports" width="100%">
             <thead>
                 <tr>
                     <th><?php echo lang('reports_index_thead_report');?></th>

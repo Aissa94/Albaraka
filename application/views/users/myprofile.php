@@ -8,9 +8,18 @@
  * @since         0.3.0
  */
 ?>
+<style type="text/css">
+    .span3 {
+        font-size: 15px;
+        font-family: tahoma, serif;
+        line-height: 40px;
+    }
 
-<h2><?php echo lang('users_myprofile_title');?></h2>
-
+</style>
+<div class="row-fluid" id="first">
+<div class="page-title">
+<h1><?php echo lang('users_myprofile_title');?></h1>
+</div>
 <div class="row-fluid">
     <div class="span3"><strong><?php echo lang('users_myprofile_field_firstname');?></strong></div>
     <div class="span3"><?php echo $user['firstname'];?></div>
@@ -74,7 +83,7 @@ echo $date->format(lang('global_date_format'));
         <?php if (count($languages) == 1) { ?>
         <input type="hidden" name="language" value="<?php echo $language_code; ?>" />
         <?php } else { ?>
-        <select class="input-medium" name="language" id="language">
+        <select name="language" id="language" class="selectpicker">
             <?php foreach ($languages as $lang_code => $lang_name) { ?>
             <option value="<?php echo $lang_code; ?>" <?php if ($language_code == $lang_code) echo 'selected'; ?>><?php echo $lang_name; ?></option>
             <?php }?>
@@ -82,7 +91,7 @@ echo $date->format(lang('global_date_format'));
         <?php } ?>
     </div>
 </div>
-
+</div>
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
 <div id="frmLinkICS" class="modal hide fade">
@@ -113,7 +122,7 @@ $(function() {
     //Copy/Paste ICS Feed
     var client = new ZeroClipboard($("#cmdCopy"));
     $('#lnkICS').click(function () {
-        $("#frmLinkICS").modal('show');
+        $("#frmLinkICS").appendTo("body").modal('show');
     });
     client.on( "aftercopy", function( event ) {
         $('#tipCopied').tooltip('show');
@@ -121,14 +130,11 @@ $(function() {
     });
     
     //Refresh page language
-    $('#language').selectize({
-        onChange: function (value) {
+    $('#language').change(function(value) {
             if (value != '') {
                 $.cookie('language', $('#language option:selected').val(), { expires: 90, path: '/'});
                 window.location.href = '<?php echo base_url();?>session/language?language=' + value;
             }
         }
-    });
-
-});
+    );
 </script>

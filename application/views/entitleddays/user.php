@@ -9,11 +9,11 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('entitleddays_user_index_title');?> <span class="muted"><?php echo $employee_name; ?></span></h1>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('entitleddays_user_index_title');?> <span class="muted"><?php echo $employee_name; ?></span>&nbsp;<?php echo $help;?></h2>
-
-<table id="entitleddaysuser">
+<table id="entitleddaysuser" class="table table-bordered">
 <thead>
     <tr>
       <th>&nbsp;</th>
@@ -71,26 +71,36 @@ $endDate = new DateTime($days['enddate']);?>
             <h3 id="frmAddEntitledDaysTitle"><?php echo lang('entitleddays_contract_popup_title');?></h3>
         </div>
         <div class="modal-body">
-            <label for="viz_startdate"><?php echo lang('entitleddays_user_index_field_start');?></label>
+            <div class="form-group">
+            <label class="col-md-3" for="viz_startdate"><?php echo lang('entitleddays_user_index_field_start');?></label>
             <div class="input-append">
                 <input type="text" id="viz_startdate" name="viz_startdate" required />
-                <button class="btn" id="cmdCurrent" onclick="set_current_period();"><?php echo lang('entitleddays_contract_index_button_current');?></button>
+                <button class="btn btn-primary" id="cmdCurrent" onclick="set_current_period();"><?php echo lang('entitleddays_contract_index_button_current');?></button>
             </div>
             <br />
             <input type="hidden" name="startdate" id="startdate" />
-            <label for="viz_enddate"><?php echo lang('entitleddays_user_index_field_end');?></label>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="viz_enddate"><?php echo lang('entitleddays_user_index_field_end');?></label>
             <input type="text" id="viz_enddate" name="viz_enddate" required /><br />
             <input type="hidden" name="enddate" id="enddate" />
-            <label for="type"><?php echo lang('entitleddays_user_index_field_type');?></label>
-            <select name="type" id="type" required>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="type"><?php echo lang('entitleddays_user_index_field_type');?></label>
+            <select name="type" id="type" class="selectpicker" data-live-search="true" required>
             <?php foreach ($types as $types_item): ?>
                 <option value="<?php echo $types_item['id'] ?>" <?php if ($types_item['id'] == 1) echo "selected" ?>><?php echo $types_item['name'] ?></option>
             <?php endforeach ?> 
-            </select>    
-            <label for="days" required><?php echo lang('entitleddays_user_index_field_days');?></label>
+            </select>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="days" required><?php echo lang('entitleddays_user_index_field_days');?></label>
             <input type="text" class="input-mini" name="days" id="days" />
-            <label for="description"><?php echo lang('entitleddays_user_index_field_description');?></label>
+            </div>
+            <div class="form-group">
+            <label class="col-md-3" for="description"><?php echo lang('entitleddays_user_index_field_description');?></label>
             <input type="text" class="input-xlarge" name="description" id="description" />
+            </div>
         </div>
         <div class="modal-footer">
             <button id="cmdFrmSaveEntitledDays" class="btn btn-primary" onclick="edit_entitleddays();" ><?php echo lang('OK');?></button>
@@ -187,7 +197,7 @@ if ($language_code != 'en') { ?>
             "<?php echo lang('entitleddays_user_confirm_delete_cancel');?>",
             "<?php echo lang('entitleddays_user_confirm_delete_yes');?>", function(result) {
             if (result) {
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
                 $.ajax({
                     url: "<?php echo base_url();?>entitleddays/userdelete/" + id
                   }).done(function() {
@@ -201,7 +211,7 @@ if ($language_code != 'en') { ?>
     //Open the pop-up (edit mode), load its fields with the content of the fields
     //of the selected row in the datatable
     function show_edit_entitleddays(id) {
-        $('#frmAddEntitledDays').modal('show');
+        $('#frmAddEntitledDays').appendTo("body").modal('show');
         $("#cmdFrmAddEntitledDays").hide();
         $("#cmdFrmSaveEntitledDays").show();
         $("#frmAddEntitledDaysTitle").html("<?php echo lang('entitleddays_user_index_title');?>");
@@ -226,7 +236,7 @@ if ($language_code != 'en') { ?>
     //Remote Ajax call for saving the modified values, update of the datatable
     function edit_entitleddays() {
         $('#frmAddEntitledDays').modal('hide');
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         $.ajax({
             url: "<?php echo base_url();?>entitleddays/ajax/update",
                             type: "POST",
@@ -269,7 +279,7 @@ if ($language_code != 'en') { ?>
     
     //"increase" or "decrease" the number of entitled days of a given row
     function incdec(id, operation) {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         $.ajax({
             url: "<?php echo base_url();?>entitleddays/ajax/update",
                             type: "POST",
@@ -314,14 +324,14 @@ if ($language_code != 'en') { ?>
     }
     
     function show_add_entitleddays() {
-        $('#frmAddEntitledDays').modal('show');
+        $('#frmAddEntitledDays').appendTo("body").modal('show');
         $("#cmdFrmAddEntitledDays").show();
         $("#cmdFrmSaveEntitledDays").hide();
         $("#frmAddEntitledDaysTitle").html('<?php echo lang('entitleddays_user_popup_title');?>');
     }
 
     function create_entitleddays(startdate, viz_startdate, enddate, viz_enddate, days, type, type_name, description) {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         $.ajax({
             url: "<?php echo base_url();?>entitleddays/ajax/user",
             type: "POST",

@@ -11,10 +11,14 @@ $isCurrentYear = (int)date('Y') === (int)$year;
 $currentMonth = (int)date('m');
 $currentDay = (int)date('d');
 ?>
-
-<h2><?php echo lang('calendar_year_title');?>&nbsp;<span class="muted">(<?php echo $employee_name;?>)</span>&nbsp;<?php echo $help;?></h2>
-
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_calendar_title").addClass('active');
+    $("#menu_calendar_year").addClass('active');
+</script>
+<div class="page-title">   
+<h1><?php echo lang('calendar_year_title');?>&nbsp;<span class="muted">(<?php echo $employee_name;?>)</span></h1>
+</div>
+<div class="row-fluid" style="padding-top:20px;">
     <div class="span4">
         <div class="span3 btn conge"><?php echo lang('Planned');?></div>
         <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
@@ -41,7 +45,7 @@ $currentDay = (int)date('d');
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
 <div class="row-fluid">
-    <div class="span12">
+    <div class="span12" style="overflow-x:scroll;margin-bottom:20px">
 <table class="table table-bordered table-condensed">
     <thead>
         <tr style="background-color:#f0f0f0;">

@@ -8,6 +8,7 @@
  */
 
 $lang['users_index_title'] = 'Liste des utilisateurs';
+$lang['users_index_description'] = 'Vous pouvez créer, modifier, filtrer ou supprimer n\'importe quel utilisateur depuis cette page.';
 $lang['users_index_thead_tip_active'] = 'Actif';
 $lang['users_index_thead_tip_inactive'] = 'Inactif';
 $lang['users_index_thead_tip_edit'] = 'Modifier la fiche utilisateur';
@@ -16,7 +17,7 @@ $lang['users_index_thead_tip_reset'] = 'réinitialiser le mot de passe';
 $lang['users_index_thead_id'] = 'ID';
 $lang['users_index_thead_firstname'] = 'Prénom';
 $lang['users_index_thead_lastname'] = 'Nom';
-$lang['users_index_thead_login'] = 'Identifiant';
+$lang['users_index_thead_login'] = 'Login';
 $lang['users_index_thead_email'] = 'E-mail';
 $lang['users_index_thead_role'] = 'Rôle';
 $lang['users_index_thead_manager'] = 'Responsable';

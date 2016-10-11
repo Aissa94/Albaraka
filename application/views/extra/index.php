@@ -9,13 +9,13 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('extra_index_title');?></h1>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('extra_index_title');?><?php echo $help;?></h2>
-
 <?php echo $flash_partial_view;?>
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="extras" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="extras" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('extra_index_thead_id');?></th>

@@ -8,12 +8,17 @@
  */
 ?>
 
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_calendar_title").addClass('active');
+    $("#menu_calendar_organization").addClass('active');
+</script>
+    
+<div class="page-title">   
+<h1><?php echo lang('calendar_organization_title');?></h1>
+</div>
+<div class="row-fluid" >
     <div class="span12">
-
-<h2><?php echo lang('calendar_organization_title');?><?php echo $help;?></h2>
-
-<div class="row-fluid">
+        <div style="margin-top:50px;">
     <div class="span4">
         <label for="txtEntity"><?php echo lang('calendar_organization_field_select_entity');?></label>
         <div class="input-append">
@@ -34,7 +39,7 @@
     
 </div>
 
-<div class="row-fluid">
+<div class="row-fluid" style="margin-bottom:20px;">
     <div class="span6">
         <button id="cmdPrevious" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i></button>
         <button id="cmdToday" class="btn btn-primary"><?php echo lang('today');?></button>
@@ -69,7 +74,7 @@
     </div>
 </div>
 
-<div id='calendar'></div>
+<div id='calendar' style="margin-bottom:20px;"></div>
 
     </div>
 </div>
@@ -180,7 +185,7 @@
 
         //Popup select entity
         $("#cmdSelectEntity").click(function() {
-            $("#frmSelectEntity").modal('show');
+            $("#frmSelectEntity").appendTo("body").modal('show');
             $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
         });
 
@@ -191,7 +196,7 @@
         });
 
         //Load alert forms
-        $("#frmSelectEntity").alert();
+        $("#frmSelectEntity").appendTo('body').show();
         //Prevent to load always the same content (refreshed each time)
         $('#frmSelectEntity').on('hidden', function() {
             $(this).removeData('modal');
@@ -207,7 +212,7 @@
             },
             loading: function(isLoading) {
                 if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
-                    $('#frmModalAjaxWait').modal('show');
+                    $('#frmModalAjaxWait').appendTo("body").modal('show');
                 } else {
                     $('#frmModalAjaxWait').modal('hide');
                 }    
@@ -364,7 +369,7 @@
             }
             $('#txtIcsUrl').val(UrlICS);
             ZeroClipboard.setData( "text/plain", UrlICS);
-            $("#frmLinkICS").modal('show');
+            $("#frmLinkICS").appendTo("body").modal('show');
         });
         client.on( "aftercopy", function( event ) {
             $('#tipCopied').tooltip('show');

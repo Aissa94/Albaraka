@@ -7,17 +7,22 @@
  * @since         0.2.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_requests_title").addClass('active');
+    $("#menu_leaves_counters").addClass('active');
+</script>
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('leaves_summary_title');?></h1>
+</div>
     <div class="span12">
 
-<h2><?php echo lang('leaves_summary_title');?><?php echo $help;?></h2>
 
     <p><?php echo lang('leaves_summary_date_field');?>&nbsp;
         <input type="text" id="refdate" />
     </p>
 
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover ">
 <thead>
     <tr>
       <th><?php echo lang('leaves_summary_thead_type');?></th>

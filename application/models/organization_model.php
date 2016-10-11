@@ -245,19 +245,27 @@ class Organization_model extends CI_Model {
         $this->db->join('users', 'users.organization = organization.id');
         $this->db->join('positions', 'positions.id  = users.position', 'left');
         $this->db->join('contracts', 'contracts.id  = users.contract', 'left');
-        if ($children === TRUE) {
+
+         if ($children === TRUE) {
             $this->load->model('organization_model');
             $list = $this->organization_model->getChildren($id);
             $ids = array();
             if (count($list) > 0) {
-                if ($list[0]['id'] != '') {
-                    $ids = explode(",", $list[0]['id']);
-                    array_push($ids, $id);
-                    $this->db->where_in('organization.id', $ids);
-                } else {
-                    $this->db->where('organization.id', $id);
+                foreach ($list as $a_list) {
+                    array_push($ids, $a_list['id']);
                 }
+                foreach($ids as $id2){
+                    $list2 = $this->organization_model->getChildren($id2);
+                    if (count($list2) > 0) {
+                        foreach ($list2 as $a_list2) {
+                            array_push($ids, $a_list2['id']);
+                        }
+                    }
+                }
+
             }
+            array_push($ids, $id);
+            $this->db->where_in('organization.id', $ids);
         } else {
             $this->db->where('organization.id', $id);
         }
@@ -327,13 +335,16 @@ class Organization_model extends CI_Model {
      * @author Nabil GHOUILA <dnghouila@gmail.com>
      */
     public function reloadManagers() {
+        $this->load->model('users_model');
         $query = $this->db->query('SELECT users.id FROM users', FALSE)->result_array();
         foreach($query as $item){
-            $this->db->where('id', $item['id']); 
-            $this->db->set('manager', $this->getManager($item['id']));
+            $newManager = $this->getManager($item['id']); //calculate the new manager
+            if($this->users_model->getManagerFromDB($item['id']) != $newManager){ //only if we need to reload
+            $this->db->where('id', $item['id']);
+            $this->db->set('manager', $newManager);
             $this->db->update('users');
+            }
         }
     }
-
 
 }

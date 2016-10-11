@@ -7,15 +7,17 @@
  * @since         0.1.0
  */
 ?>
-
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_calendar_title").addClass('active');
+    $("#menu_calendar_individual").addClass('active');
+</script>
+<div class="row-fluid" style="padding-bottom:20px;">
+    <div class="page-title">   
+        <h1><?php echo lang('calendar_individual_title');?></h1>
+        <p><?php echo lang('calendar_individual_description');?></p>
+    </div>
     <div class="span12">
 
-<h2><?php echo lang('calendar_individual_title');?> &nbsp;<?php echo $help;?></h2>
-
-<div class="row-fluid">
-    <div class="span12"><?php echo lang('calendar_individual_description');?></div>
-</div>
 
 <div class="row-fluid">
     <div class="span6">
@@ -118,7 +120,7 @@ $(function () {
         }
       });
     
-    $("#frmEvent").alert();
+    $("#frmEvent").appendTo('body').show();
 
     //Load FullCalendar widget
     $('#calendar').fullCalendar({
@@ -134,12 +136,12 @@ $(function () {
             if (calEvent.color != '#000000') { //This color must probably change to #555555
                 var link = "<?php echo base_url();?>ics/ical/" + calEvent.id;
                 $("#lnkDownloadCalEvnt").attr('href', link);
-                $('#frmEvent').modal('show');
+                $('#frmEvent').appendTo("body").modal('show');
             }
         },
         loading: function(isLoading) {
             if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
             } else {
                 $('#frmModalAjaxWait').modal('hide');
             }    
@@ -274,7 +276,7 @@ $(function () {
     //Copy/Paste ICS Feed
     var client = new ZeroClipboard($("#cmdCopy"));
     $('#lnkICS').click(function () {
-        $("#frmLinkICS").modal('show');
+        $("#frmLinkICS").appendTo("body").modal('show');
     });
     client.on( "aftercopy", function( event ) {
         $('#tipCopied').tooltip('show');

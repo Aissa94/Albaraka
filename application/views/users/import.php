@@ -9,10 +9,8 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title"><h1><?php echo $title;?></h1></div>
     <div class="span12">
-
-        <h2><?php echo $title;?><?php echo $help;?></h2>
-
         <table class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>

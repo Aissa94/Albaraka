@@ -82,10 +82,10 @@ $(document).ready(function() {
         suggest_reload();
     });
     
-    $("#frmSelectEntity").alert();
+    $("#frmSelectEntity").appendTo('body').show();
     
     $("#cmdSelectEntity").click(function() {
-        $("#frmSelectEntity").modal('show');
+        $("#frmSelectEntity").appendTo("body").modal('show');
         $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
     });
 });

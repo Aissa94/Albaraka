@@ -8,7 +8,7 @@
  */
 
 $lang['leavetypes_type_title'] = 'Types d\'absence';
-$lang['leavetypes_type_description'] = 'Le type d\'absence n°0 est réservé pour la gestion des heures supplémentaires. Vous ne devriez pas l\'utiliser pour les autres types de demande.';
+$lang['leavetypes_type_description'] = 'Les types d\'absence n°0, 1 et 2 sont réservés pour la gestion des congés. Vous ne devriez pas les utiliser pour les autres types de demande.';
 $lang['leavetypes_type_confirm_rename'] = 'Le type d\'absence n°0 est réservé pour la gestion des heures supplémentaires. Êtes-vous sûr de vouloir le renommer ?';
 $lang['leavetypes_type_thead_id'] = 'N°';
 $lang['leavetypes_type_thead_name'] = 'Nom';

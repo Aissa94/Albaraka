@@ -26,8 +26,11 @@
         background-image:url('<?php echo base_url();?>assets/images/login-background.jpg');
         background-size: 100% 100%;
         background-repeat: no-repeat;
+        overflow: hidden;
     }
-    
+    .selectpicker {
+        width: 100% !important;
+    }
     .vertical-center {
         min-height: 90%;  /* Fallback for browsers do NOT support vh unit */
         min-height: 90vh;
@@ -52,8 +55,9 @@
             <div class="span6 form-box">
                 <div class="row-fluid">
                     <div class="span6">
-<h2><?php echo lang('session_login_title');?><?php echo $help;?></h2>
-
+                        <div>
+                            <h1><?php echo lang('session_login_title');?></h1>
+                        </div>
 <?php echo $flash_partial_view;?>
 
 <?php echo validation_errors(); ?>
@@ -68,14 +72,14 @@ $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
     <input type="hidden" name="language" value="<?php echo $language_code; ?>" />
     <?php } else { ?>
     <div class="form-group">
-        <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-        <select name="language" id="language">
-            <?php foreach ($languages as $lang_code => $lang_name) { ?>
+      <div class="input-group">
+      <span class="input-group-addon" ><i class="fa fa-globe"></i></span>
+    <select name="language" id="language" class=" form-control selectpicker">
+        <?php foreach ($languages as $lang_code => $lang_name) { ?>
         <option value="<?php echo $lang_code; ?>" <?php if ($language_code == $lang_code) echo 'selected'; ?>><?php echo $lang_name; ?></option>
         <?php }?>
-        </select>
-        </div>
+    </select>
+    </div>
     </div>
     <?php } ?>
     <div class="form-group">
@@ -125,11 +129,9 @@ $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
         <div class="span3">&nbsp;</div>
     </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/selectize.bootstrap2.css" />
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.pers-brow.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jsencrypt.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/selectize.min.js"></script>
 <script type="text/javascript">
     
     //Encrypt the password using RSA and send the ciphered value into the form
@@ -192,14 +194,12 @@ $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
         }
         
         //Refresh page language
-        $('#language').selectize({
-            onChange: function (value) {
+        $('#language').change(function(value) {
                 if (value != '') {
                     $.cookie('language', $('#language option:selected').val(), { expires: 90, path: '/'});
                     $('#loginFrom').prop('action', '<?php echo base_url();?>session/language');
                     $('#loginFrom').submit();
                 }
-            }
         });
         
         $('#login').focus();

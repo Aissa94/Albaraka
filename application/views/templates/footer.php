@@ -10,8 +10,17 @@
  
     
 
+     <!-- Copyright -->
+    <div class="copyright">
+        <div class="pull-left">
+            &copy; 2016 <strong>Albaraka</strong>.<?php echo lang('menu_banner_copyright');?>
+        </div>
+        <div class="pull-right">
+            <a href="http://albaraka-bank.com/fr">www.albaraka-bank.com</a>
+        </div>
+    </div>
+    <!-- ./Copyright -->
 
-                
     </div><!-- ./page content container -->
       </div>
               
@@ -21,10 +30,10 @@
             
             <!-- FOOTER -->
     <div class="dev-page-footer dev-page-footer-fixed">
-      <div class="span4"><br />&copy; 2016</div>
+      <div class="span4"><br /><?php echo lang('Leave Management System');?></div>
      <ul class="dev-page-footer-buttons">
          <li> <center>
-              <img src="<?php echo base_url();?>assets/images/logo.png" style="margin-top:-6px;">
+              <img src="<?php echo base_url();?>assets/images/logo.png">&nbsp;
               <b>
 <?php switch ($language_code){
     case 'fr' : echo '<a class="anchor" href="http://albaraka-bank.com/fr" target="_blank">Albaraka</a>'; break;
@@ -52,18 +61,13 @@
         
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/bootstrap-select/bootstrap-select.js"></script>
         
-        <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/nvd3/d3.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/nvd3/nv.d3.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/nvd3/lib/stream_layers.js"></script>
-        
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/waypoint/waypoints.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/counter/jquery.counterup.min.js"></script>        
-                
+              
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/dev-loaders.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/dev-layout-default.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/demo.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>assets/js/dev-app.js"></script>
-        <script type="text/javascript" src="<?php echo base_url();?>assets/js/demo-dashboard.js"></script>
         <!-- ./javascript -->
 </body>
 </html>

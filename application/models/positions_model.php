@@ -54,6 +54,21 @@ class Positions_model extends CI_Model {
             return '';
         }
     }
+
+    /**
+     * Get the description of a position
+     * @param int $id Identifier of the postion
+     * @return string Name of the position
+     * @author Nabil GHOUILA <dnghouila@gmail.com>
+     */
+    public function getDescription($id) {
+        $record = $this->getPositions($id);
+        if (count($record) >0) {
+            return $record['description'];
+        } else {
+            return '';
+        }
+    }
     
     /**
      * Insert a new position

@@ -11,7 +11,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="employees" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered display" id="employees" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('users_employees_thead_id');?></th>

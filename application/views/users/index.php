@@ -7,15 +7,19 @@
  * @since         0.1.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_admin_title").addClass('active');
+    $("#menu_admin_list_users").addClass('active');
+</script>
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('users_index_title');?></h1>
+<p><?php echo lang('users_index_description');?></p>
+</div> 
     <div class="span12">
-        
-<h2><?php echo lang('users_index_title');?><?php echo $help;?></h2>
-
-<?php echo $flash_partial_view;?>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="users" width="100%">
+<?php echo $flash_partial_view;?><br />  <br />
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered  table-hover" id="users" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('users_index_thead_id');?></th>
@@ -54,6 +58,7 @@
 <?php endforeach ?>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 
@@ -151,8 +156,8 @@ $(document).ready(function() {
             }
         },
     });
-    $("#frmResetPwd").alert();
-    $("#frmImportUsers").alert();
+    $("#frmResetPwd").appendTo('body').show();
+    $("#frmImportUsers").appendTo('body').show();
 	
     //On showing the confirmation pop-up, add the user id at the end of the delete url action
     $('#frmConfirmDelete').on('show', function() {
@@ -165,7 +170,7 @@ $(document).ready(function() {
     //a simplier selector doesn't work when the delete is on page >1 
     $("#users tbody").on('click', '.confirm-delete',  function(){
         var id = $(this).data('id');
-        $('#frmConfirmDelete').data('id', id).modal('show');
+        $('#frmConfirmDelete').data('id', id).appendTo('body').modal('show');
     });
     
     //Prevent to load always the same content (refreshed each time)

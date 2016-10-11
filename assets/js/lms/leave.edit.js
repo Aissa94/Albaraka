@@ -15,7 +15,7 @@ function getLeaveLength(refreshInfos) {
     var endType = $('#enddatetype option:selected').val();      
 
     if (start.isValid() && end.isValid()) {
-        if (start.isSame(end)) {
+        /*if (start.isSame(end)) {
             if (startType == "Morning" && endType == "Morning") {
                 $("#spnDayType").html("<img src='" + baseURL + "assets/images/leave_1d_MM.png' />");
             }
@@ -43,7 +43,7 @@ function getLeaveLength(refreshInfos) {
                     $("#spnDayType").html("<img src='" + baseURL + "assets/images/leave_2d_AM.png' />");
                 }
              }
-        }
+        }*/
         if (refreshInfos) getLeaveInfos(false);
     }
 }
@@ -51,7 +51,7 @@ function getLeaveLength(refreshInfos) {
 //Get the leave credit, duration and detect overlapping cases (Ajax request)
 //Default behavour is to set the duration field. pass false if you want to disable this behaviour
 function getLeaveInfos(preventDefault) {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         var start = moment($('#startdate').val());
         var end = moment($('#enddate').val());
         $.ajax({
@@ -79,13 +79,29 @@ function getLeaveInfos(preventDefault) {
             if (typeof leaveInfo.credit !== 'undefined') {
                 var credit = parseFloat(leaveInfo.credit);
                 var duration = parseFloat($("#duration").val());
+                var daysToAdd = 0;
                 if (duration > credit) {
                     $("#lblCreditAlert").show();
                 } else {
                     $("#lblCreditAlert").hide();
+                    if (typeof leaveInfo.length !== 'undefined'){
+                        var day = $("#viz_enddate").datepicker('getDate').getUTCDay();
+                        if ( (day == '3'|| day == '4')&&
+                        ($("#type option:selected").val() == 1 || $("#type option:selected").val() == 2)) {
+                                if (day == '3') daysToAdd = 2;
+                                else if (day == '4') daysToAdd = 1;
+                                switch(credit - duration){
+                                    case 0 : daysToAdd = 0; break;
+                                    case 1 : daysToAdd = 1; break;
+                                }
+                                $("#duration").val(duration + daysToAdd);
+                        }
+                    }
                 }
                 if (leaveInfo.credit != null) {
+                    if ($("#type option:selected").val() == 1 /*|| $("#type option:selected").val() == 2*/)
                     $("#lblCredit").text('(' + leaveInfo.credit + ')');
+                    else $("#lblCredit").text('');
                 }
             }
             //Check if the current request overlaps with another one
@@ -111,7 +127,7 @@ function getLeaveInfos(preventDefault) {
 
 //When editing/viewing a leave request, refresh the information about overlapping and days off in the period
 function refreshLeaveInfo() {
-        $('#frmModalAjaxWait').modal('show');
+        $('#frmModalAjaxWait').appendTo("body").modal('show');
         var start = moment($('#startdate').val());
         var end = moment($('#enddate').val());
         $.ajax({

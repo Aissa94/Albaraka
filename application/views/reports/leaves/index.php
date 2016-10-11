@@ -9,13 +9,18 @@
  * @since         0.4.3
  */
 ?>
-        
-<h2><?php echo lang('reports_leaves_title');?> &nbsp;<?php echo $help;?></h2>
-
-<div class="row-fluid">
-    <div class="span4">
-        <label for="cboMonth"><?php echo lang('reports_leaves_month_field');?>
-            <select name="cboMonth" id="cboMonth">
+<script type="application/javascript">
+    $("#menu_hr_title").addClass('active');
+    $("#menu_hr_report_leaves").addClass('active');
+</script>     
+<div class="page-title">   
+<h1><?php echo lang('reports_leaves_title');?></h1>
+</div>
+<div class="row-fluid" style="padding-top:10px">
+    <div class="span4" style="margin-top:30px;">
+        <div class="form-group">
+        <label class="col-md-2" for="cboMonth"><?php echo lang('reports_leaves_month_field');?></label>
+            <select class="col-md-4 selectpicker" name="cboMonth" id="cboMonth">
                 <?php for ($ii=1; $ii<13;$ii++) {
                     if ($ii == date('m')) {
                         echo "<option val='" . $ii ."' selected>" . $ii ."</option>";
@@ -25,9 +30,10 @@
                 }?>
                 <!--<option val='0'><?php echo lang('All');?></option>//-->
             </select>
-        </label>
-        <label for="cboYear"><?php echo lang('reports_leaves_year_field');?>
-            <select name="cboYear" id="cboYear">
+        </div>
+        <div class="form-group">
+        <label class="col-md-2" for="cboYear"><?php echo lang('reports_leaves_year_field');?></label>
+            <select class="col-md-4 selectpicker" name="cboYear" id="cboYear">
                 <?php $len =  date('Y');
                 for ($ii=date('Y', strtotime('-6 year')); $ii<= $len; $ii++) {
                     if ($ii == date('Y')) {
@@ -37,10 +43,10 @@
                     }
                 }?>
             </select>
-        </label>
+        </div>
         <br />
     </div>
-    <div class="span4">	
+    <div class="span4" style="margin-top:30px;">	
         <label for="txtEntity"><?php echo lang('reports_leaves_field_entity');?></label>
         <div class="input-append">
         <input type="text" id="txtEntity" name="txtEntity" readonly />
@@ -50,7 +56,7 @@
                 <input type="checkbox" id="chkIncludeChildren" name="chkIncludeChildren" checked /> <?php echo lang('reports_leaves_field_subdepts');?>
         </label>
     </div>
-    <div class="span4">
+    <div class="span4" style="margin-top:30px;">
         <div class="pull-right">    
             <label for="chkLeaveDetails">
                     <input type="checkbox" id="chkLeaveDetails" name="chkLeaveDetails" style ="display : none"/> <?php //echo lang('reports_leaves_field_leave_requests');?>
@@ -64,7 +70,7 @@
 
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
-<div id="reportResult"></div>
+<div class="row-fluid"><div id="reportResult"></div></div>
 
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
@@ -115,19 +121,27 @@ $(document).ready(function() {
     $("#refdate").val(moment().format('L'));
     $('#refdate').datepicker();    
     
-    $("#frmSelectEntity").alert();
+    $("#frmSelectEntity").appendTo('body').show();
     
     $("#cmdSelectEntity").click(function() {
-        $("#frmSelectEntity").modal('show');
+        $("#frmSelectEntity").appendTo("body").modal('show');
         $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
     });
     
     $("#cboMonth").click(function() {
         month = $("#cboMonth").val();
     });
+
+    $("#cboMonth").change(function() {
+        $('#cmdLaunchReport').click();
+    });
     
     $("#cboYear").click(function() {
         year = $("#cboYear").val();
+    });
+
+    $("#cboYear").change(function() {
+        $('#cmdLaunchReport').click();
     });
     
     $('#cmdExportReport').click(function() {

@@ -1,33 +1,39 @@
-<h1>Gestion des congés et des heures supplémentaires</h1>
-
-<p>Bienvenue dans Jorani. N'hésitez pas à cliquer sur l'icône d'aide en ligne de chacun des écrans (<i class="icon-question-sign"></i>). Cela vous donnera accès à la documentation en Français de la fonctionnalité que vous êtes en train d'utiliser.</p>
-
-<h4>Pour les employés</h4>
-
-<p>Si vous êtes un employé, vous pourriez maintenant :</p>
-
-<ul>
-    <li>Voir vos <a href="<?php echo base_url();?>leaves/counters">compteurs de congés</a>.</li>
-    <li>Voir la <a href="<?php echo base_url();?>leaves">liste des demandes de congés que vous avez soumises</a>.</li>
-    <li>Soumettre une <a href="<?php echo base_url();?>leaves/create">nouvelle demande</a>.</li>
-</ul>
-
-<h4>Pour les managers</h4>
-
-<p>Si vous êtes le responsable hiérarchique d'au moins un employé, vous pourriez maintenant :</p>
-
-<ul>
-    <li>Valider <a href="<?php echo base_url();?>requests">les demandes de congés qui vous ont été soumises</a>.</li>
-    <?php if ($this->config->item('disable_overtime') == FALSE) { ?>
-    <li>Valider <a href="<?php echo base_url();?>overtime">les déclarations d'heures supplémentaires qui vous ont été soumises</a>.</li>
-    <?php } ?>
-</ul>
-
-<h4>Pour les responsables RH</h4>
-
-<p>Le <a href="http://fr.jorani.org/" target="_blank">site officiel de Jorani</a> contient la documentation complète et en Français du système, par exemple :</p>
-
-<ul>
-    <li><a href="http://fr.jorani.org/utilisation/prise-en-main.html" target="_blank">Un tutoriel de prise en main</a>.</li>
-    <li><a href="http://fr.jorani.org/utilisation/guide-de-demarrage-rapide.html" target="_blank">Le guide de ce qu'il faut configurer</a> pour commencer.</li>
-</ul>
+<div class="row-fluid">
+    <div class="page-title">
+        <h1>Gestion des Demandes de Congé</h1>
+        <p>Bienvenue dans l'application de gestion des demandes de congé.</p>
+    </div>
+    <div class="table-responsive">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped table-hover" id="contracts" width="100%">
+            <thead id="table-titles">
+                <tr>    
+                    <th>Les employés</th>
+                    <?php if ($is_manager == TRUE) { ?><th>Les responsables</th><?php } ?>
+                    <?php if ($is_hr == TRUE) { ?><th>Les administrateurs RH</th><?php } ?>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Soumettre une <a href="<?php echo base_url();?>leaves/create">nouvelle demande</a></td>
+                <?php if ($is_manager == TRUE) { ?><td>Valider les <a href="<?php echo base_url();?>requests">demandes de congés</a> qui vous ont été soumises</td><?php } ?>
+                <?php if ($is_hr == TRUE) { ?><td>Créer, modifier, filter or supprimer <a href="<?php echo base_url();?>users">un utilisateur</a></td><?php } ?>
+            </tr>
+            <tr>
+                <td>Voir la <a href="<?php echo base_url();?>leaves">liste des demandes de congés</a> que vous avez soumises</td>
+                <?php if ($is_manager == TRUE) { ?><td>Lister vos <a href="<?php echo base_url();?>requests/collaborators">subordonnés</a> pour contrôler la présence</td><?php } ?>
+                <?php if ($is_hr == TRUE) { ?><td>Attacher le responsable et les employés <a href="<?php echo base_url();?>organization">à un service donné</td><?php } ?>
+            </tr>
+            <tr>
+                <td>Voir vos <a href="<?php echo base_url();?>leaves/counters">compteurs de congés</a></td>
+                <?php if ($is_manager == TRUE) { ?><td>Choisir les <a href="<?php echo base_url();?>requests/delegations">délégués</a> qui peuvent recevoir les demandes à votre place</a></td><?php } ?>
+                <?php if ($is_hr == TRUE) { ?><td>Suivre <a href="<?php echo base_url();?>hr/employees">l'état des congés</a> (titre de congé, contrat, rapport...)</td><?php } ?>
+            </tr>
+            <tr>
+                <td>Visualiser vos <a href="<?php echo base_url();?>calendar/individual">calendriers (individuel et annuel)</td>
+                <?php if ($is_manager == TRUE) { ?><td>Visualiser le <a href="<?php echo base_url();?>calendar/collaborators">calendrier de vos subordonnés</td><?php } ?>
+                <?php if ($is_hr == TRUE) { ?><td>Visualiser le <a href="<?php echo base_url();?>calendar/organization">calendrier global de l'organisation</a></td><?php } ?>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

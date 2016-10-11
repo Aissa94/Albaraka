@@ -7,12 +7,17 @@
  * @since         0.4.6
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_admin_title").addClass('active');
+    $("#menu_admin_settings_divider").addClass('active');
+    $("#menu_admin_diagnostic").addClass('active');
+</script>
 <div class="row-fluid">
-    <div class="span12">
-        <h2><?php echo $title;?><?php echo $help;?></h2>
-        
+        <div class="page-title">   
+        <h1><?php echo $title;?></h1>
         <p><?php echo lang('admin_diagnostic_description');?></p>
+     </div> 
+    <div class="span12">  
 
 <?php
 $daysOffYears_count = ($daysOffYears_count == 0)?'':'<span class="badge badge-info">' . $daysOffYears_count . '</span>&nbsp;';

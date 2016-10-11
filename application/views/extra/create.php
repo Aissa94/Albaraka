@@ -9,9 +9,10 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('extra_create_title');?></h1>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('extra_create_title');?>&nbsp;<?php echo $help;?></h2>
 
 <?php echo validation_errors(); ?>
 

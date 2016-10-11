@@ -23,14 +23,14 @@ $lang['requests_index_thead_cause'] = 'Cause';
 $lang['requests_index_thead_manager'] = 'Responsable';
 $lang['requests_index_thead_substitute'] = 'Remplaçant';
 
-$lang['requests_collaborators_title'] = 'Liste de mes collaborateurs';
-$lang['requests_collaborators_description'] = 'Cet écran liste vos collaborateurs. Si vous n\'êtes pas un responsable, cette liste sera vide.';
-$lang['requests_collaborators_description2'] = 'Les absences sont indiquées par un double trait.';
+$lang['requests_collaborators_title'] = 'Liste de mes subordonnés';
+$lang['requests_collaborators_description'] = 'Cet écran liste vos subordonnés. Si vous n\'êtes pas un responsable, cette liste sera vide.';
+$lang['requests_collaborators_description2'] = 'Les absences sont indiquées par une autre couleur.';
 $lang['requests_collaborators_thead_id'] = 'ID';
 $lang['requests_collaborators_thead_link_balance'] = 'Solde des congés';
 $lang['requests_collaborators_thead_link_presence'] = 'Rapport sur la présence';
 $lang['requests_collaborators_thead_link_year'] = 'Calendrier annuel';
-$lang['requests_collaborators_thead_link_create_leave'] = 'Créer une demande de congé pour ce collaborateur';
+$lang['requests_collaborators_thead_link_create_leave'] = 'Créer une demande de congé pour ce subordonné';
 $lang['requests_collaborators_thead_firstname'] = 'Prénom';
 $lang['requests_collaborators_thead_lastname'] = 'Nom';
 $lang['requests_collaborators_thead_email'] = 'E-mail';
@@ -44,7 +44,7 @@ $lang['requests_summary_thead_entitled'] = 'Acquis';
 $lang['requests_summary_thead_description'] = 'Description';
 $lang['requests_summary_flash_msg_error'] = 'Cet employé n\'a pas de contrat.';
 $lang['requests_summary_flash_msg_forbidden'] = 'Vous n\'êtes pas le supérieur hierarchique de cet employé.';
-$lang['requests_summary_button_list'] = 'Liste des collaborateurs';
+$lang['requests_summary_button_list'] = 'Liste des subordonnés';
 
 $lang['requests_index_button_export'] = 'Exporter cette liste';
 $lang['requests_index_button_show_all'] = 'Toutes les demandes';
@@ -83,6 +83,6 @@ $lang['requests_delegations_confirm_delete_message'] = 'Etes vous sûr de vouloi
 $lang['requests_delegations_confirm_delete_cancel'] = 'Annuler';
 $lang['requests_delegations_confirm_delete_yes'] = 'Oui';
 
-$lang['requests_balance_title'] = 'Solde des congés (collaborateurs)';
-$lang['requests_balance_description'] = 'État des congés de mes collaborateurs. Si vous n\'êtes pas un responsable, cette liste sera vide.';
+$lang['requests_balance_title'] = 'Solde des congés (subordonnés)';
+$lang['requests_balance_description'] = 'État des congés de mes subordonnés. Si vous n\'êtes pas un responsable, cette liste sera vide.';
 $lang['requests_balance_date_field'] = 'Date du rapport';

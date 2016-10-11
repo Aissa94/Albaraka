@@ -9,15 +9,16 @@
 
 $lang['discordance_index_title'] = 'Liste des congés';
 $lang['discordance_pay_title'] = 'Liste des soldes';
-$lang['discordance_index_thead_id'] = 'Numéro';
+$lang['discordance_index_thead_id'] = 'Matricule';
 $lang['discordance_index_thead_employee'] = 'Matricule de l\'employée';
 $lang['discordance_index_thead_lastname'] = 'Nom';
 $lang['discordance_index_thead_firstname'] = 'Prénom';
+$lang['discordance_index_thead_structure'] = 'Structure';
 $lang['discordance_index_thead_service'] = 'Service';
 $lang['discordance_index_thead_start'] = 'Date de début';
 $lang['discordance_index_thead_end'] = 'Date de fin';
 $lang['discordance_index_thead_description'] = 'Description';
-$lang['discordance_index_thead_our_balance'] = 'Solde_BDD';
+$lang['discordance_index_thead_our_balance'] = 'Solde';
 $lang['discordance_index_thead_your_balance'] = 'Solde_DRH';
 $lang['discordance_description_exist'] = 'Veuillez vérifier l\'existence de ce congé';
 $lang['discordance_description_dates'] = 'Veuillez vérifier les dates de ce congé';
@@ -35,7 +36,7 @@ $lang['discordance_index_popup_title_rem2'] = 'Veuillez vérifier qu\'il n\'y a 
 $lang['discordance_index_popup_delete_title'] = 'Supprimer contrat';
 $lang['discordance_index_popup_delete_description'] = 'Vous êtes sur le point de supprimer un contrat, cette procédure est irréversible.';
 $lang['discordance_index_popup_delete_confirm'] = 'Voulez-vous continuer ?';
-$lang['discordance_index_popup_delete_button_yes'] = 'Oui';
+$lang['discordance_index_popup_delete_button_yes'] = 'D\'accord';
 $lang['discordance_index_popup_delete_button_no'] = 'Non';
 $lang['discordance_index_popup_entitled_title'] = 'Crédit congés';
 $lang['discordance_index_popup_entitled_button_cancel'] = 'Annuler';

@@ -10,12 +10,12 @@
 ?>
 
 <div class="row-fluid">
-    <div class="span12">
-
-<h2><?php echo lang('hr_presence_title');?><span class="muted">&nbsp;(<?php echo $employee_name;?>&nbsp; |&nbsp;<?php echo lang($month_name);?>&nbsp;<?php echo $year;?>)</span> &nbsp;<?php echo $help;?></h2>
-
+    <div class="page-title">   
+<h1><?php echo lang('hr_presence_title');?><span class="muted">&nbsp;(<?php echo $employee_name;?>&nbsp; |&nbsp;<?php echo lang($month_name);?>&nbsp;<?php echo $year;?>)</span></h1>
 <p><?php echo lang('hr_presence_description');?></p>
+</div>
 
+    <div class="span12">
 <div class="row-fluid">
      <div class="span6">
         <div id='calendar'></div>
@@ -51,7 +51,7 @@
     <div class="span3">
         <br /><br />
         <label for="cboMonth"><?php echo lang('calendar_tabular_field_month');?></label>
-        <select name="cboMonth" id="cboMonth">
+        <select name="cboMonth" id="cboMonth" class="selectpicker">
             <?php for ($ii=1; $ii<13;$ii++) {
                 if ($ii == $month) {
                     echo "<option val='" . $ii ."' selected>" . $ii ."</option>";
@@ -61,7 +61,7 @@
             }?>
         </select>
         <label for="cboYear"><?php echo lang('calendar_tabular_field_year');?></label>
-        <select name="cboYear" id="cboYear">
+        <select name="cboYear" id="cboYear" class="selectpicker">
             <?php $len =  date('Y');
             for ($ii=date('Y', strtotime('-6 year')); $ii<= $len; $ii++) {
                 if ($ii == $year) {
@@ -70,12 +70,12 @@
                     echo "<option val='" . $ii ."'>" . $ii ."</option>";
                 }
             }?>
-        </select><br />
+        </select><br /><br />
         <button id="cmdPrevious" class="btn btn-primary"><i class="icon-chevron-left icon-white"></i></button>
         <button id="cmdExecute" class="btn btn-primary"><?php echo lang('hr_presence_button_execute');?></button>
         <button id="cmdNext" class="btn btn-primary"><i class="icon-chevron-right icon-white"></i></button>
         <br /><br />
-        <a href="<?php echo base_url() . 'hr/presence/export/' . $source . '/' . $user_id . '/' . $month . '/' . $year;?>" class="btn btn-primary"><i class="fa fa-file-excel-o"></i>&nbsp;<?php echo lang('hr_presence_button_export');?></a>
+        <a href="<?php echo base_url() . 'hr/presence/export/' . $source . '/' . $user_id . '/' . $month . '/' . $year;?>" class="btn btn-primary" style="margin-left:18%;"><i class="fa fa-file-excel-o"></i>&nbsp;<?php echo lang('hr_presence_button_export');?></a>
      </div>
 </div>
 
@@ -84,8 +84,8 @@
 <h3><?php echo lang('hr_presence_leaves_list_title');?></h3>
 
 <div class="row-fluid">
-    <div class="span12">
-        <table class="table table-bordered">
+    <div class="span12" style="overflow-x:scroll; margin-bottom:20px">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="contracts" width="100%">
             <thead>
                 <tr>
                     <?php
@@ -219,7 +219,7 @@
     </div>
 </div>
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="leaves" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="leaves" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('hr_presence_thead_id');?></th>
@@ -318,7 +318,7 @@ $(function () {
         $('#calendar').fullCalendar({
             timeFormat: ' ', /*Trick to remove the start time of the event*/
             height: 300,
-            defaultDate: moment('<?php echo $default_date;?>'),
+            
             header: {
                 left: "",
                 center: "",
@@ -326,7 +326,7 @@ $(function () {
             },
             loading: function(isLoading) {
                 if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
-                    $('#frmModalAjaxWait').modal('show');
+                    $('#frmModalAjaxWait').appendTo("body").modal('show');
                 } else {
                     $('#frmModalAjaxWait').modal('hide');
                 }    
@@ -405,7 +405,7 @@ date_sub($datePrev, date_interval_create_from_date_string('1 month'));?>
             document.location.href = url;
         });
         
-        refresh_calendar();
+       // refresh_calendar();
 });
 </script>
 

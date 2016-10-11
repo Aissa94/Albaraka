@@ -1037,7 +1037,7 @@ class Leaves_model extends CI_Model {
                     array_push($ids, $a_list['id']);
                 }
                 foreach($ids as $id2){
-                    $list2 = $this->organization_model->getChildren($entity_id);
+                    $list2 = $this->organization_model->getChildren($id2);
                     if (count($list2) > 0) {
                         foreach ($list2 as $a_list2) {
                             array_push($ids, $a_list2['id']);
@@ -1142,7 +1142,7 @@ class Leaves_model extends CI_Model {
                     array_push($ids, $a_list['id']);
                 }
                 foreach($ids as $id2){
-                    $list2 = $this->organization_model->getChildren($entity_id);
+                    $list2 = $this->organization_model->getChildren($id2);
                     if (count($list2) > 0) {
                         foreach ($list2 as $a_list2) {
                             array_push($ids, $a_list2['id']);

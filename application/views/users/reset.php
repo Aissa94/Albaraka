@@ -13,10 +13,11 @@ $attributes = array('id' => 'target');
 echo form_open('users/reset/' . $target_user_id, $attributes); ?>
     <input type="hidden" name="CipheredValue" id="CipheredValue" />
 </form>
-    <label for="password"><?php echo lang('users_reset_field_password');?></label>
-    <input type="password" name="password" id="password" required /><br />
-    <br />
-    <button id="send" class="btn btn-primary"><?php echo lang('users_reset_button_reset');?></button>
+      <div class="input-group">
+         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+         <input type="password" class="form-control" name="password" id="password" required placeholder="<?php echo 'Mot de passe';?>"/>
+      </div>
+    <button id="send" style="display:none" class="btn btn-primary"><?php echo lang('users_reset_button_reset');?></button>
 
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jsencrypt.min.js"></script>
 <script type="text/javascript">

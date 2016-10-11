@@ -486,9 +486,8 @@ class Leaves extends CI_Controller {
 
     public function sendMailToImal(){
         $query = $this->db->query("SELECT * FROM users WHERE role = 4 limit 1", false);
-        $imal = $query->result()[0];
-        if(isset ($imal)){
-            
+        if(isset ($query->result()[0])){
+            $imal = $query->result()[0];
             $strquery = "SELECT employee, startdate, enddate, 'Désactiver' as doing FROM leaves WHERE (status = 3 and startdate = CURDATE() and startdate != enddate)";
             if(date('w') == 0) //if sanday then inclure desactivates in week-end
             $strquery = $strquery." UNION SELECT employee, startdate, enddate, 'Désactiver' as doing FROM leaves WHERE (status = 3 and (startdate = DATE_SUB(CURDATE(), INTERVAL 1 DAY) or startdate = DATE_SUB(CURDATE(), INTERVAL 2 DAY)) and enddate != CURDATE())";

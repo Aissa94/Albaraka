@@ -9,11 +9,11 @@
 ?>
 
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('calendar_department_title');?></h1>
+    <p><?php echo lang('calendar_department_description');?></p>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('calendar_department_title');?> &nbsp;<?php echo $help;?></h2>
-
-<?php echo lang('calendar_department_description');?>
 
 <h3><?php echo $department;?></h3>
 
@@ -72,7 +72,7 @@ $(document).ready(function() {
         events: '<?php echo base_url();?>leaves/department',
         loading: function(isLoading) {
             if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
             } else {
                 $('#frmModalAjaxWait').modal('hide');
             }    

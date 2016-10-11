@@ -7,8 +7,14 @@
  * @since         0.1.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_discordance_title").addClass('active');
+    $("#menu_discordance_leave").addClass('active');
+</script>
 <div class="row-fluid">
+    <div class="page-title">   
+<h1><?php echo lang('discordance_index_title');?></h1>
+</div>
     <div class="span12">
 
 <?php if($this->session->flashdata('msg')){ ?>
@@ -20,14 +26,13 @@
 <script type="text/javascript">
 //Flash message
 $(document).ready(function() {
-    $("#flashbox").alert();
+    $("#flashbox").show();
 });
 </script>
 <?php } ?>
-
-<h2><?php echo lang('discordance_index_title');?> &nbsp;<?php echo $help;?></h2>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="contracts" width="100%">
+<div class="row-fluid">
+<div class="table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="contracts" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('discordance_index_thead_id');?></th>
@@ -45,7 +50,7 @@ $(document).ready(function() {
 <?php foreach ($discordances as $contracts_item): ?>
     <tr>
         <td data-order="<?php echo $contracts_item['id']; ?>">
-            <?php echo $contracts_item['id'] ?></td>
+            <?php echo $contracts_item['titredecng'] ?></td>
         <td><?php echo $contracts_item['employee']; ?></td>
         <td><?php echo $contracts_item['firstname']; ?></td>
         <td><?php echo $contracts_item['lastname']; ?></td>
@@ -67,7 +72,7 @@ $(document).ready(function() {
     </tr>
 <?php endforeach ?>
 	</tbody>
-</table>
+</table></div>
 	</div>
 </div>
 
@@ -75,7 +80,7 @@ $(document).ready(function() {
 
 
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
-
+</div>
 <div id="frmDeleteContract" class="modal hide fade">
     <div class="modal-header">
         <a href="#" onclick="$('#frmDeleteContract').modal('hide');" class="close">&times;</a>
@@ -136,8 +141,8 @@ $(document).ready(function() {
             }
         }
     });
-    $("#frmChangePwd").alert();
-    $("#frmEntitledDays").alert();
+    $("#frmChangePwd").appendTo('body').show();
+    $("#frmEntitledDays").appendTo('body').show();
 	
     //On showing the confirmation pop-up, add the contract id at the end of the delete url action
     $('#frmDeleteContract').on('show', function() {

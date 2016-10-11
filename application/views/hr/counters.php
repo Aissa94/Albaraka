@@ -9,14 +9,15 @@
 ?>
 
 <div class="row-fluid">
+        <div class="page-title">   
+        <h1><?php echo lang('hr_summary_title');?>&nbsp;<?php echo $employee_id; ?>&nbsp;<span class="muted"> (<?php echo $employee_name; ?>)</span></h1>
+      </div>
     <div class="span12">
-        <h2><?php echo lang('hr_summary_title');?>&nbsp;<?php echo $employee_id; ?>&nbsp;<span class="muted"> (<?php echo $employee_name; ?>)</span>&nbsp;<?php echo $help;?></h2>
-
+        
         <p><?php echo lang('hr_summary_date_field');?>&nbsp;
             <input type="text" id="refdate" />
         </p>
-        
-        <table id="counters" cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
+        <table id="counters" cellpadding="0" cellspacing="0" border="0" class="table table-bordered" width="100%">
         <thead>
             <tr>
               <th><?php echo lang('hr_summary_thead_type');?></th>
@@ -28,10 +29,7 @@
           </thead>
           <tbody>
           <?php 
-            $i = 1;
             foreach ($summary as $key => $value) { 
-             if($i == 1 || $i == 2) $key = '.' . $key;
-             $i++;
               ?>
             <tr>
               <td><?php echo $key; ?></td>
@@ -90,7 +88,7 @@
         <?php } else { ?>
         <h3><?php echo lang('entitleddays_counters_title_employee');?></h3>
         <?php } ?>
-        <table id="entitleddaysemployee">
+        <table id="entitleddaysemployee" cellpadding="0" cellspacing="0" border="0" class="table table-bordered" width="100%">
         <thead>
             <tr>
               <th><?php echo lang('entitleddays_user_index_thead_start');?></th>

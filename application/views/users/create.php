@@ -7,8 +7,23 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('users_create_title');?><?php echo $help;?></h2>
+<script type="application/javascript">
+    $("#menu_admin_title").addClass('active');
+    $("#menu_admin_add_user").addClass('active');
+</script>
+<style type="text/css">
+    .selectpicker {
+        padding-left: 0 !important;
+        width: 103% !important;
+    }
+    .input-append {
+        padding-left: 0px;
+    }
+</style>
+<div class="row-fluid">
+<div class="page-title">   
+<h1><?php echo lang('users_create_title');?></h1>
+</div>
 
 <?php echo validation_errors(); ?>
 
@@ -17,45 +32,52 @@ $attributes = array('id' => 'target');
 echo form_open('users/create', $attributes); ?>
 
     <input type="hidden" name="CipheredValue" id="CipheredValue" />
-    
-    <label for="firstname"><?php echo lang('users_create_field_firstname');?></label>
-    <input type="text" name="firstname" id="firstname" required /><br />
-
-    <label for="lastname"><?php echo lang('users_create_field_lastname');?></label>
-    <input type="text" name="lastname" id="lastname" required /><br />
-
-    <label for="role[]"><?php echo lang('users_create_field_role');?></label>
-    <select name="role[]" multiple="multiple" size="2" required>
+    <div class="form-group">
+    <label class="col-md-3" for="firstname"><?php echo lang('users_create_field_firstname');?></label>
+    <input class="col-md-4" type="text" name="firstname" id="firstname" required /><br />
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="lastname"><?php echo lang('users_create_field_lastname');?></label>
+    <input class="col-md-4" type="text" name="lastname" id="lastname" required /><br />
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="role[]"><?php echo lang('users_create_field_role');?></label>
+    <select class="col-md-4 selectpicker" name="role[]" required>
     <?php foreach ($roles as $roles_item): ?>
         <option value="<?php echo $roles_item['id'] ?>" <?php if ($roles_item['id'] == 2) echo "selected"; ?>><?php echo $roles_item['name'] ?></option>
     <?php endforeach ?>
     </select>
-
-    <label for="login"><?php echo lang('users_create_field_login');?></label>
-    <div class="input-append">
-        <input type="text" name="login" id="login" required />
-        <a id="cmdRefreshLogin" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
-    </div><br />
-    <div class="alert hide alert-error" id="lblLoginAlert">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="login"><?php echo lang('users_create_field_login');?></label>
+    <div class="col-md-6 input-append">
+        <input class="col-md-6" type="text" name="login" id="login" required />
+        <a id="cmdRefreshLogin" class="col-md-2 btn btn-primary"><i class="icon-refresh icon-white"></i></a>
+    </div><br /><br /><br />
+    <div class="col-md-3"></div>
+    <div class="alert-error col-md-4" id="lblLoginAlert" style="padding:8px 15px 8px 14px">
         <button type="button" class="close" onclick="$('#lblLoginAlert').hide();">&times;</button>
         <?php echo lang('users_create_flash_msg_error');?>
     </div>
-
-    <label for="email"><?php echo lang('users_create_field_email');?></label>
-    <input type="email" id="email" name="email" required /><br />
-
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="email"><?php echo lang('users_create_field_email');?></label>
+    <input class="col-md-4" type="email" id="email" name="email" required /><br />
+    </div>
+    <div class="form-group">
     <input type="hidden" name="manager" id="manager" /><br />
-    <label for="txtManager"><?php echo lang('users_create_field_manager');?></label>
+    <label class="col-md-3" for="txtManager"><?php echo lang('users_create_field_manager');?></label>
     <div class="input-append">
-        <input type="text" id="txtManager" name="txtManager" required readonly />
+        <input class="col-md-4" type="text" id="txtManager" name="txtManager" required readonly />
         <a id="cmdSelfManager" class="btn btn-primary"><?php echo lang('users_create_button_self');?></a>
         <a id="cmdSelectManager" class="btn btn-primary"><?php echo lang('users_create_button_select');?></a>
     </div><br />
-    <i><?php echo lang('users_create_field_manager_description');?></i>
+    <div><i><?php echo lang('users_create_field_manager_description');?></i></div>
     <br /><br />
-
-    <label for="contract"><?php echo lang('users_create_field_contract');?></label>
-    <select name="contract" id="contract" class="selectized input-xlarge">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="contract"><?php echo lang('users_create_field_contract');?></label>
+    <select name="contract" id="contract" class="col-md-4 selectpicker" data-live-search="true">
     <?php $index = 0;
          foreach ($contracts as $contract) { ?>
         <option value="<?php echo $contract['id'] ?>" <?php if ($index == 0) echo "selected"; ?>><?php echo $contract['name']; ?></option>
@@ -63,32 +85,37 @@ echo form_open('users/create', $attributes); ?>
             $index++;
         } ?>
     </select>
-
+    </div>
+    <div class="form-group">
     <input type="hidden" name="entity" id="entity" /><br />
-    <label for="txtEntity"><?php echo lang('users_create_field_entity');?></label>
-    <div class="input-append">
-        <input type="text" id="txtEntity" name="txtEntity" readonly />
-        <a id="cmdSelectEntity" class="btn btn-primary"><?php echo lang('users_create_button_select');?></a>
+    <label class="col-md-3" for="txtEntity"><?php echo lang('users_create_field_entity');?></label>
+    <div class="col-md-6 input-append">
+        <input  class="col-md-6" type="text" id="txtEntity" name="txtEntity" readonly />
+        <a id="cmdSelectEntity" class="col-md-2 btn btn-primary"><?php echo lang('users_create_button_select');?></a>
     </div>
     <br />
-
+    </div>
+    <div class="form-group">
     <input type="hidden" name="position" id="position" /><br />
-    <label for="txtPosition"><?php echo lang('users_create_field_position');?></label>
-    <div class="input-append">
-        <input type="text" id="txtPosition" name="txtPosition" readonly />
-        <a id="cmdSelectPosition" class="btn btn-primary"><?php echo lang('users_create_button_select');?></a>
+    <label class="col-md-3" for="txtPosition"><?php echo lang('users_create_field_position');?></label>
+    <div class="col-md-6 input-append">
+        <input class="col-md-6" type="text" id="txtPosition" name="txtPosition" readonly />
+        <a id="cmdSelectPosition" class="col-md-2 btn btn-primary"><?php echo lang('users_create_button_select');?></a>
     </div>
     <br />
-
-    <label for="viz_datehired"><?php echo lang('users_create_field_hired');?></label>
-    <input type="text" id="viz_datehired" name="viz_datehired" /><br />
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="viz_datehired"><?php echo lang('users_create_field_hired');?></label>
+    <input class="col-md-4" type="text" id="viz_datehired" name="viz_datehired" /><br />
     <input type="hidden" name="datehired" id="datehired" />
-
-    <label for="identifier"><?php echo lang('users_create_field_identifier');?></label>
-    <input type="text" name="identifier" /><br />
-    
-    <label for="language"><?php echo lang('users_create_field_language');?></label>
-    <select name="language">
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="identifier"><?php echo lang('users_create_field_identifier');?></label>
+    <input class="col-md-4" type="text" name="identifier" /><br />
+    </div>
+    <div class="form-group">
+    <label class="col-md-3" for="language"><?php echo lang('users_create_field_language');?></label>
+    <select class="col-md-4 selectpicker" name="language">
          <?php 
          $languages = $this->polyglot->nativelanguages($this->config->item('languages'));
          $default_lang = $this->polyglot->language2code($this->config->item('language'));
@@ -96,39 +123,44 @@ echo form_open('users/create', $attributes); ?>
         <option value="<?php echo $code; ?>" <?php if ($code == $default_lang) echo "selected"; ?>><?php echo $language; ?></option>
         <?php endforeach ?>
     </select>
-    
+    </div>
     <?php 
     $tzdef = $this->config->item('default_timezone');
     if ($tzdef == FALSE) $tzdef = 'Europe/Paris';
     $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);?>
-    <label for="timezone"><?php echo lang('users_create_field_timezone');?></label>
-    <select id="timezone" name="timezone" class="selectized input-xlarge">
+    <div class="form-group">
+    <label class="col-md-3" for="timezone"><?php echo lang('users_create_field_timezone');?></label>
+    <select id="timezone" name="timezone" class="col-md-4 selectpicker"  data-live-search="true">
     <?php foreach ($tzlist as $tz) { ?>
         <option value="<?php echo $tz ?>" <?php if ($tz == $tzdef) echo "selected"; ?>><?php echo $tz; ?></option>
     <?php 
             $index++;
         } ?>
     </select>
-
+    </div>
     <?php if ($this->config->item('ldap_basedn_db')) {?>
-    <label for="ldap_path"><?php echo lang('users_create_field_ldap_path');?></label>
-    <input type="text" class="input-xxlarge" name="ldap_path" />
+    <div class="form-group">
+    <label class="col-md-3" for="ldap_path"><?php echo lang('users_create_field_ldap_path');?></label>
+    <input class="col-md-4" type="text" class="input-xxlarge" name="ldap_path" />
+    </div>
     <?php }?>
 </form>
 
     <?php if ($this->config->item('ldap_enabled')=== FALSE && $this->config->item('saml_enabled') === FALSE) {?>
-    <label for="password"><?php echo lang('users_create_field_password');?></label>
+    <div class="form-group">
+    <label class="col-md-3" for="password"><?php echo lang('users_create_field_password');?></label>
     <div class="input-append">
-        <input type="password" name="password" id="password" required />
-        <a class="btn" id="cmdGeneratePassword"><i class="icon-refresh"></i>&nbsp;<?php echo lang('users_create_button_generate_password');?></a>
+        <input class="col-md-4" type="password" name="password" id="password" required />
+        <a class="btn btn-primary" id="cmdGeneratePassword"><i class="icon-refresh icon-white"></i>&nbsp;<?php echo lang('users_create_button_generate_password');?></a>
+    </div>
     </div>
     <?php }?>
     <br />
     
     <button id="send" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('users_create_button_create');?></button>
     &nbsp;
-    <a href="<?php echo base_url(); ?>users" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('users_create_button_cancel');?></a>
-
+    <a href="<?php echo base_url(); ?>users" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('users_create_button_cancel');?></a><div style="margin-bottom:20px;"></div>
+</div>
 <div id="frmSelectManager" class="modal hide fade">
     <div class="modal-header">
         <a href="#" onclick="$('#frmSelectManager').modal('hide');" class="close">&times;</a>
@@ -179,8 +211,8 @@ if ($language_code != 'en') { ?>
 <script src="<?php echo base_url();?>assets/js/i18n/jquery.ui.datepicker-<?php echo $language_code;?>.js"></script>
 <?php } ?>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/selectize.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/selectize.bootstrap2.css" />
+
+
 <script type="text/javascript">
 
     //Popup select postion: on click OK, find the user id for the selected line
@@ -335,10 +367,8 @@ if ($language_code != 'en') { ?>
             altFormat: "yy-mm-dd",
             altField: "#datehired"
         }, $.datepicker.regional['<?php echo $language_code;?>']);
-        $("#lblLoginAlert").alert();
+        $("#lblLoginAlert").appendTo('body').show();
         
-        $('#timezone').selectize();
-        $('#contract').selectize();
         
         $("#cmdGeneratePassword").click(function() {
             $("#password").val(password_generator(<?php echo $this->config->item('password_length');?>));
@@ -399,24 +429,24 @@ if ($language_code != 'en') { ?>
         
         //Popup select manager
         $("#cmdSelectManager").click(function() {
-            $("#frmSelectManager").modal('show');
+            $("#frmSelectManager").appendTo("body").modal('show');
             $("#frmSelectManagerBody").load('<?php echo base_url(); ?>users/employees');
         });
         
         //Popup select position
         $("#cmdSelectPosition").click(function() {
-            $("#frmSelectPosition").modal('show');
+            $("#frmSelectPosition").appendTo("body").modal('show');
             $("#frmSelectPositionBody").load('<?php echo base_url(); ?>positions/select');
         });
         
         //Popup select entity
         $("#cmdSelectEntity").click(function() {
-            $("#frmSelectEntity").modal('show');
+            $("#frmSelectEntity").appendTo("body").modal('show');
             $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select');
         });
 
         //Load alert forms
-        $("#frmSelectEntity").alert();
+        $("#frmSelectEntity").appendTo('body').show();
         //Prevent to load always the same content (refreshed each time)
         $('#frmSelectEntity').on('hidden', function() {
             $(this).removeData('modal');

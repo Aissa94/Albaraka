@@ -8,18 +8,23 @@
  * @since         0.4.0
  */
 ?>
-
+<script type="application/javascript">
+    $("#menu_validation_title").addClass('active');
+    $("#menu_validation_divider").addClass('active');
+    $("#menu_validation_collaborators").addClass('active');
+</script>
 <div class="row-fluid">
+<div class="page-title">  
+<h1><?php echo lang('requests_collaborators_title');?></h1>
+    <p><?php echo lang('requests_collaborators_description');?></p>
+</div>
     <div class="span12">
-
-<h2><?php echo lang('requests_collaborators_title');?>  &nbsp;<?php echo $help;?></h2>
-
 <?php echo $flash_partial_view;?>
-<p><?php echo lang('requests_collaborators_description');?>
-</br><?php echo lang('requests_collaborators_description2');?></p>
+
+<br /><p><?php echo lang('requests_collaborators_description2');?></p>
 
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="collaborators" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered " id="collaborators" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('requests_collaborators_thead_id');?></th>
@@ -158,7 +163,7 @@ $(document).ready(function() {
     //Copy/Paste ICS Feed
     var client = new ZeroClipboard($("#cmdCopy"));
     $('#lnkICS').click(function () {
-        $("#frmLinkICS").modal('show');
+        $("#frmLinkICS").appendTo("body").modal('show');
     });
     client.on( "aftercopy", function( event ) {
         $('#tipCopied').tooltip('show');

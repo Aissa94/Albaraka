@@ -7,13 +7,16 @@
  * @since         0.1.0
  */
 ?>
-
-<div class="row-fluid">
+<script type="application/javascript">
+    $("#menu_calendar_title").addClass('active');
+    $("#menu_calendar_collaborators").addClass('active');
+</script>
+<div class="page-title">   
+    <h1><?php echo lang('calendar_collaborators_title');?></h1>
+    <p><?php echo lang('calendar_collaborators_description');?></p>
+</div>
+<div class="row-fluid" style="padding-bottom:20px;">
     <div class="span12">
-
-<h2><?php echo lang('calendar_collaborators_title');?> &nbsp;<?php echo $help;?></h2>
-
-<p><?php echo lang('calendar_collaborators_description');?></p>
 <div class="row-fluid">
     <div class="span4">
         <label for="txtEntity"><?php echo lang('calendar_organization_field_select_entity');?></label>
@@ -29,7 +32,7 @@
     </div>
 </div>
 
-<div class="row-fluid" data-toggle="buttons">
+<div class="row-fluid" data-toggle="buttons" style="padding-bottom:20px;">
     <div class="span3 btn conge"><?php echo lang('Planned');?></div>
     <div class="span3 btn btn-success conge"><?php echo lang('Accepted');?></div>
     <div class="span3 btn btn-warning conge"><?php echo lang('Requested');?></div>
@@ -130,7 +133,7 @@ $(document).ready(function() {
 
         //Popup select entity
         $("#cmdSelectEntity").click(function() {
-            $("#frmSelectEntity").modal('show');
+            $("#frmSelectEntity").appendTo("body").modal('show');
             $("#frmSelectEntityBody").load('<?php echo base_url(); ?>organization/select', "<?php echo $organization_id; ?>");
         });
 
@@ -141,7 +144,7 @@ $(document).ready(function() {
       });
     
         //Load alert forms
-        $("#frmSelectEntity").alert();
+        $("#frmSelectEntity").appendTo('body').show();
         //Prevent to load always the same content (refreshed each time)
         $('#frmSelectEntity').on('hidden', function() {
             $(this).removeData('modal');
@@ -158,7 +161,7 @@ $(document).ready(function() {
         events: '<?php echo base_url();?>leaves/collaborators',
         loading: function(isLoading) {
             if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
-                $('#frmModalAjaxWait').modal('show');
+                $('#frmModalAjaxWait').appendTo("body").modal('show');
             } else {
                 $('#frmModalAjaxWait').modal('hide');
             }    

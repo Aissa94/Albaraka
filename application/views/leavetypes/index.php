@@ -7,10 +7,15 @@
  * @since         0.1.0
  */
 ?>
-
-<h2><?php echo lang('leavetypes_type_title');?><?php echo $help;?></h2>
-
+<script type="application/javascript">
+    $("#menu_admin_title").addClass('active');
+    $("#menu_hr_list_leaves_type").addClass('active');
+</script>
+<div class="row-fluid">
+<div class="page-title">   
+<h1><?php echo lang('leavetypes_type_title');?></h1>
 <p><?php echo lang('leavetypes_type_description');?></p>
+</div>
 
 <?php echo $flash_partial_view;?>
 
@@ -54,7 +59,7 @@
 </div>
 
 <div class="row-fluid"><div class="span12">&nbsp;</div></div>
-
+</div>
 <div id="frmAddLeaveType" class="modal hide fade">
     <div class="modal-header">
         <a href="#" onclick="$('#frmAddLeaveType').modal('hide');" class="close">&times;</a>
@@ -98,9 +103,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#frmAddLeaveType").alert();
-    $("#frmEditLeaveType").alert();
-    $("#frmDeleteLeaveType").alert();
+    $("#frmAddLeaveType").appendTo('body').show();
+    $("#frmEditLeaveType").appendTo('body').show();
+    $("#frmDeleteLeaveType").appendTo('body').show();
 	
     //On showing the confirmation pop-up, add the user id at the end of the delete url action
     $('#frmDeleteLeaveType').on('show', function() {
