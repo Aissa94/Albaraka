@@ -214,9 +214,10 @@ if($boolean_to_send){
                       &nbsp;</span>
                   </a>
                   <ul>
-                    <li id="menu_validation_leaves"><a href="<?php echo base_url();?>requests"><?php if ($requested_leaves_count > 0) { ?>
+                    <li id="menu_validation_leaves"><a href="<?php echo base_url();?>requests"><?php echo lang('menu_validation_leaves');?>
+                                <?php if ($requested_leaves_count > 0) { ?>
                                 <span class="badge badge-info"><?php echo $requested_leaves_count;?></span>
-                                <?php } ?><?php echo lang('menu_validation_leaves');?></a>
+                                <?php } ?></a>
                     </li>
                     <li id="menu_validation_divider">
                     <a href="#"><?php echo lang('menu_validation_title');?></a>
