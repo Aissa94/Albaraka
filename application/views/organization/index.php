@@ -15,16 +15,21 @@
 <div class="row-fluid" id="containers">
     <div class="page-title">
     <h1><?php echo lang('organization_index_title');?></h1>
+    <p id="noteactualisation">
+        <?php echo lang('organization_employees_description');?>
+        <i class="fa fa-floppy-o"></i>
+        <?php echo lang('organization_employees_description2');?>
+    </p>
     </div>
 <div class="span12">
 </div>
-<div class="row-fluid"  style="padding-top: 20px">
+<div class="row-fluid">
     <div class="span4">
         <div class="input-append">
             <input type="text" class="input-medium" placeholder="<?php echo lang('organization_index_field_search_placeholder');?>" id="txtSearch" />
             <button id="cmdSearch" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
             <button id="cmdClearSearch" class="btn btn-primary"><i class="icon-remove icon-white"></i></button>
-            <button id="cmdReloadManagers" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+            <button id="cmdReloadManagers" class="btn btn-primary"><i class="fa fa-floppy-o"></i></button>
         </div>
         <div style="text-align: left;" id="organization"></div>
     </div>
@@ -172,6 +177,7 @@
             //Update field with the name of employee (the supervisor)
             $('#txtSupervisor').val(text);
             $('#frmModalAjaxWait').modal('hide');
+            //$('#noteactualisation').show();
           });
     }
     
@@ -187,6 +193,7 @@
             //Update field with the name of employee (the supervisor)
             $('#txtSupervisor').val("");
             $('#frmModalAjaxWait').modal('hide');
+            //$('#noteactualisation').show();
           });
     }
     

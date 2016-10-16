@@ -8,6 +8,8 @@
  */
 
 $lang['organization_index_title'] = 'Organization';
+$lang['organization_employees_description'] = 'Once you are done, press the  button ';
+$lang['organization_employees_description2'] = ' to save your changes.';
 $lang['organization_index_field_search_placeholder'] = 'Search for an entity';
 $lang['organization_index_button_search'] = 'Search';
 $lang['organization_index_title_employees'] = 'Employees attached to entity';
