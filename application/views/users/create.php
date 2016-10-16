@@ -64,17 +64,7 @@ echo form_open('users/create', $attributes); ?>
     <label class="col-md-3" for="email"><?php echo lang('users_create_field_email');?></label>
     <input class="col-md-4" type="email" id="email" name="email" required /><br />
     </div>
-    <div class="form-group">
-    <input type="hidden" name="manager" id="manager" /><br />
-    <label class="col-md-3" for="txtManager"><?php echo lang('users_create_field_manager');?></label>
-    <div class="input-append">
-        <input class="col-md-4" type="text" id="txtManager" name="txtManager" required readonly />
-        <a id="cmdSelfManager" class="btn btn-primary"><?php echo lang('users_create_button_self');?></a>
-        <a id="cmdSelectManager" class="btn btn-primary"><?php echo lang('users_create_button_select');?></a>
-    </div><br />
-    <div><i><?php echo lang('users_create_field_manager_description');?></i></div>
-    <br /><br />
-    </div>
+    
     <div class="form-group">
     <label class="col-md-3" for="contract"><?php echo lang('users_create_field_contract');?></label>
     <select name="contract" id="contract" class="col-md-4 selectpicker" data-live-search="true">

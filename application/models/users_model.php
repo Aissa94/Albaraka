@@ -188,6 +188,7 @@ class Users_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function setUsers() {
+        $this->load->model('organization_model');
         //Decipher the password value (RSA encoded -> base64 -> decode -> decrypt)
         $password = '';
         if (function_exists('openssl_pkey_get_private')) {
@@ -237,10 +238,11 @@ class Users_model extends CI_Model {
         $this->db->insert('users', $data);
         
         //Deal with user having no line manager
-        if ($this->input->post('manager') == -1) {
+        //if ($this->input->post('manager') == -1) 
+        {
             $id = $this->db->insert_id();
             $data = array(
-                'manager' => $id
+                'manager' => $this->organization_model->getManager($id)
             );
             $this->db->where('id', $id);
             $this->db->update('users', $data);
