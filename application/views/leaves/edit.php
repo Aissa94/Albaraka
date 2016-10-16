@@ -28,7 +28,7 @@ if (isset($_GET['source'])) {
     <?php foreach ($types as $types_item): ?>
          <option value="<?php echo $types_item['id'] ?>" 
         <?php switch ($types_item['id']) {
-            case 0 : echo "hidden"; break; 
+            case 0 : echo 'style = " display:none"'; break; 
             case $leave['type'] : echo "selected"; break;
             case 1 : break;
             case 2 : break;

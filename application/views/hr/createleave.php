@@ -28,7 +28,7 @@ echo form_open($form_action, $attributes) ?>
     foreach ($types as $types_item):?>
         <option value="<?php echo $types_item['id'] ?>" 
         <?php switch ($types_item['id']) {
-            case 0 : echo "hidden"; break; 
+            case 0 : echo 'style = " display:none"'; break; 
             case $default_type : echo "selected"; break;
             case 2 : break;
             default : echo "disabled";
