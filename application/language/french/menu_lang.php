@@ -10,7 +10,7 @@
 $lang['menu_banner_change_password'] = 'Changer le mot de passe';
 $lang['menu_banner_welcome'] = 'Bienvenue';
 $lang['menu_banner_logout'] = 'Déconnexion';
-$lang['menu_banner_tip_myprofile'] = 'Voir mes informations personelles';
+$lang['menu_banner_tip_myprofile'] = 'Voir mes informations personnelles';
 $lang['menu_banner_tip_reset'] = 'Changer le mot de passe';
 $lang['menu_password_popup_title'] = 'Changer le mot de passe';
 $lang['menu_password_popup_button_cancel'] = 'Annuler';
@@ -29,7 +29,7 @@ $lang['menu_hr_employees_divider'] = 'Employés';
 $lang['menu_hr_list_organization'] = 'Organisation';
 $lang['menu_hr_list_employees'] = 'Liste des employés';
 $lang['menu_hr_request_leave'] = 'Demandes RH';
-$lang['menu_hr_contracts_divider'] = 'Contrats';
+$lang['menu_hr_contracts_divider'] = 'Contrats et Postes';
 $lang['menu_hr_list_contracts'] = 'Liste des contrats';
 $lang['menu_hr_list_positions'] = 'Liste des postes';
 $lang['menu_hr_leaves_type_divider'] = 'Absences';

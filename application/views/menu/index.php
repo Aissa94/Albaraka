@@ -220,7 +220,7 @@ if($boolean_to_send){
                                 <?php } ?></a>
                     </li>
                     <li id="menu_validation_divider">
-                    <a href="#"><?php echo lang('menu_validation_title');?></a>
+                    <a href="#"><?php echo lang('menu_validation_devider');?></a>
                         <ul>
                             <li id="menu_validation_collaborators"><a href="<?php echo base_url();?>requests/collaborators"><i class="fa fa-level-down"></i> <?php echo lang('menu_validation_collaborators');?></a></li>
                             <li id="menu_hr_report_leave_balance"><a href="<?php echo base_url();?>requests/balance"><?php echo lang('menu_hr_report_leave_balance');?></a></li>

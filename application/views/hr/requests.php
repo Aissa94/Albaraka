@@ -74,7 +74,7 @@
         <td data-order="<?php echo$tmpEndDate; ?>"><?php echo $enddate; ?></td>
         <td><?php echo $requests_item['duration']; ?></td>
         <td><?php echo $requests_item['cause']; ?></td>
-        <td><?php echo $requests_item['manager_firstname'].' '.$requests_item['manager_firstname']; ?></td>
+        <td><?php echo $requests_item['manager_firstname'].' '.$requests_item['manager_lastname']; ?></td>
     </tr>
 <?php endforeach ?>
 	</tbody>

@@ -25,7 +25,7 @@ $lang['requests_index_thead_substitute'] = 'Remplaçant';
 
 $lang['requests_collaborators_title'] = 'Liste de mes subordonnés';
 $lang['requests_collaborators_description'] = 'Cet écran liste vos subordonnés. Si vous n\'êtes pas un responsable, cette liste sera vide.';
-$lang['requests_collaborators_description2'] = 'Les absences sont indiquées par une autre couleur.';
+$lang['requests_collaborators_description2'] = 'Les absences sont indiquées par une couleur grise.';
 $lang['requests_collaborators_thead_id'] = 'ID';
 $lang['requests_collaborators_thead_link_balance'] = 'Solde des congés';
 $lang['requests_collaborators_thead_link_presence'] = 'Rapport sur la présence';

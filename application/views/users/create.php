@@ -116,7 +116,7 @@ echo form_open('users/create', $attributes); ?>
     </div>
     <?php 
     $tzdef = $this->config->item('default_timezone');
-    if ($tzdef == FALSE) $tzdef = 'Europe/Paris';
+    if ($tzdef == FALSE) $tzdef = 'Africa/Algiers';
     $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);?>
     <div class="form-group">
     <label class="col-md-3" for="timezone"><?php echo lang('users_create_field_timezone');?></label>

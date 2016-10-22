@@ -474,7 +474,7 @@ $config['saml_enabled'] = FALSE;
 //____________________________________________________________________________
 //Enable public ICS feeds (global calendar, contract, personal information)
 $config['ics_enabled'] = FALSE;
-$config['default_timezone'] = 'Europe/Paris';
+$config['default_timezone'] = 'Africa/Algiers';
 
 //____________________________________________________________________________
 //Enable public access for tabular and global calendar

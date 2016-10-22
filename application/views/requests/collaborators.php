@@ -36,9 +36,8 @@
     </thead>
     <tbody>
     <?php foreach ($collaborators as $collaborator): ?>
-        <tr>
-            <td data-order="<?php echo $collaborator['id']; ?>" 
-            <?php if ($this->users_model->isAbsent($collaborator['id'])){ ?>style="border-left: thick double #000;" <?php }?> >        
+        <tr <?php if ($this->users_model->isAbsent($collaborator['id'])){ ?>style="background: #C0C0C0;" <?php }?> >      
+            <td data-order="<?php echo $collaborator['id']; ?>" >  
                 <?php echo $collaborator['id']; ?>
                 <div class="pull-right">
                     <?php if ($this->config->item('requests_by_manager') == TRUE) { ?>

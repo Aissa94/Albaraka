@@ -70,7 +70,7 @@
         <td><?php echo $requests_item['type_name']; ?></td>
         <td><?php echo lang($requests_item['status_name']); ?></td>
         <td><?php echo $requests_item['cause']; ?></td>
-        <td><?php echo $requests_item['substitute_firstname'].' '.$requests_item['substitute_firstname']; ?></td>
+        <td><?php echo $requests_item['substitute_firstname'].' '.$requests_item['substitute_lastname']; ?></td>
     </tr>
 <?php endforeach ?>
 	</tbody>
